@@ -15,4 +15,4 @@
  * 		});
  */
 
-Admin::menu()->url('/')->label('Start page')->icon('fa-dashboard')->uses('\SleepingOwl\Admin\Controllers\DummyController@getIndex');
+Admin::menu()->url('/')->label('Start page')->icon('fa-dashboard')->uses('App\Http\Controllers\AdminController@index');
