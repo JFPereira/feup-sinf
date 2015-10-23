@@ -25,7 +25,7 @@ namespace project.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("DEMOSINF")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ZAHA")]
         public string Company {
             get {
                 return ((string)(this["Company"]));
