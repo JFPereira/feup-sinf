@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -12,15 +13,15 @@ namespace project.Controllers
     public class ClientsController : ApiController
     {
         //
-        // GET: /Clientes/
+        // GET: api/clients/
 
         public IEnumerable<Lib_Primavera.Model.Cliente> Get()
         {
-                return Lib_Primavera.PriIntegration.ListaClientes();
+            return Lib_Primavera.PriIntegration.ListaClientes();
         }
 
 
-        // GET api/cliente/5    
+        // GET api/clients/5    
         public Cliente Get(string id)
         {
             Lib_Primavera.Model.Cliente cliente = Lib_Primavera.PriIntegration.GetCliente(id);
@@ -36,6 +37,15 @@ namespace project.Controllers
             }
         }
 
+        [ActionName("TopClients")]
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage TopClients()
+        {
+            int i = 49;
+            var json = new JavaScriptSerializer().Serialize(i);
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            return response;
+        }
 
         public HttpResponseMessage Post(Lib_Primavera.Model.Cliente cliente)
         {
