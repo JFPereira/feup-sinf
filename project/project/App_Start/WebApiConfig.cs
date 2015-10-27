@@ -9,11 +9,48 @@ namespace project
     {
         public static void Register(HttpConfiguration config)
         {
+            //--------------- Products ---------------//
+
+            // GET api/products/
+            config.Routes.MapHttpRoute(
+                name: "Products",
+                routeTemplate: "api/products",
+                defaults: new { controller = "Products", action = "Get" }
+            );
+
+            // GET api/products/top
+            config.Routes.MapHttpRoute(
+                name: "TopProducts",
+                routeTemplate: "api/products/top",
+                defaults: new { controller = "Products", action = "TopProducts" }
+            );
+
+            //--------------- Clients ---------------//
+
+            // GET api/clients/
+            config.Routes.MapHttpRoute(
+                name: "Clients",
+                routeTemplate: "api/clients",
+                defaults: new { controller = "Clients", action = "Get" }
+            );
+
+            // GET api/clients/top
             config.Routes.MapHttpRoute(
                 name: "TopClients",
                 routeTemplate: "api/clients/top",
-                defaults: new { controller="Clients", action="TopClients" }
+                defaults: new { controller = "Clients", action = "TopClients" }
             );
+
+            //--------------- Suppliers ---------------//
+
+            // GET api/suppliers/
+            config.Routes.MapHttpRoute(
+                name: "Suppliers",
+                routeTemplate: "api/suppliers",
+                defaults: new { controller = "Suppliers", action = "Get" }
+            );
+
+            //--------------- Defaut Route ---------------//
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

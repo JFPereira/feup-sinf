@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Net;
 using System.Net.Http;
@@ -12,16 +13,13 @@ namespace project.Controllers
 {
     public class ClientsController : ApiController
     {
-        //
         // GET: api/clients/
-
         public IEnumerable<Lib_Primavera.Model.Cliente> Get()
         {
             return Lib_Primavera.PriIntegration.ListaClientes();
         }
 
-
-        // GET api/clients/5    
+        // GET api/clients/{id}
         public Cliente Get(string id)
         {
             Lib_Primavera.Model.Cliente cliente = Lib_Primavera.PriIntegration.GetCliente(id);
@@ -37,16 +35,21 @@ namespace project.Controllers
             }
         }
 
-        [ActionName("TopClients")]
+        // GET api/clients/top
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage TopClients()
+        public IEnumerable<string> TopClients()
+        {
+            return new string[] { "botas", "ferrolho", "ramos", "anais" };
+        }
+        /*public HttpResponseMessage TopClients()
         {
             int i = 49;
             var json = new JavaScriptSerializer().Serialize(i);
             var response = Request.CreateResponse(HttpStatusCode.OK, json);
             return response;
-        }
+        }*/
 
+        //--------------- REST Methods ---------------//
         public HttpResponseMessage Post(Lib_Primavera.Model.Cliente cliente)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
@@ -65,13 +68,10 @@ namespace project.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-
         }
-
 
         public HttpResponseMessage Put(string id, Lib_Primavera.Model.Cliente cliente)
         {
-
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
 
             try
@@ -93,17 +93,12 @@ namespace project.Controllers
             }
         }
 
-
-
         public HttpResponseMessage Delete(string id)
         {
-
-
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
 
             try
             {
-
                 erro = Lib_Primavera.PriIntegration.DelCliente(id);
 
                 if (erro.Erro == 0)
@@ -114,17 +109,12 @@ namespace project.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, erro.Descricao);
                 }
-
             }
 
             catch (Exception exc)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
-
             }
-
         }
-
-
     }
 }

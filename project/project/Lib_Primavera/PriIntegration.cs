@@ -20,8 +20,6 @@ namespace project.Lib_Primavera
 
         public static List<Model.Cliente> ListaClientes()
         {
-
-
             StdBELista objList;
 
             List<Model.Cliente> listClientes = new List<Model.Cliente>();
@@ -56,10 +54,7 @@ namespace project.Lib_Primavera
 
         public static Lib_Primavera.Model.Cliente GetCliente(string codCliente)
         {
-
-
             GcpBECliente objCli = new GcpBECliente();
-
 
             Model.Cliente myCli = new Model.Cliente();
 
@@ -236,7 +231,6 @@ namespace project.Lib_Primavera
 
         #endregion Cliente;   // -----------------------------  END   CLIENTE    -----------------------
 
-
         #region Artigo
 
         public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
@@ -305,7 +299,67 @@ namespace project.Lib_Primavera
 
         #endregion Artigo
 
+        #region Fornecedor
 
+        public static List<Model.Fornecedor> ListaFornecedores()
+        {
+            StdBELista objList;
+
+            List<Model.Fornecedor> listFornecedores = new List<Model.Fornecedor>();
+
+            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT Fornecedor, Nome, Morada, NumContrib, Tel FROM FORNECEDORES");
+
+
+                while (!objList.NoFim())
+                {
+                    listFornecedores.Add(new Model.Fornecedor
+                    {
+                        CodFornecedor = objList.Valor("Fornecedor"),
+                        NomeFornecedor = objList.Valor("Nome"),
+                        Morada = objList.Valor("Morada"),
+                        NumContribuinte = objList.Valor("NumContrib"),
+                        Telefone = objList.Valor("Tel")
+                    });
+                    objList.Seguinte();
+
+                }
+
+                return listFornecedores;
+            }
+            else
+                return null;
+        }
+
+        public static Lib_Primavera.Model.Fornecedor GetFornecedor(string codFornecedor)
+        {
+            GcpBEFornecedor objFor = new GcpBEFornecedor();
+
+            Model.Fornecedor myFor = new Model.Fornecedor();
+
+            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                if (PriEngine.Engine.Comercial.Clientes.Existe(codFornecedor) == true)
+                {
+                    objFor = PriEngine.Engine.Comercial.Fornecedores.Edita(codFornecedor);
+                    myFor.CodFornecedor = objFor.get_Fornecedor();
+                    myFor.NomeFornecedor = objFor.get_Nome();
+                    myFor.NumContribuinte = objFor.get_NumContribuinte();
+                    myFor.Morada = objFor.get_Morada();
+                    return myFor;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
+
+        #endregion fornecedor
 
         #region DocCompra
 
@@ -424,7 +478,6 @@ namespace project.Lib_Primavera
 
 
         #endregion DocCompra
-
 
         #region DocsVenda
 
