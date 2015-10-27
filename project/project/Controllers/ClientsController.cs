@@ -43,7 +43,7 @@ namespace project.Controllers
         {
             int i = 49;
             var json = new JavaScriptSerializer().Serialize(i);
-            var response = Request.CreateResponse(HttpStatusCode.OK);
+            var response = Request.CreateResponse(HttpStatusCode.OK, json);
             return response;
         }
 
