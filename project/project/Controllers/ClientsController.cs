@@ -48,6 +48,7 @@ namespace project.Controllers
                 if (result.Exists(e => e.nif == sale.NumContribuinte))
                 {
                     result.Find(e => e.nif == sale.NumContribuinte).salesVolume += (sale.TotalMerc + sale.TotalIva);
+                    result.Find(e => e.nif == sale.NumContribuinte).numPurchases++;
                 }
                 else
                 {
@@ -56,7 +57,8 @@ namespace project.Controllers
                         name = sale.Nome,
                         nif = sale.NumContribuinte,
                         salesVolume = sale.TotalMerc + sale.TotalIva,
-                        percentage = ""
+                        percentage = "",
+                        numPurchases = 1
                     });
                 }
             }

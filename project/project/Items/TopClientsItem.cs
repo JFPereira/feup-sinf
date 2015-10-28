@@ -30,5 +30,11 @@ namespace project.Items
             get;
             set;
         }
+
+        public int numPurchases
+        {
+            get;
+            set;
+        }
     }
 }
