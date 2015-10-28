@@ -5,7 +5,7 @@ using System.Web;
 
 namespace project.Lib_Primavera.Model
 {
-    public class Artigo
+    public class Product
     {
         public string CodArtigo
         {

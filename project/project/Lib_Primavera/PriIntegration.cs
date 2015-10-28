@@ -15,14 +15,13 @@ namespace project.Lib_Primavera
 {
     public class PriIntegration
     {
-
         # region Cliente
 
-        public static List<Model.Cliente> ListaClientes()
+        public static List<Model.Client> ListaClientes()
         {
             StdBELista objList;
 
-            List<Model.Cliente> listClientes = new List<Model.Cliente>();
+            List<Model.Client> listClientes = new List<Model.Client>();
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
@@ -34,7 +33,7 @@ namespace project.Lib_Primavera
 
                 while (!objList.NoFim())
                 {
-                    listClientes.Add(new Model.Cliente
+                    listClientes.Add(new Model.Client
                     {
                         CodCliente = objList.Valor("Cliente"),
                         NomeCliente = objList.Valor("Nome"),
@@ -52,11 +51,11 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static Lib_Primavera.Model.Cliente GetCliente(string codCliente)
+        public static Lib_Primavera.Model.Client GetCliente(string codCliente)
         {
             GcpBECliente objCli = new GcpBECliente();
 
-            Model.Cliente myCli = new Model.Cliente();
+            Model.Client myCli = new Model.Client();
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
@@ -80,7 +79,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Cliente cliente)
+        public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Client cliente)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
 
@@ -136,7 +135,6 @@ namespace project.Lib_Primavera
 
         }
 
-
         public static Lib_Primavera.Model.RespostaErro DelCliente(string codCliente)
         {
 
@@ -182,9 +180,7 @@ namespace project.Lib_Primavera
 
         }
 
-
-
-        public static Lib_Primavera.Model.RespostaErro InsereClienteObj(Model.Cliente cli)
+        public static Lib_Primavera.Model.RespostaErro InsereClienteObj(Model.Client cli)
         {
 
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
@@ -227,17 +223,15 @@ namespace project.Lib_Primavera
 
         }
 
-
-
         #endregion Cliente;   // -----------------------------  END   CLIENTE    -----------------------
 
         #region Artigo
 
-        public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
+        public static Lib_Primavera.Model.Product GetArtigo(string codArtigo)
         {
 
             GcpBEArtigo objArtigo = new GcpBEArtigo();
-            Model.Artigo myArt = new Model.Artigo();
+            Model.Product myArt = new Model.Product();
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
@@ -263,13 +257,13 @@ namespace project.Lib_Primavera
 
         }
 
-        public static List<Model.Artigo> ListaArtigos()
+        public static List<Model.Product> ListaArtigos()
         {
 
             StdBELista objList;
 
-            Model.Artigo art = new Model.Artigo();
-            List<Model.Artigo> listArts = new List<Model.Artigo>();
+            Model.Product art = new Model.Product();
+            List<Model.Product> listArts = new List<Model.Product>();
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
@@ -278,7 +272,7 @@ namespace project.Lib_Primavera
 
                 while (!objList.NoFim())
                 {
-                    art = new Model.Artigo();
+                    art = new Model.Product();
                     art.CodArtigo = objList.Valor("artigo");
                     art.DescArtigo = objList.Valor("descricao");
 
@@ -363,7 +357,6 @@ namespace project.Lib_Primavera
 
         #region DocCompra
 
-
         public static List<Model.DocCompra> VGR_List()
         {
 
@@ -417,7 +410,6 @@ namespace project.Lib_Primavera
             }
             return listdc;
         }
-
 
         public static Model.RespostaErro VGR_New(Model.DocCompra dc)
         {
@@ -475,7 +467,6 @@ namespace project.Lib_Primavera
                 return erro;
             }
         }
-
 
         #endregion DocCompra
 
@@ -538,9 +529,7 @@ namespace project.Lib_Primavera
                 return erro;
             }
         }
-
-
-
+        
         public static List<Model.DocVenda> Encomendas_List()
         {
 
@@ -591,10 +580,7 @@ namespace project.Lib_Primavera
             }
             return listdv;
         }
-
-
-
-
+        
         public static Model.DocVenda Encomenda_Get(string numdoc)
         {
 
@@ -641,6 +627,36 @@ namespace project.Lib_Primavera
                 return dv;
             }
             return null;
+        }
+
+        public static List<Model.Sale> ListaCompras()
+        {
+            StdBELista objList;
+
+            List<Model.Sale> listCompras = new List<Model.Sale>();
+
+            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
+                while (!objList.NoFim())
+                {
+                    listCompras.Add(new Model.Sale
+                    {
+                        Cliente = "Pila",
+                        Nome = objList.Valor("Nome"),
+                        NumDoc = objList.Valor("NumDoc"),
+                        NumContribuinte = objList.Valor("NumContribuinte"),
+                        TotalMerc = objList.Valor("TotalMerc"),
+                        TotalIva = objList.Valor("TotalIva")
+                    });
+                    objList.Seguinte();
+
+                }
+
+                return listCompras;
+            }
+            else
+                return null;
         }
 
         #endregion DocsVenda
