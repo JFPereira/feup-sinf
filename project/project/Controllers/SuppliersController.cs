@@ -33,6 +33,13 @@ namespace project.Controllers
                 return fornecedor;
             }
         }
+
+        // GET api/suppliers/top
+        [System.Web.Http.HttpGet]
+        public IEnumerable<string> TopSuppliers()
+        {
+            return new string[] { "Cabras", "Vacas", "Porcas", "Galinhas" };
+        }
     }
 }
 

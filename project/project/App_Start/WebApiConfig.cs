@@ -50,6 +50,38 @@ namespace project
                 defaults: new { controller = "Suppliers", action = "Get" }
             );
 
+            // GET api/suppliers/top
+            config.Routes.MapHttpRoute(
+                name: "TopSuppliers",
+                routeTemplate: "api/suppliers/top",
+                defaults: new { controller = "Suppliers", action = "TopSuppliers" }
+            );
+
+            //--------------- Sales ---------------//
+
+            // GET api/sales/top
+            config.Routes.MapHttpRoute(
+                name: "SalesTop",
+                routeTemplate: "api/sales/top",
+                defaults: new { controller = "Sales", action = "TopSales" }
+            );
+
+            // GET api/sales/top/countries
+            config.Routes.MapHttpRoute(
+                name: "SalesTopCountries",
+                routeTemplate: "api/sales/top/countries",
+                defaults: new { controller = "Sales", action = "TopCountries" }
+            );
+
+            //--------------- Financial ---------------//
+
+            // GET api/financial/global
+            config.Routes.MapHttpRoute(
+                name: "GlobalFinancial",
+                routeTemplate: "api/financial/global",
+                defaults: new { controller = "Financial", action = "Global" }
+            );
+
             //--------------- Defaut Route ---------------//
 
             config.Routes.MapHttpRoute(
