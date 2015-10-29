@@ -301,6 +301,7 @@
     </Compile>
     <Compile Include="Items\TopClientsItem.cs" />
     <Compile Include="Items\TopProductsItem.cs" />
+    <Compile Include="Items\TopSalesItem.cs" />
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
     <Compile Include="Lib_Primavera\Model\CabecDoc.cs" />
     <Compile Include="Lib_Primavera\Model\Cliente.cs" />
