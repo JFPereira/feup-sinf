@@ -55,7 +55,7 @@ namespace project.Controllers
                     {
                         result.Add(new TopProductsItem
                         {
-                            name = sale.DescArtigo,
+                            description = sale.DescArtigo,
                             codArtigo = cod,
                             salesVolume = sale.TotalILiquido,
                             quantity = sale.Quantidade,
