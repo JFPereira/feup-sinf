@@ -43,5 +43,29 @@ namespace project.Lib_Primavera.Model
             get;
             set;
         }
+
+        public string Id
+        {
+            get;
+            set;
+        }
+
+        public DateTime Data
+        {
+            get;
+            set;
+        }
+
+        public string Serie
+        {
+            get;
+            set;
+        }
+
+        public List<Model.LinhaDocVenda> LinhasDoc
+        {
+            get;
+            set;
+        }
     }
 }

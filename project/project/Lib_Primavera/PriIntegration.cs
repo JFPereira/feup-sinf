@@ -472,7 +472,7 @@ namespace project.Lib_Primavera
 
         #region DocsVenda
 
-        public static Model.RespostaErro Encomendas_New(Model.DocVenda dv)
+        /*public static Model.RespostaErro Encomendas_New(Model.DocVenda dv)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
             GcpBEDocumentoVenda myEnc = new GcpBEDocumentoVenda();
@@ -528,9 +528,9 @@ namespace project.Lib_Primavera
                 erro.Descricao = ex.Message;
                 return erro;
             }
-        }
+        }*/
 
-        public static List<Model.DocVenda> Encomendas_List()
+        /*public static List<Model.DocVenda> Encomendas_List()
         {
 
             StdBELista objListCab;
@@ -579,9 +579,9 @@ namespace project.Lib_Primavera
                 }
             }
             return listdv;
-        }
+        }*/
 
-        public static Model.DocVenda Encomenda_Get(string numdoc)
+        /*public static Model.DocVenda Encomenda_Get(string numdoc)
         {
 
 
@@ -627,7 +627,7 @@ namespace project.Lib_Primavera
                 return dv;
             }
             return null;
-        }
+        }*/
 
         public static List<Model.CabecDoc> getSales()
         {
@@ -642,17 +642,21 @@ namespace project.Lib_Primavera
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
                 while (!objList.NoFim())
                 {
                     sales.Add(new Model.CabecDoc
                     {
+                        Id = null,
                         Entidade = objList.Valor("Entidade"),
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
                         TotalMerc = objList.Valor("TotalMerc"),
-                        TotalIva = objList.Valor("TotalIva")
+                        TotalIva = objList.Valor("TotalIva"),
+                        LinhasDoc = null,
+                        Data = objList.Valor("Data"),
+                        Serie = null
                     });
 
                     objList.Seguinte();
