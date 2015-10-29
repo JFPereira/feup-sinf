@@ -39,30 +39,30 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public List<TopProductsItem> TopProducts()
         {
-            List<Lib_Primavera.Model.LinhaDocVenda> sales = Lib_Primavera.PriIntegration.getProductSales();
+            List<Lib_Primavera.Model.LinhaDocVenda> products = Lib_Primavera.PriIntegration.getProductSales();
             List<TopProductsItem> result = new List<TopProductsItem>();
             double totalSalesVolume = 0;
 
-            foreach (LinhaDocVenda sale in sales)
+            foreach (LinhaDocVenda product in products)
             {
-                string cod = sale.CodArtigo;
+                string cod = product.CodArtigo;
                     if (result.Exists(e => e.codArtigo == cod))
                     {
-                        result.Find(e => e.codArtigo == cod).salesVolume += (sale.TotalILiquido);
-                        result.Find(e => e.codArtigo == cod).quantity += sale.Quantidade;
+                        result.Find(e => e.codArtigo == cod).salesVolume += (product.PrecoLiquido);
+                        result.Find(e => e.codArtigo == cod).quantity += product.Quantidade;
                     }
                     else
                     {
                         result.Add(new TopProductsItem
                         {
-                            description = sale.DescArtigo,
+                            description = product.DescArtigo,
                             codArtigo = cod,
-                            salesVolume = sale.TotalILiquido,
-                            quantity = sale.Quantidade,
+                            salesVolume = product.TotalILiquido,
+                            quantity = product.Quantidade,
                             percentage = ""
                         });
                     }
-                    totalSalesVolume += sale.TotalILiquido;
+                    totalSalesVolume += product.TotalILiquido;
                 }
             
 

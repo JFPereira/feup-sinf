@@ -84,7 +84,6 @@ namespace project.Controllers
             return response;
         }*/
 
-
         // GET api/clients/{id}/top-products
         [System.Web.Http.HttpGet]
         public List<Items.TopProductsItem> TopProducts(string id)
@@ -99,7 +98,7 @@ namespace project.Controllers
                 if (result.Exists(e => e.codArtigo == product.CodArtigo))
                 {
                     result.Find(e => e.codArtigo == product.CodArtigo).quantity += product.Quantidade;
-                    result.Find(e => e.codArtigo == product.CodArtigo).salesVolume += (product.TotalILiquido + product.TotalIva);
+                    result.Find(e => e.codArtigo == product.CodArtigo).salesVolume += product.PrecoLiquido;
                 }
                 else
                 {
@@ -108,12 +107,12 @@ namespace project.Controllers
                         codArtigo = product.CodArtigo,
                         description = product.DescArtigo,
                         quantity = product.Quantidade,
-                        salesVolume = (product.TotalILiquido + product.TotalIva),
+                        salesVolume = product.PrecoLiquido,
                         percentage = ""
                     });
                 }
 
-                totalProductSalesVolume += (product.TotalILiquido + product.TotalIva);
+                totalProductSalesVolume += product.PrecoLiquido;
             }
 
             result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
@@ -123,6 +122,9 @@ namespace project.Controllers
 
             return result;
         }
+
+        /*[System.Web.Http.HttpGet]
+        public string DailyPurchases()*/
 
         //--------------- REST Methods ---------------//
         public HttpResponseMessage Post(Lib_Primavera.Model.Cliente cliente)

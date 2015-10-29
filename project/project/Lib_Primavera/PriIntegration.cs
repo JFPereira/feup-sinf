@@ -721,7 +721,7 @@ namespace project.Lib_Primavera
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
-                    objList = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc");
+                    objList = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalIva, TotalILiquido, PrecoLiquido from LinhasDoc");
 
                     sales = new List<Model.LinhaDocVenda>();
 
@@ -737,6 +737,7 @@ namespace project.Lib_Primavera
                         lindv.PrecoUnitario = objList.Valor("PrecUnit");
                         lindv.TotalILiquido = objList.Valor("TotalILiquido");
                         lindv.TotalIva = objList.Valor("TotalIva");
+                        lindv.PrecoLiquido = objList.Valor("PrecoLiquido");
 
                         sales.Add(lindv);
                         objList.Seguinte();
@@ -787,7 +788,7 @@ namespace project.Lib_Primavera
 
             if (companyInitialize)
             {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.TotalIva, LinhasDoc.TotalILiquido, LinhasDoc.Quantidade FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.Entidade = " + client_id);
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.TotalIva, LinhasDoc.PrecoLiquido, LinhasDoc.TotalILiquido, LinhasDoc.Quantidade FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.Entidade = " + client_id);
                 while (!objList.NoFim())
                 {
                     listProducts.Add(new Model.LinhaDocVenda
@@ -800,7 +801,8 @@ namespace project.Lib_Primavera
                         Desconto = 0,
                         IdCabecDoc = "",
                         Unidade = "",
-                        PrecoUnitario = 0
+                        PrecoUnitario = 0,
+                        PrecoLiquido = objList.Valor("PrecoLiquido")
 
                     });
                     objList.Seguinte();

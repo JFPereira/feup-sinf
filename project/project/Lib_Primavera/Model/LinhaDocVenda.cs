@@ -27,8 +27,6 @@ namespace project.Lib_Primavera.Model
              set;
          }
 
-
-
          public double Quantidade
         {
             get;
@@ -65,6 +63,10 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-
+         public double PrecoLiquido
+         {
+             get;
+             set;
+         }
     }
 }
