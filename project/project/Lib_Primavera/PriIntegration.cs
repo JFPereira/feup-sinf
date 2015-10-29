@@ -694,6 +694,32 @@ namespace project.Lib_Primavera
             return purchases;
         }
 
+        public static double getSalesTotal()
+        {
+            double total = 0;
+
+            bool companyInitialized = PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+
+            if (companyInitialized)
+            {
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
+
+                while (!objList.NoFim())
+                {
+                    total -= objList.Valor("TotalMerc");
+                    total -= objList.Valor("TotalIVA");
+
+                    objList.Seguinte();
+                }
+            }
+
+            return total;
+        }
+
         /*public static List<Model.Product> mostSoldProductsByClient(string client_id)
         {
             StdBELista objList;

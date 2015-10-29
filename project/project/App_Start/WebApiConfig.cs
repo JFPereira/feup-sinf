@@ -118,6 +118,13 @@ namespace project
                 defaults: new { controller = "Financial", action = "Purchases" }
             );
 
+            // GET api/financial/sales
+            config.Routes.MapHttpRoute(
+                name: "FinancialSales",
+                routeTemplate: "api/financial/sales",
+                defaults: new { controller = "Financial", action = "Sales" }
+            );
+
             //--------------- Defaut Route ---------------//
 
             config.Routes.MapHttpRoute(
