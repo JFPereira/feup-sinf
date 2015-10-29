@@ -223,6 +223,24 @@ namespace project.Lib_Primavera
 
         }
 
+        public int numPurchases(string entity) 
+        {
+            int numPurchases = 0;
+
+            bool companyInitialized = PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+
+            if (companyInitialized)
+            {
+               numPurchases = PriEngine.Engine.Consulta("SELECT count(*) as numPurchases FROM CabecDoc WHERE Entidade = " + entity).Valor("numPurchases");
+               return numPurchases;
+               
+            }
+            return -1;
+        }
+
         #endregion Cliente;   // -----------------------------  END   CLIENTE    -----------------------
 
         #region Artigo
