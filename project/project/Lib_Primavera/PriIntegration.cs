@@ -326,7 +326,7 @@ namespace project.Lib_Primavera
                 {
                     lindv = new Model.LinhaDocVenda();
                     lindv.Quantidade = objList.Valor("Quantidade");
-                    lindv.TotalLiquido = objList.Valor("PrecoLiquido");
+                    lindv.PrecoLiquido = objList.Valor("PrecoLiquido");
 
                     sales.Add(lindv);
                     objList.Seguinte();
@@ -334,7 +334,7 @@ namespace project.Lib_Primavera
 
                 foreach (Model.LinhaDocVenda sale in sales)
                 {
-                    sum += (sale.Quantidade * sale.TotalLiquido);
+                    sum += (sale.Quantidade * sale.PrecoLiquido);
                     totalQuantity += sale.Quantidade;
                 }
 
