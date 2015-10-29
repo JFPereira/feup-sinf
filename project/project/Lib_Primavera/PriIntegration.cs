@@ -11,6 +11,8 @@ using Interop.IGcpBS800;
 //using Interop.StdBESql800;
 //using Interop.StdBSSql800;
 
+using project.Items;
+
 namespace project.Lib_Primavera
 {
     public class PriIntegration
@@ -223,7 +225,7 @@ namespace project.Lib_Primavera
 
         }
 
-        public static int numPurchases(string entity) 
+        public static int numPurchases(string entity)
         {
             int numPurchases = 0;
 
@@ -234,9 +236,9 @@ namespace project.Lib_Primavera
 
             if (companyInitialized)
             {
-               numPurchases = PriEngine.Engine.Consulta("SELECT count(*) as numPurchases FROM CabecDoc WHERE Entidade = " + entity).Valor("numPurchases");
-               return numPurchases;
-               
+                numPurchases = PriEngine.Engine.Consulta("SELECT count(*) as numPurchases FROM CabecDoc WHERE Entidade = " + entity).Valor("numPurchases");
+                return numPurchases;
+
             }
             return -1;
         }
@@ -488,7 +490,7 @@ namespace project.Lib_Primavera
 
         public static double getPurchasesTotal()
         {
-            double purchases = 0;
+            double total = 0;
 
             bool companyInitialized = PriEngine.InitializeCompany(
                 project.Properties.Settings.Default.Company.Trim(),
@@ -498,18 +500,18 @@ namespace project.Lib_Primavera
             if (companyInitialized)
             {
                 StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
+                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
 
                 while (!objList.NoFim())
                 {
-                    purchases += objList.Valor("TotalMerc");
-                    purchases += objList.Valor("TotalIVA");
+                    total -= objList.Valor("TotalMerc");
+                    total -= objList.Valor("TotalIVA");
 
                     objList.Seguinte();
                 }
             }
 
-            return purchases;
+            return total;
         }
 
         #endregion DocCompra
@@ -711,7 +713,7 @@ namespace project.Lib_Primavera
             else
                 return null;
         }
-        
+
         public static List<Model.LinhaDocVenda> getProductSales()
         {
             StdBELista objList;
@@ -722,24 +724,24 @@ namespace project.Lib_Primavera
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
                 objList = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc");
-                    sales = new List<Model.LinhaDocVenda>();
+                sales = new List<Model.LinhaDocVenda>();
 
-                    while (!objList.NoFim())
-                    {
-                        lindv = new Model.LinhaDocVenda();
-                        lindv.IdCabecDoc = objList.Valor("idCabecDoc");
-                        lindv.CodArtigo = objList.Valor("Artigo");
-                        lindv.DescArtigo = objList.Valor("Descricao");
-                        lindv.Quantidade = objList.Valor("Quantidade");
-                        lindv.Unidade = objList.Valor("Unidade");
-                        lindv.Desconto = objList.Valor("Desconto1");
-                        lindv.PrecoUnitario = objList.Valor("PrecUnit");
-                        lindv.TotalILiquido = objList.Valor("TotalILiquido");
-                        lindv.TotalLiquido = objList.Valor("PrecoLiquido");
+                while (!objList.NoFim())
+                {
+                    lindv = new Model.LinhaDocVenda();
+                    lindv.IdCabecDoc = objList.Valor("idCabecDoc");
+                    lindv.CodArtigo = objList.Valor("Artigo");
+                    lindv.DescArtigo = objList.Valor("Descricao");
+                    lindv.Quantidade = objList.Valor("Quantidade");
+                    lindv.Unidade = objList.Valor("Unidade");
+                    lindv.Desconto = objList.Valor("Desconto1");
+                    lindv.PrecoUnitario = objList.Valor("PrecUnit");
+                    lindv.TotalILiquido = objList.Valor("TotalILiquido");
+                    lindv.TotalLiquido = objList.Valor("PrecoLiquido");
 
-                        sales.Add(lindv);
-                        objList.Seguinte();
-                    }
+                    sales.Add(lindv);
+                    objList.Seguinte();
+                }
 
                 return sales;
             }
@@ -759,18 +761,78 @@ namespace project.Lib_Primavera
             if (companyInitialized)
             {
                 StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
+                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
 
                 while (!objList.NoFim())
                 {
-                    total -= objList.Valor("TotalMerc");
-                    total -= objList.Valor("TotalIVA");
+                    total += objList.Valor("TotalMerc");
+                    total += objList.Valor("TotalIVA");
 
                     objList.Seguinte();
                 }
             }
 
             return total;
+        }
+
+        public static List<TopSalesCountry> getTop10SalesCountries()
+        {
+            List<TopSalesCountry> result = new List<TopSalesCountry>();
+
+            bool companyInitialized = PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+
+            if (companyInitialized)
+            {
+                Dictionary<string, double> countrySalesMap = new Dictionary<string, double>();
+
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT Clientes.Pais, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM Clientes, CabecDoc WHERE CabecDoc.Entidade = Clientes.Cliente");
+
+                // build country-sales dictionary
+                while (!objList.NoFim())
+                {
+                    string country = objList.Valor("Pais");
+                    double amount = objList.Valor("TotalMerc") + objList.Valor("TotalIVA");
+
+                    if (countrySalesMap.ContainsKey(country))
+                        countrySalesMap[country] += amount;
+                    else
+                        countrySalesMap[country] = amount;
+
+                    objList.Seguinte();
+                }
+
+                // this is the total sales of the top 10 sales countries
+                double total = 0;
+
+                // pick the top 10
+                for (int i = 0; i < 10 && countrySalesMap.Count > 0; i++)
+                {
+                    var countryMaxSales = countrySalesMap.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
+
+                    result.Add(new TopSalesCountry
+                    {
+                        country = countryMaxSales,
+                        amount = countrySalesMap[countryMaxSales],
+                        percentage = 0
+                    });
+
+                    total += countrySalesMap[countryMaxSales];
+
+                    countrySalesMap.Remove(countryMaxSales);
+                }
+
+                // fill in the percentage for each entry
+                foreach (TopSalesCountry entry in result)
+                {
+                    entry.percentage = 100.0 * entry.amount / total;
+                }
+            }
+
+            return result;
         }
 
         /*public static List<Model.Product> mostSoldProductsByClient(string client_id)

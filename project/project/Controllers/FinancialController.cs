@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using project.Lib_Primavera.Model;
+using project.Items;
 
 namespace project.Controllers
 {
@@ -42,5 +43,13 @@ namespace project.Controllers
             return Lib_Primavera.PriIntegration.getSalesTotal();
         }
 
+        // GET api/top10sales
+        [System.Web.Http.HttpGet]
+        public List<TopSalesCountry> Top10SalesCountries()
+        {
+            return Lib_Primavera.PriIntegration.getTop10SalesCountries();
+        }
+
     }
+
 }
