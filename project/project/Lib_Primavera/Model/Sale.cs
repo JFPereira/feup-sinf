@@ -37,5 +37,11 @@ namespace project.Lib_Primavera.Model
             get;
             set;
         }
+
+        public List<string> codArtigo
+        {
+            get;
+            set;
+        }
     }
 }
