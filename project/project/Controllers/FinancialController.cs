@@ -35,5 +35,12 @@ namespace project.Controllers
             return Lib_Primavera.PriIntegration.getPurchasesTotal();
         }
 
+        // GET api/financial/sales
+        [System.Web.Http.HttpGet]
+        public double Sales()
+        {
+            return Lib_Primavera.PriIntegration.getSalesTotal();
+        }
+
     }
 }
