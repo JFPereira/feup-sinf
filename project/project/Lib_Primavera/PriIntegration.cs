@@ -17,6 +17,18 @@ namespace project.Lib_Primavera
 {
     public class PriIntegration
     {
+        # region Helpers
+
+        private static bool initCompany()
+        {
+            return PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+        }
+
+        # endregion
+
         # region Cliente
 
         public static List<Model.Cliente> ListaClientes()
@@ -229,10 +241,7 @@ namespace project.Lib_Primavera
         {
             int numPurchases = 0;
 
-            bool companyInitialized = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
+            bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
@@ -254,10 +263,7 @@ namespace project.Lib_Primavera
             StdBELista objList;
 
 
-            bool companyInitialized = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
+            bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
@@ -291,10 +297,7 @@ namespace project.Lib_Primavera
 
             StdBELista objList;
 
-            bool companyInitialized = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
+            bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
@@ -396,10 +399,7 @@ namespace project.Lib_Primavera
 
             List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
 
-            bool companyInitialized = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
+            bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
@@ -668,10 +668,7 @@ namespace project.Lib_Primavera
         {
             double total = 0;
 
-            bool companyInitialized = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
+            bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
@@ -857,10 +854,7 @@ namespace project.Lib_Primavera
 
             List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
 
-            bool companyInitialized = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
+            bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
@@ -895,10 +889,7 @@ namespace project.Lib_Primavera
 
             int quantity = 0;
 
-            bool companyInitialized = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
+            bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
@@ -958,10 +949,7 @@ namespace project.Lib_Primavera
         {
             double total = 0;
 
-            bool companyInitialized = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
+            bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
@@ -984,10 +972,7 @@ namespace project.Lib_Primavera
         {
             List<TopSalesCountry> result = new List<TopSalesCountry>();
 
-            bool companyInitialized = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
+            bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
