@@ -35,6 +35,7 @@ namespace project.Controllers
                 artigo = Lib_Primavera.PriIntegration.GetPrecoArtigo(artigo);
                 artigo = Lib_Primavera.PriIntegration.GetVendasArtigo(artigo);
                 artigo = Lib_Primavera.PriIntegration.GetComprasArtigo(artigo);
+                artigo = Lib_Primavera.PriIntegration.GetTopClientesArtigo(artigo);
                 return artigo;
             }
         }
