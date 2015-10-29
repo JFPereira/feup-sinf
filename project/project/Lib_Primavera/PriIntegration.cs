@@ -886,7 +886,34 @@ namespace project.Lib_Primavera
             else
                 return null;
         }
-        
+
+        public static int getSalesProdM(string controller, string name)
+        {
+
+            int quantity = 0;
+
+            bool companyInitialized = PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+
+            if (companyInitialized)
+            {
+                if (controller == "year")
+                    quantity = PriEngine.Engine.Consulta("SELECT sum(LinhasDoc.Quantidade) as quantity FROM LinhasDoc,CabecDoc WHERE CabecDoc.Data.Year = DateTime.Now.Year AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.DescArtigo = " + name).Valor("quantity");
+                else if (controller == "month")
+                    quantity = PriEngine.Engine.Consulta("SELECT sum(LinhasDoc.Quantidade) as quantity FROM LinhasDoc,CabecDoc WHERE CabecDoc.Data.Month = DateTime.Now.Month AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.DescArtigo = " + name).Valor("quantity");
+                else if (controller == "day")
+                    quantity = PriEngine.Engine.Consulta("SELECT sum(LinhasDoc.Quantidade) as quantity FROM LinhasDoc,CabecDoc WHERE CabecDoc.Data.Day = DateTime.Now.Day AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.DescArtigo = " + name).Valor("quantity");
+
+
+                return quantity;
+
+            }
+            return -1;
+
+        }
+
         public static List<Model.LinhaDocVenda> getProductSales()
         {
             StdBELista objList;
