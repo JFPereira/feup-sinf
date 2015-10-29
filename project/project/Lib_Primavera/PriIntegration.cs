@@ -642,7 +642,6 @@ namespace project.Lib_Primavera
                 {
                     listCompras.Add(new Model.Sale
                     {
-                        Cliente = "Pila",
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
@@ -654,6 +653,85 @@ namespace project.Lib_Primavera
                 }
 
                 return listCompras;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.Product> ProdutosMaisComprados(string id)
+        {
+            StdBELista objList;
+
+            List<Model.Product> listProducts = new List<Model.Product>();
+
+            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao FROM LinhasDoc");
+                while (!objList.NoFim())
+                {
+                    listProducts.Add(new Model.Product
+                    {
+                        CodArtigo = objList.Valor("Artigo"),
+                        DescArtigo = objList.Valor("Descricao")
+                    });
+                    objList.Seguinte();
+
+                }
+
+                return listProducts;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.Teste> getIDDocProduct()
+        {
+            StdBELista objList;
+
+            List<Model.Teste> listProducts = new List<Model.Teste>();
+
+            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT IdCabecDoc, Descricao FROM LinhasDoc");
+
+                while (!objList.NoFim())
+                {
+                    listProducts.Add(new Model.Teste
+                    {
+                        teste_str = objList.Valor("IdCabecDoc"),
+                        teste_str2 = objList.Valor("Descricao")
+                    });
+                    objList.Seguinte();
+
+                }
+
+                return listProducts;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.Teste> getIDDoc()
+        {
+            StdBELista objList;
+
+            List<Model.Teste> listProducts = new List<Model.Teste>();
+
+            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT Id, NumContribuinte FROM CabecDoc");
+
+                while (!objList.NoFim())
+                {
+                    listProducts.Add(new Model.Teste
+                    {
+                        teste_str = objList.Valor("Id"),
+                        teste_str2 = objList.Valor("NumContribuinte")
+                    });
+                    objList.Seguinte();
+                }
+
+                return listProducts;
             }
             else
                 return null;

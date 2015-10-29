@@ -13,6 +13,13 @@ namespace project.Controllers
 {
     public class FinancialController : ApiController
     {
+        // GET api/financial
+        [System.Web.Http.HttpGet]
+        public string Index()
+        {
+            return "test only financial";
+        }
+
         // GET api/financial/global
         [System.Web.Http.HttpGet]
         public string Global()

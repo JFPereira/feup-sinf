@@ -7,12 +7,6 @@ namespace project.Lib_Primavera.Model
 {
     public class Sale
     {
-        public string Cliente
-        {
-            get;
-            set;
-        }
-
         public int NumDoc
         {
             get;
