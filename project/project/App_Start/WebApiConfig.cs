@@ -88,11 +88,11 @@ namespace project
                 defaults: new { controller = "Sales", action = "TopSales" }
             );
 
-            // GET api/sales/top/countries
+            // GET api/sales/top/status
             config.Routes.MapHttpRoute(
-                name: "SalesTopCountries",
-                routeTemplate: "api/sales/top/countries",
-                defaults: new { controller = "Sales", action = "TopCountries" }
+                name: "SalesBooking",
+                routeTemplate: "api/sales/booking",
+                defaults: new { controller = "Sales", action = "SalesBooking" }
             );
 
             //--------------- Financial ---------------//
