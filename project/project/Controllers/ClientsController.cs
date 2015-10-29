@@ -123,8 +123,11 @@ namespace project.Controllers
             return result;
         }
 
-        /*[System.Web.Http.HttpGet]
-        public string DailyPurchases()*/
+        [System.Web.Http.HttpGet]
+        public string DailyPurchases(string month)
+        {
+            return month;
+        }
 
         //--------------- REST Methods ---------------//
         public HttpResponseMessage Post(Lib_Primavera.Model.Cliente cliente)
