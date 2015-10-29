@@ -84,21 +84,47 @@ namespace project.Controllers
             return response;
         }*/
 
-
         // GET api/clients/{id}/top-products
         [System.Web.Http.HttpGet]
-        /*public List<Lib_Primavera.Model.Product> TopProducts(string id)
+        public List<Items.TopProductsItem> TopProducts(string id)
         {
-            return Lib_Primavera.PriIntegration.ProdutosMaisComprados(id);
-        }*/
-        public List<Lib_Primavera.Model.Teste> TopProducts()
-        {
-            List<Lib_Primavera.Model.Teste> a = Lib_Primavera.PriIntegration.getIDDocProduct();
+            List<Lib_Primavera.Model.LinhaDocVenda> allProducts = Lib_Primavera.PriIntegration.topClientProducts(id);
+            List<TopProductsItem> result = new List<TopProductsItem>();
 
-            a.AddRange(Lib_Primavera.PriIntegration.getIDDoc());
+            double totalProductSalesVolume = 0;
 
-            return a;
+            foreach (LinhaDocVenda product in allProducts)
+            {
+                if (result.Exists(e => e.codArtigo == product.CodArtigo))
+                {
+                    result.Find(e => e.codArtigo == product.CodArtigo).quantity += product.Quantidade;
+                    result.Find(e => e.codArtigo == product.CodArtigo).salesVolume += product.PrecoLiquido;
+                }
+                else
+                {
+                    result.Add(new TopProductsItem
+                    {
+                        codArtigo = product.CodArtigo,
+                        description = product.DescArtigo,
+                        quantity = product.Quantidade,
+                        salesVolume = product.PrecoLiquido,
+                        percentage = ""
+                    });
+                }
+
+                totalProductSalesVolume += product.PrecoLiquido;
+            }
+
+            result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
+
+            foreach (TopProductsItem product in result)
+                product.percentage += Math.Round(product.salesVolume / totalProductSalesVolume * 100, 2) + " %";
+
+            return result;
         }
+
+        /*[System.Web.Http.HttpGet]
+        public string DailyPurchases()*/
 
         //--------------- REST Methods ---------------//
         public HttpResponseMessage Post(Lib_Primavera.Model.Cliente cliente)

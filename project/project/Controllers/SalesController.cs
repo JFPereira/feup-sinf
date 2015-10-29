@@ -38,11 +38,26 @@ namespace project.Controllers
             return result;
         }
 
-        // GET api/sales/countries
+        // GET api/sales/booking/{id}
         [System.Web.Http.HttpGet]
-        public IEnumerable<string> TopCountries()
+        public List<SalesBookingItem> SalesBooking(string id)
         {
-            return new string[] { "portugal", "england", "france", "spain" };
+            List<SalesBookingItem> returnList = new List<SalesBookingItem>();
+            List<Lib_Primavera.Model.Artigo> allProd = Lib_Primavera.PriIntegration.ListaArtigos();
+
+            foreach (Lib_Primavera.Model.Artigo prod in allProd)
+            {
+                returnList.Add(new SalesBookingItem
+                    {
+                        nome = prod.DescArtigo,
+                        numVendas = Lib_Primavera.PriIntegration.getSalesProd(id, prod.DescArtigo)
+                    });
+
+
+            }
+            returnList.OrderBy(e => e.numVendas).Reverse().Take(10).ToList();
+
+            return returnList;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace project.Items
             get;
             set;
         }
-        public string name
+        public string description
         {
             get;
             set;
