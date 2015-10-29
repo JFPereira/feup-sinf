@@ -5,7 +5,7 @@ using System.Web;
 
 namespace project.Lib_Primavera.Model
 {
-    public class Client
+    public class Cliente
     {
         public string Morada;
 

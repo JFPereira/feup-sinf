@@ -5,8 +5,14 @@ using System.Web;
 
 namespace project.Lib_Primavera.Model
 {
-    public class Sale
+    public class CabecDoc
     {
+        public string Entidade
+        {
+            get;
+            set;
+        }
+
         public int NumDoc
         {
             get;
@@ -33,12 +39,6 @@ namespace project.Lib_Primavera.Model
         }
 
         public double TotalIva
-        {
-            get;
-            set;
-        }
-
-        public List<string> codArtigo
         {
             get;
             set;

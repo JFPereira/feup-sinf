@@ -17,11 +17,11 @@ namespace project.Lib_Primavera
     {
         # region Cliente
 
-        public static List<Model.Client> ListaClientes()
+        public static List<Model.Cliente> ListaClientes()
         {
             StdBELista objList;
 
-            List<Model.Client> listClientes = new List<Model.Client>();
+            List<Model.Cliente> listClientes = new List<Model.Cliente>();
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
@@ -33,7 +33,7 @@ namespace project.Lib_Primavera
 
                 while (!objList.NoFim())
                 {
-                    listClientes.Add(new Model.Client
+                    listClientes.Add(new Model.Cliente
                     {
                         CodCliente = objList.Valor("Cliente"),
                         NomeCliente = objList.Valor("Nome"),
@@ -51,11 +51,11 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static Lib_Primavera.Model.Client GetCliente(string codCliente)
+        public static Lib_Primavera.Model.Cliente GetCliente(string codCliente)
         {
             GcpBECliente objCli = new GcpBECliente();
 
-            Model.Client myCli = new Model.Client();
+            Model.Cliente myCli = new Model.Cliente();
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
@@ -79,7 +79,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Client cliente)
+        public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Cliente cliente)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
 
@@ -180,7 +180,7 @@ namespace project.Lib_Primavera
 
         }
 
-        public static Lib_Primavera.Model.RespostaErro InsereClienteObj(Model.Client cli)
+        public static Lib_Primavera.Model.RespostaErro InsereClienteObj(Model.Cliente cli)
         {
 
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
@@ -227,11 +227,11 @@ namespace project.Lib_Primavera
 
         #region Artigo
 
-        public static Lib_Primavera.Model.Product GetArtigo(string codArtigo)
+        public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
         {
 
             GcpBEArtigo objArtigo = new GcpBEArtigo();
-            Model.Product myArt = new Model.Product();
+            Model.Artigo myArt = new Model.Artigo();
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
@@ -257,13 +257,13 @@ namespace project.Lib_Primavera
 
         }
 
-        public static List<Model.Product> ListaArtigos()
+        public static List<Model.Artigo> ListaArtigos()
         {
 
             StdBELista objList;
 
-            Model.Product art = new Model.Product();
-            List<Model.Product> listArts = new List<Model.Product>();
+            Model.Artigo art = new Model.Artigo();
+            List<Model.Artigo> listArts = new List<Model.Artigo>();
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
@@ -272,7 +272,7 @@ namespace project.Lib_Primavera
 
                 while (!objList.NoFim())
                 {
-                    art = new Model.Product();
+                    art = new Model.Artigo();
                     art.CodArtigo = objList.Valor("artigo");
                     art.DescArtigo = objList.Valor("descricao");
 
@@ -629,19 +629,25 @@ namespace project.Lib_Primavera
             return null;
         }
 
-        public static List<Model.Sale> getSales()
+        public static List<Model.CabecDoc> getSales()
         {
             StdBELista objList;
 
-            List<Model.Sale> sales = new List<Model.Sale>();
+            List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
 
-            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            bool companyInitialized = PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+
+            if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
                 while (!objList.NoFim())
                 {
-                    sales.Add(new Model.Sale
+                    sales.Add(new Model.CabecDoc
                     {
+                        Entidade = objList.Valor("Entidade"),
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
@@ -684,7 +690,7 @@ namespace project.Lib_Primavera
             return purchases;
         }
 
-        /*public static List<Model.Product> ProdutosMaisComprados(string id)
+        /*public static List<Model.Product> mostSoldProductsByClient(string client_id)
         {
             StdBELista objList;
 
@@ -692,7 +698,7 @@ namespace project.Lib_Primavera
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.PrecoLiquido, LinhasDoc.Quantidade FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc == CabecDoc.Id AND CabecDoc.Entidade = " + id);
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.PrecoLiquido, LinhasDoc.Quantidade FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc == CabecDoc.Id AND CabecDoc.Entidade = " + client_id);
                 while (!objList.NoFim())
                 {
                     listProducts.Add(new Model.Product

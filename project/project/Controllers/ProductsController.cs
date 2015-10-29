@@ -15,15 +15,15 @@ namespace project.Controllers
     public class ProductsController : ApiController
     {
         // GET: api/products/
-        public IEnumerable<Lib_Primavera.Model.Product> Get()
+        public IEnumerable<Lib_Primavera.Model.Artigo> Get()
         {
             return Lib_Primavera.PriIntegration.ListaArtigos();
         }
 
         // GET api/products/{id}    
-        public Product GetProduct(string id)
+        public Artigo GetProduct(string id)
         {
-            Lib_Primavera.Model.Product artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
+            Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
             if (artigo == null)
             {
                 throw new HttpResponseException(

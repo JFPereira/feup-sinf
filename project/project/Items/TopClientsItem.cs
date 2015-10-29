@@ -7,6 +7,12 @@ namespace project.Items
 {
     public class TopClientsItem
     {
+        public string entity
+        {
+            get;
+            set;
+        }
+
         public string name
         {
             get;

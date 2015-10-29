@@ -7,7 +7,6 @@ using System.Web.Script.Serialization;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using AttributeRouting.Web.Http;
 using project.Lib_Primavera.Model;
 using project.Items;
 
@@ -16,16 +15,16 @@ namespace project.Controllers
     public class ClientsController : ApiController
     {
         // GET: api/clients/
-        public IEnumerable<Lib_Primavera.Model.Client> Get()
+        public IEnumerable<Lib_Primavera.Model.Cliente> Get()
         {
             return Lib_Primavera.PriIntegration.ListaClientes();
         }
 
         // GET api/clients/{id}
         [System.Web.Http.HttpGet]
-        public Client GetClient(string id)
+        public Cliente GetClient(string id)
         {
-            Lib_Primavera.Model.Client cliente = Lib_Primavera.PriIntegration.GetCliente(id);
+            Lib_Primavera.Model.Cliente cliente = Lib_Primavera.PriIntegration.GetCliente(id);
             if (cliente == null)
             {
                 throw new HttpResponseException(
@@ -42,10 +41,10 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public List<TopClientsItem> TopClients()
         {
-            List<Lib_Primavera.Model.Sale> sales = Lib_Primavera.PriIntegration.getSales();
+            List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
             List<TopClientsItem> result = new List<TopClientsItem>();
 
-            foreach (Sale sale in sales)
+            foreach (CabecDoc sale in sales)
             {
                 if (result.Exists(e => e.nif == sale.NumContribuinte))
                 {
@@ -56,6 +55,7 @@ namespace project.Controllers
                 {
                     result.Add(new TopClientsItem
                     {
+                        entity = sale.Entidade,
                         name = sale.Nome,
                         nif = sale.NumContribuinte,
                         salesVolume = sale.TotalMerc + sale.TotalIva,
@@ -101,7 +101,7 @@ namespace project.Controllers
         }
 
         //--------------- REST Methods ---------------//
-        public HttpResponseMessage Post(Lib_Primavera.Model.Client cliente)
+        public HttpResponseMessage Post(Lib_Primavera.Model.Cliente cliente)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
             erro = Lib_Primavera.PriIntegration.InsereClienteObj(cliente);
@@ -121,7 +121,7 @@ namespace project.Controllers
             }
         }
 
-        public HttpResponseMessage Put(string id, Lib_Primavera.Model.Client cliente)
+        public HttpResponseMessage Put(string id, Lib_Primavera.Model.Cliente cliente)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
 
