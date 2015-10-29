@@ -18,6 +18,13 @@ namespace project
                 defaults: new { controller = "Products", action = "Get" }
             );
 
+            // GET api/products/{id}
+            config.Routes.MapHttpRoute(
+                name: "GetProduct",
+                routeTemplate: "api/products/{id}",
+                defaults: new { controller = "Products", action = "GetProduct" }
+            );
+
             // GET api/products/top
             config.Routes.MapHttpRoute(
                 name: "TopProducts",
@@ -32,6 +39,13 @@ namespace project
                 name: "Clients",
                 routeTemplate: "api/clients",
                 defaults: new { controller = "Clients", action = "Get" }
+            );
+
+            // GET api/clients/{id}
+            config.Routes.MapHttpRoute(
+                name: "GetClient",
+                routeTemplate: "api/clients/{id}",
+                defaults: new { controller = "Clients", action = "GetClient" }
             );
 
             // GET api/clients/top

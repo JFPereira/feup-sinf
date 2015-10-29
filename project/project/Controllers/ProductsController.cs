@@ -20,7 +20,7 @@ namespace project.Controllers
         }
 
         // GET api/products/{id}    
-        public Product Get(string id)
+        public Product GetProduct(string id)
         {
             Lib_Primavera.Model.Product artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
             if (artigo == null)
