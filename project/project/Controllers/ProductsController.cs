@@ -35,8 +35,10 @@ namespace project.Controllers
             }
         }
 
+/*
+
         // GET api/products/top
-        /*[System.Web.Http.HttpGet]
+        [System.Web.Http.HttpGet]
         public List<TopProductsItem> TopProducts()
         {
             List<Lib_Primavera.Model.Sale> sales = Lib_Primavera.PriIntegration.ListaCompras();
