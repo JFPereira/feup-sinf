@@ -223,7 +223,7 @@ namespace project.Lib_Primavera
 
         }
 
-        public int numPurchases(string entity) 
+        public static int numPurchases(string entity) 
         {
             int numPurchases = 0;
 
