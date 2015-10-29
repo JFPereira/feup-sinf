@@ -26,11 +26,15 @@ namespace project.Controllers
             Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
             if (artigo == null)
             {
-                throw new HttpResponseException(
-                  Request.CreateResponse(HttpStatusCode.NotFound));
+                return null;
+                //throw new HttpResponseException(
+                 // Request.CreateResponse(HttpStatusCode.NotFound));
             }
             else
             {
+                artigo = Lib_Primavera.PriIntegration.GetPrecoArtigo(artigo);
+                artigo = Lib_Primavera.PriIntegration.GetVendasArtigo(artigo);
+                artigo = Lib_Primavera.PriIntegration.GetComprasArtigo(artigo);
                 return artigo;
             }
         }

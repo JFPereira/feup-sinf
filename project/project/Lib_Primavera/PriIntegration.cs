@@ -247,10 +247,185 @@ namespace project.Lib_Primavera
 
         public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
         {
-
-            GcpBEArtigo objArtigo = new GcpBEArtigo();
             Model.Artigo myArt = new Model.Artigo();
 
+            StdBELista objList;
+
+
+            bool companyInitialized = PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT Artigo.Artigo, Artigo.Descricao, Artigo.PCMedio, Artigo.TipoArtigo, Artigo.STKActual, Artigo.STKReposicao FROM Artigo WHERE Artigo.Artigo = '" + codArtigo + "'");
+                if (objList.NoFim()) return null;
+                else {
+                    //objList.Seguinte();
+                    myArt = new Model.Artigo
+                    {
+                        CodArtigo = codArtigo,
+                        DescArtigo = objList.Valor("Descricao"),
+                        Custo = objList.Valor("PCMedio"),
+                        Tipo = objList.Valor("TipoArtigo"),
+                        Stock = objList.Valor("STKActual"),
+                        StockReposicao = objList.Valor("STKReposicao")
+                    };
+                }
+
+                myArt.emFalta = myArt.StockReposicao - myArt.Stock;
+                if (myArt.emFalta < 0) myArt.emFalta = 0;
+                return myArt ;
+            }
+            else
+                return null;
+
+        }
+
+        public static Lib_Primavera.Model.Artigo GetPrecoArtigo(Model.Artigo artigo)
+        {
+
+            StdBELista objList;
+
+            bool companyInitialized = PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT ArtigoMoeda.PVP1 FROM ArtigoMoeda WHERE ArtigoMoeda.Artigo = '" + artigo.CodArtigo + "' AND ArtigoMoeda.Moeda = 'EUR'");
+                if (objList.NoFim()) return null;
+                else
+                {
+                    artigo.Preco = objList.Valor("PVP1");
+                }
+
+                return artigo;
+            }
+            else
+                return null;
+        }
+
+        public static Lib_Primavera.Model.Artigo GetVendasArtigo(Model.Artigo artigo)
+        {
+            StdBELista objList;
+            Model.LinhaDocVenda lindv;
+
+            List<Model.LinhaDocVenda> sales = new List<Model.LinhaDocVenda>();
+            double sum = 0;
+            double totalQuantity = 0;
+
+            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade, LinhasDoc.PrecoLiquido from LinhasDoc WHERE Artigo = '" + artigo.CodArtigo + "'");
+                sales = new List<Model.LinhaDocVenda>();
+
+                while (!objList.NoFim())
+                {
+                    lindv = new Model.LinhaDocVenda();
+                    lindv.Quantidade = objList.Valor("Quantidade");
+                    lindv.TotalLiquido = objList.Valor("PrecoLiquido");
+
+                    sales.Add(lindv);
+                    objList.Seguinte();
+                }
+
+                foreach (Model.LinhaDocVenda sale in sales)
+                {
+                    sum += (sale.Quantidade * sale.TotalLiquido);
+                    totalQuantity += sale.Quantidade;
+                }
+
+                artigo.Vendas = sum;
+                artigo.Vendidos = totalQuantity;
+
+                return artigo;
+            }
+            else
+                return null;
+        }
+
+        public static Lib_Primavera.Model.Artigo GetComprasArtigo(Model.Artigo artigo)
+        {
+            StdBELista objList;
+            Model.LinhaDocCompra lindv;
+
+            List<Model.LinhaDocCompra> purchases = new List<Model.LinhaDocCompra>();
+            double sum = 0;
+            double totalQuantity = 0;
+
+            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT LinhasCompras.Quantidade, LinhasCompras.PrecoLiquido from LinhasCompras WHERE Artigo = '" + artigo.CodArtigo + "'");
+                purchases = new List<Model.LinhaDocCompra>();
+
+                while (!objList.NoFim())
+                {
+                    lindv = new Model.LinhaDocCompra();
+                    lindv.Quantidade = objList.Valor("Quantidade");
+                    lindv.TotalLiquido = objList.Valor("PrecoLiquido");
+
+                    purchases.Add(lindv);
+                    objList.Seguinte();
+                }
+
+                foreach (Model.LinhaDocCompra purchase in purchases)
+                {
+                    sum += (Math.Abs(purchase.Quantidade) * purchase.TotalLiquido);
+                    totalQuantity += Math.Abs(purchase.Quantidade);
+                }
+
+                artigo.Compras = sum;
+                artigo.Comprados = totalQuantity;
+                artigo.Margem = artigo.Vendas + artigo.Compras;
+
+                return artigo;
+            }
+            else
+                return null;
+        }
+        /*
+        public static Lib_Primavera.Model.Artigo GetTopClientesArtigo(Model.Artigo artigo)
+        {
+            StdBELista objList;
+
+            List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
+
+            bool companyInitialized = PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
+                while (!objList.NoFim())
+                {
+                    sales.Add(new Model.CabecDoc
+                    {
+                        Id = null,
+                        Entidade = objList.Valor("Entidade"),
+                        Nome = objList.Valor("Nome"),
+                        NumDoc = objList.Valor("NumDoc"),
+                        NumContribuinte = objList.Valor("NumContribuinte"),
+                        TotalMerc = objList.Valor("TotalMerc"),
+                        TotalIva = objList.Valor("TotalIva"),
+                        LinhasDoc = null,
+                        Data = objList.Valor("Data"),
+                        Serie = null
+                    });
+
+                    objList.Seguinte();
+                }
+
+                return sales;
+            }
+            else
+                return null;
+        }*/
+        /*
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
 
@@ -274,7 +449,7 @@ namespace project.Lib_Primavera
             }
 
         }
-
+        */
         public static List<Model.Artigo> ListaArtigos()
         {
 
