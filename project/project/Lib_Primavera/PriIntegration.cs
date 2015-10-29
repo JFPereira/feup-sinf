@@ -529,7 +529,7 @@ namespace project.Lib_Primavera
                 return erro;
             }
         }
-        
+
         public static List<Model.DocVenda> Encomendas_List()
         {
 
@@ -580,7 +580,7 @@ namespace project.Lib_Primavera
             }
             return listdv;
         }
-        
+
         public static Model.DocVenda Encomenda_Get(string numdoc)
         {
 
@@ -629,18 +629,18 @@ namespace project.Lib_Primavera
             return null;
         }
 
-        public static List<Model.Sale> ListaCompras()
+        public static List<Model.Sale> getSales()
         {
             StdBELista objList;
 
-            List<Model.Sale> listCompras = new List<Model.Sale>();
+            List<Model.Sale> sales = new List<Model.Sale>();
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
                 objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
                 while (!objList.NoFim())
                 {
-                    listCompras.Add(new Model.Sale
+                    sales.Add(new Model.Sale
                     {
                         Cliente = "Pila",
                         Nome = objList.Valor("Nome"),
@@ -649,14 +649,40 @@ namespace project.Lib_Primavera
                         TotalMerc = objList.Valor("TotalMerc"),
                         TotalIva = objList.Valor("TotalIva")
                     });
-                    objList.Seguinte();
 
+                    objList.Seguinte();
                 }
 
-                return listCompras;
+                return sales;
             }
             else
                 return null;
+        }
+
+        public static double getPurchasesTotal()
+        {
+            double purchases = 0;
+
+            bool companyInitialized = PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+
+            if (companyInitialized)
+            {
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
+
+                while (!objList.NoFim())
+                {
+                    purchases += objList.Valor("TotalMerc");
+                    purchases += objList.Valor("TotalIVA");
+
+                    objList.Seguinte();
+                }
+            }
+
+            return purchases;
         }
 
         #endregion DocsVenda

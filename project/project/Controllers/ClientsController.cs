@@ -40,7 +40,7 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public List<TopClientsItem> TopClients()
         {
-            List<Lib_Primavera.Model.Sale> sales = Lib_Primavera.PriIntegration.ListaCompras();
+            List<Lib_Primavera.Model.Sale> sales = Lib_Primavera.PriIntegration.getSales();
             List<TopClientsItem> result = new List<TopClientsItem>();
 
             foreach (Sale sale in sales)

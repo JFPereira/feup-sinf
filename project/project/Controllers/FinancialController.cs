@@ -13,11 +13,20 @@ namespace project.Controllers
 {
     public class FinancialController : ApiController
     {
+
         // GET api/financial/global
         [System.Web.Http.HttpGet]
         public string Global()
         {
             return "Tamos tesos. No money. Ja tas Cândido";
         }
+
+        // GET api/financial/purchases
+        [System.Web.Http.HttpGet]
+        public double Purchases()
+        {
+            return Lib_Primavera.PriIntegration.getPurchasesTotal();
+        }
+
     }
 }
