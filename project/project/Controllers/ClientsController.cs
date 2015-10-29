@@ -44,6 +44,8 @@ namespace project.Controllers
             List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
             List<TopClientsItem> result = new List<TopClientsItem>();
 
+            double totalSalesVolume = 0;
+
             foreach (CabecDoc sale in sales)
             {
                 if (result.Exists(e => e.nif == sale.NumContribuinte))
@@ -63,16 +65,14 @@ namespace project.Controllers
                         numPurchases = 1
                     });
                 }
+
+                totalSalesVolume += (sale.TotalMerc + sale.TotalIva);
             }
 
             result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
 
-            double sum = 0;
             foreach (TopClientsItem client in result)
-                sum += client.salesVolume;
-
-            foreach (TopClientsItem client in result)
-                client.percentage += Math.Round(client.salesVolume / sum * 100, 2) + " %";
+                client.percentage += Math.Round(client.salesVolume / totalSalesVolume * 100, 2) + " %";
 
             return result;
         }
