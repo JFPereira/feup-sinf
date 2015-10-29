@@ -41,13 +41,14 @@ namespace project.Controllers
         {
             List<Lib_Primavera.Model.LinhaDocVenda> sales = Lib_Primavera.PriIntegration.getProductSales();
             List<TopProductsItem> result = new List<TopProductsItem>();
+            double totalSalesVolume = 0;
 
             foreach (LinhaDocVenda sale in sales)
             {
                 string cod = sale.CodArtigo;
                     if (result.Exists(e => e.codArtigo == cod))
                     {
-                        result.Find(e => e.codArtigo == cod).salesVolume += (sale.TotalILiquido * sale.Quantidade);
+                        result.Find(e => e.codArtigo == cod).salesVolume += (sale.TotalILiquido);
                         result.Find(e => e.codArtigo == cod).quantity += sale.Quantidade;
                     }
                     else
@@ -56,22 +57,19 @@ namespace project.Controllers
                         {
                             name = sale.DescArtigo,
                             codArtigo = cod,
-                            salesVolume = sale.TotalILiquido * sale.Quantidade,
+                            salesVolume = sale.TotalILiquido,
                             quantity = sale.Quantidade,
                             percentage = ""
                         });
                     }
+                    totalSalesVolume += sale.TotalILiquido;
                 }
             
 
             result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
 
-            double sum = 0;
             foreach (TopProductsItem product in result)
-                sum += product.salesVolume;
-
-            foreach (TopProductsItem product in result)
-                product.percentage += Math.Round(product.salesVolume / sum * 100, 2) + " %";
+                product.percentage += Math.Round(product.salesVolume / totalSalesVolume * 100, 2) + " %";
 
             return result;
         }

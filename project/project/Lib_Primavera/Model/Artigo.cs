@@ -19,5 +19,13 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
+        public double Preco
+        {
+            get;
+            set;
+        }
+
+
+
     }
 }
