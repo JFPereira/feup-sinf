@@ -7,6 +7,7 @@ using System.Web.Script.Serialization;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AttributeRouting.Web.Http;
 using project.Lib_Primavera.Model;
 using project.Items;
 
@@ -81,6 +82,22 @@ namespace project.Controllers
             var response = Request.CreateResponse(HttpStatusCode.OK, json);
             return response;
         }*/
+
+
+        // GET api/clients/{id}/top-products
+        [System.Web.Http.HttpGet]
+        /*public List<Lib_Primavera.Model.Product> TopProducts(string id)
+        {
+            return Lib_Primavera.PriIntegration.ProdutosMaisComprados(id);
+        }*/
+        public List<Lib_Primavera.Model.Teste> TopProducts()
+        {
+            List<Lib_Primavera.Model.Teste> a = Lib_Primavera.PriIntegration.getIDDocProduct();
+
+            a.AddRange(Lib_Primavera.PriIntegration.getIDDoc());
+
+            return a;
+        }
 
         //--------------- REST Methods ---------------//
         public HttpResponseMessage Post(Lib_Primavera.Model.Client cliente)
