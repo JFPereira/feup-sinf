@@ -684,7 +684,7 @@ namespace project.Lib_Primavera
             return purchases;
         }
 
-        public static List<Model.Product> ProdutosMaisComprados(string id)
+        /*public static List<Model.Product> ProdutosMaisComprados(string id)
         {
             StdBELista objList;
 
@@ -692,7 +692,7 @@ namespace project.Lib_Primavera
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao FROM LinhasDoc");
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.PrecoLiquido, LinhasDoc.Quantidade FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc == CabecDoc.Id AND CabecDoc.Entidade = " + id);
                 while (!objList.NoFim())
                 {
                     listProducts.Add(new Model.Product
@@ -708,7 +708,7 @@ namespace project.Lib_Primavera
             }
             else
                 return null;
-        }
+        }*/
 
         public static List<Model.Teste> getIDDocProduct()
         {

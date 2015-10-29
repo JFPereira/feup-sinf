@@ -41,19 +41,19 @@ namespace project
                 defaults: new { controller = "Clients", action = "Get" }
             );
 
-            // GET api/clients/{id}
-            config.Routes.MapHttpRoute(
-                name: "GetClient",
-                routeTemplate: "api/clients/{id}",
-                defaults: new { controller = "Clients", action = "GetClient" }
-            );
-
             // GET api/clients/top
             config.Routes.MapHttpRoute(
                 name: "TopClients",
                 routeTemplate: "api/clients/top",
                 defaults: new { controller = "Clients", action = "TopClients" }
                 );
+
+            // GET api/clients/{id}
+            config.Routes.MapHttpRoute(
+                name: "GetClient",
+                routeTemplate: "api/clients/{id}",
+                defaults: new { controller = "Clients", action = "GetClient" }
+            );
 
             // GET api/clients/{id}/topProducts
             config.Routes.MapHttpRoute(
@@ -101,9 +101,9 @@ namespace project
             config.Routes.MapHttpRoute(
                 name: "Financial",
                 routeTemplate: "api/financial",
-                defaults: new { controller = "Financial", action = "Index"}
+                defaults: new { controller = "Financial", action = "Index" }
             );
-            
+
             // GET api/financial/global
             config.Routes.MapHttpRoute(
                 name: "GlobalFinancial",

@@ -22,6 +22,7 @@ namespace project.Controllers
         }
 
         // GET api/clients/{id}
+        [System.Web.Http.HttpGet]
         public Client GetClient(string id)
         {
             Lib_Primavera.Model.Client cliente = Lib_Primavera.PriIntegration.GetCliente(id);
