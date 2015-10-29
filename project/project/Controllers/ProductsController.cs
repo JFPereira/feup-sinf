@@ -20,7 +20,7 @@ namespace project.Controllers
             return Lib_Primavera.PriIntegration.ListaArtigos();
         }
 
-        // GET api/products/{id}    
+        // GET api/products/{id}
         public Artigo GetProduct(string id)
         {
             Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
@@ -35,36 +35,34 @@ namespace project.Controllers
             }
         }
 
-/*
-
         // GET api/products/top
         [System.Web.Http.HttpGet]
         public List<TopProductsItem> TopProducts()
         {
-            List<Lib_Primavera.Model.Sale> sales = Lib_Primavera.PriIntegration.ListaCompras();
+            List<Lib_Primavera.Model.LinhaDocVenda> sales = Lib_Primavera.PriIntegration.getProductSales();
             List<TopProductsItem> result = new List<TopProductsItem>();
 
-            foreach (Sale sale in sales)
+            foreach (LinhaDocVenda sale in sales)
             {
-                foreach (string cod in sale.codArtigo)
-                {
+                string cod = sale.CodArtigo;
                     if (result.Exists(e => e.codArtigo == cod))
                     {
-                        result.Find(e => e.codArtigo == cod).salesVolume += (sale.TotalMerc + sale.TotalIva);
+                        result.Find(e => e.codArtigo == cod).salesVolume += (sale.TotalILiquido * sale.Quantidade);
+                        result.Find(e => e.codArtigo == cod).quantity += sale.Quantidade;
                     }
                     else
                     {
-                        Product pro = Get(cod);
                         result.Add(new TopProductsItem
                         {
-                            name = pro.DescArtigo,
+                            name = sale.DescArtigo,
                             codArtigo = cod,
-                            salesVolume = sale.TotalMerc + sale.TotalIva,
+                            salesVolume = sale.TotalILiquido * sale.Quantidade,
+                            quantity = sale.Quantidade,
                             percentage = ""
                         });
                     }
                 }
-            }
+            
 
             result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
 
@@ -76,6 +74,6 @@ namespace project.Controllers
                 product.percentage += Math.Round(product.salesVolume / sum * 100, 2) + " %";
 
             return result;
-        }*/
+        }
     }
 }

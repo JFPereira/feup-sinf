@@ -667,6 +667,41 @@ namespace project.Lib_Primavera
             else
                 return null;
         }
+        
+        public static List<Model.LinhaDocVenda> getProductSales()
+        {
+            StdBELista objList;
+            Model.LinhaDocVenda lindv;
+
+            List<Model.LinhaDocVenda> sales = new List<Model.LinhaDocVenda>();
+
+            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc");
+                    sales = new List<Model.LinhaDocVenda>();
+
+                    while (!objList.NoFim())
+                    {
+                        lindv = new Model.LinhaDocVenda();
+                        lindv.IdCabecDoc = objList.Valor("idCabecDoc");
+                        lindv.CodArtigo = objList.Valor("Artigo");
+                        lindv.DescArtigo = objList.Valor("Descricao");
+                        lindv.Quantidade = objList.Valor("Quantidade");
+                        lindv.Unidade = objList.Valor("Unidade");
+                        lindv.Desconto = objList.Valor("Desconto1");
+                        lindv.PrecoUnitario = objList.Valor("PrecUnit");
+                        lindv.TotalILiquido = objList.Valor("TotalILiquido");
+                        lindv.TotalLiquido = objList.Valor("PrecoLiquido");
+
+                        sales.Add(lindv);
+                        objList.Seguinte();
+                    }
+
+                return sales;
+            }
+            else
+                return null;
+        }
 
         public static double getPurchasesTotal()
         {

@@ -18,18 +18,18 @@ namespace project
                 defaults: new { controller = "Products", action = "Get" }
             );
 
-            // GET api/products/{id}
-            config.Routes.MapHttpRoute(
-                name: "GetProduct",
-                routeTemplate: "api/products/{id}",
-                defaults: new { controller = "Products", action = "GetProduct" }
-            );
-
             // GET api/products/top
             config.Routes.MapHttpRoute(
                 name: "TopProducts",
                 routeTemplate: "api/products/top",
                 defaults: new { controller = "Products", action = "TopProducts" }
+            );
+
+            // GET api/products/{id}
+            config.Routes.MapHttpRoute(
+                name: "GetProduct",
+                routeTemplate: "api/products/{id}",
+                defaults: new { controller = "Products", action = "GetProduct" }
             );
 
             //--------------- Clients ---------------//
