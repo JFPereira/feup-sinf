@@ -486,6 +486,32 @@ namespace project.Lib_Primavera
             }
         }
 
+        public static double getPurchasesTotal()
+        {
+            double purchases = 0;
+
+            bool companyInitialized = PriEngine.InitializeCompany(
+                project.Properties.Settings.Default.Company.Trim(),
+                project.Properties.Settings.Default.User.Trim(),
+                project.Properties.Settings.Default.Password.Trim());
+
+            if (companyInitialized)
+            {
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
+
+                while (!objList.NoFim())
+                {
+                    purchases += objList.Valor("TotalMerc");
+                    purchases += objList.Valor("TotalIVA");
+
+                    objList.Seguinte();
+                }
+            }
+
+            return purchases;
+        }
+
         #endregion DocCompra
 
         #region DocsVenda
@@ -719,32 +745,6 @@ namespace project.Lib_Primavera
             }
             else
                 return null;
-        }
-
-        public static double getPurchasesTotal()
-        {
-            double purchases = 0;
-
-            bool companyInitialized = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
-
-            if (companyInitialized)
-            {
-                StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
-
-                while (!objList.NoFim())
-                {
-                    purchases += objList.Valor("TotalMerc");
-                    purchases += objList.Valor("TotalIVA");
-
-                    objList.Seguinte();
-                }
-            }
-
-            return purchases;
         }
 
         public static double getSalesTotal()
