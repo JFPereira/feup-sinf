@@ -43,7 +43,7 @@ namespace project.Controllers
             return Lib_Primavera.PriIntegration.getSalesTotal();
         }
 
-        // GET api/top10sales
+        // GET api/financial/top10sales
         [System.Web.Http.HttpGet]
         public List<TopSalesCountry> Top10SalesCountries()
         {

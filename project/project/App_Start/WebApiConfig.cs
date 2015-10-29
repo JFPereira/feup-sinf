@@ -135,7 +135,7 @@ namespace project
             // GET api/top10sales
             config.Routes.MapHttpRoute(
                 name: "FinancialTop10Sales",
-                routeTemplate: "api/top10sales",
+                routeTemplate: "api/financial/top10sales",
                 defaults: new { controller = "Financial", action = "Top10SalesCountries" }
             );
 
