@@ -887,7 +887,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static int getSalesProdM(string controller, string name)
+        public static int getSalesProd(string controller, string name)
         {
 
             int quantity = 0;

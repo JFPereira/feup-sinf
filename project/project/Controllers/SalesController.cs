@@ -50,7 +50,7 @@ namespace project.Controllers
                 returnList.Add(new SalesBookingItem
                     {
                         nome = prod.DescArtigo,
-                        numVendas = getSalesProd(id, prod.DescArtigo)
+                        numVendas = Lib_Primavera.PriIntegration.getSalesProd(id, prod.DescArtigo)
                     });
 
 
