@@ -50,6 +50,13 @@ namespace project.Controllers
             return Lib_Primavera.PriIntegration.getSalesTotal();
         }
 
+        // GET api/financial/sales/yoy/{year}
+        [System.Web.Http.HttpGet]
+        public List<List<double>> SalesYoY(int year)
+        {
+            return Lib_Primavera.PriIntegration.getSalesYoY(year);
+        }
+
         // GET api/financial/top10sales
         [System.Web.Http.HttpGet]
         public List<TopSalesCountry> Top10SalesCountries()

@@ -140,6 +140,14 @@ namespace project
                 defaults: new { controller = "Financial", action = "Sales" }
             );
 
+            // GET api/financial/sales/yoy/{year}
+            config.Routes.MapHttpRoute(
+                name: "FinancialSalesYoY",
+                routeTemplate: "api/financial/sales/yoy/{year}",
+                defaults: new { controller = "Financial", action = "SalesYoY" },
+                constraints: new { year = "[0-9]+" }
+            );
+
             // GET api/financial/top10sales
             config.Routes.MapHttpRoute(
                 name: "FinancialTop10Sales",
