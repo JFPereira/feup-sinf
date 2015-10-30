@@ -41,7 +41,7 @@ namespace project.Controllers
                     Mes = i,
                     Compras = sale,
                     Vendas = purchase
-                    
+
                 });
             }
 

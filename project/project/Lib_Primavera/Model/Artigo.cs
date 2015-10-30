@@ -90,5 +90,11 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
+        public List<Items.GlobalFinancialItem> VendasComprasMes
+        {
+            get;
+            set;
+        }
+
     }
 }

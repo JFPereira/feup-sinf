@@ -36,6 +36,27 @@ namespace project.Controllers
                 artigo = Lib_Primavera.PriIntegration.GetVendasArtigo(artigo);
                 artigo = Lib_Primavera.PriIntegration.GetComprasArtigo(artigo);
                 artigo = Lib_Primavera.PriIntegration.GetTopClientesArtigo(artigo);
+                List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
+                string month = DateTime.Now.Month.ToString();
+                string year = DateTime.Now.Year.ToString();
+                int m = Int32.Parse(month);
+                int y = Int32.Parse(year);
+                for (int i = 1; i < m + 1; i++)
+                {
+                    double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
+                    double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
+                    global.Add(new GlobalFinancialItem
+                    {
+                        Ano = y,
+                        Mes = i,
+                        Compras = sale,
+                        Vendas = purchase
+
+                    });
+                }
+
+                global = global.OrderBy(e => e.Mes).ToList();
+                artigo.VendasComprasMes = global;
                 return artigo;
             }
         }

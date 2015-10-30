@@ -13,7 +13,7 @@ namespace project.Items
             set;
         }
 
-        public double numVendas
+        public double valorVendas
         {
             get;
             set;
