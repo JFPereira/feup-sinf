@@ -1288,7 +1288,7 @@ namespace project.Lib_Primavera
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte FROM CabecDoc WHERE '" + dateStart + "' <= CONVERT(DATE, CabecDoc.Data) AND CONVERT(DATE, CabecDoc.Data) <= '" + dateEnd + "'");
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva, CabecDoc.Data, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte FROM CabecDoc WHERE '" + dateStart + "' <= CONVERT(DATE, CabecDoc.Data) AND CONVERT(DATE, CabecDoc.Data) <= '" + dateEnd + "'");
                 while (!objList.NoFim())
                 {
                     sales.Add(new Model.CabecDoc
@@ -1298,8 +1298,8 @@ namespace project.Lib_Primavera
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
-                        TotalMerc = 0,
-                        TotalIva = 0,
+                        TotalMerc = objList.Valor("TotalMerc"),
+                        TotalIva = objList.Valor("TotalIva"),
                         LinhasDoc = null,
                         Datatime = objList.Valor("Data"),
                         Serie = null

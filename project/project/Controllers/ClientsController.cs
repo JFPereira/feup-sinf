@@ -123,13 +123,26 @@ namespace project.Controllers
             return result;
         }
 
+        // static variable to the total elements of the purchases graphics
+        public int totalElems = 0;
+
+        // GET api/clients/{id}/daily-purchases/{month}/{year}
         [System.Web.Http.HttpGet]
-        public List<Lib_Primavera.Model.CabecDoc> DailyPurchases(string id, string month, string year)
+        public List<DailyPurchasesItem> DailyPurchases(string id, string month, string year)
         {
+            // date interval between the target sales documents
             string dateStart, dateEnd;
 
+            // list to save the dates which would be process on route
             List<string> dates = new List<string>();
 
+            // list with all the target sales docs
+            List<Lib_Primavera.Model.CabecDoc> docs = new List<CabecDoc>();
+
+            // list with the final core view items
+            List<Items.DailyPurchasesItem> days = new List<DailyPurchasesItem>();
+
+            // validate month obtained in route
             if (checkMonth(month))
             {
                 dates = processDates(month, year);
@@ -140,11 +153,44 @@ namespace project.Controllers
             else
                 return null;
 
-            List<Lib_Primavera.Model.CabecDoc> docs = Lib_Primavera.PriIntegration.getDailyPurchases(id, dateStart, dateEnd);
+            // get all the target sales docs
+            docs = Lib_Primavera.PriIntegration.getDailyPurchases(id, dateStart, dateEnd);
 
-            return docs;
+            foreach (Lib_Primavera.Model.CabecDoc doc in docs) {
+                if (days.Exists(e => e.day == doc.Datatime.Day))
+                {
+                    days.Find(e => e.day == doc.Datatime.Day).numPurchase++;
+                    days.Find(e => e.day == doc.Datatime.Day).salesVolume += (doc.TotalIva + doc.TotalMerc);
+                }
+                else
+                {
+                    days.Add(new DailyPurchasesItem
+                    {
+                        day = doc.Datatime.Day,
+                        numPurchase = 1,
+                        salesVolume = (doc.TotalMerc + doc.TotalIva)
+                    });
+                }
+            }
+
+            //adding remaining days that have not a purchase
+            for (int day = 1; day <= totalElems; day++)
+            {
+                if (!days.Exists(e => e.day == day))
+                {
+                    days.Add(new DailyPurchasesItem
+                    {
+                        day = day,
+                        numPurchase = 0,
+                        salesVolume = 0
+                    });
+                }
+            }
+
+            return days.OrderBy(e => e.day).ToList(); ;
         }
 
+        // static variable to the list of available months
         static List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
 
         public List<string> processDates(string month, string year)
@@ -155,17 +201,24 @@ namespace project.Controllers
             {
                 dates.Add("" + year + "-" + (months.IndexOf(month) + 1) + "-" + "01");
 
-                if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december")
+                if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december") {
                     dates.Add("" + year + "-" + (months.IndexOf(month) + 1).ToString() + "-31");
-                else if (month == "april" || month == "june" || month == "september" || month == "november")
+                    totalElems = 31;
+                }
+                else if (month == "april" || month == "june" || month == "september" || month == "november") {
                     dates.Add("" + year + "-" + (months.IndexOf(month) + 1).ToString() + "-30");
-                else
+                    totalElems = 30;
+                }
+                else {
                     dates.Add("" + year + "-" + (months.IndexOf(month) + 1).ToString() + "-28");
+                    totalElems = 28;
+                }
             }
             else
             {
                 dates.Add("" + year + "-01-01");
                 dates.Add("" + year + "-12-31");
+                totalElems = 12;
             }
 
             return dates;
