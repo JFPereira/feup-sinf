@@ -48,40 +48,48 @@ namespace project
                 defaults: new { controller = "Clients", action = "TopClients" }
                 );
 
-            // GET api/clients/{id}
+            // GET api/clients/{entity}
             config.Routes.MapHttpRoute(
                 name: "GetClient",
-                routeTemplate: "api/clients/{id}",
+                routeTemplate: "api/clients/{entity}",
                 defaults: new { controller = "Clients", action = "GetClient" }
             );
 
-            // GET api/clients/{id}/apc
+            // GET api/clients/{entity}/apc
             config.Routes.MapHttpRoute(
                 name: "AveragePurchaseCost",
                 routeTemplate: "api/clients/{entity}/apc",
                 defaults: new { controller = "Clients", action = "AveragePurchaseCost" }
                 );
 
-            // GET api/clients/{id}/monthly-purchases/{year}
+            // GET api/clients/{entity}/monthly-purchases/{year}
             config.Routes.MapHttpRoute(
                 name: "MonthlyPurchases",
-                routeTemplate: "api/clients/{id}/monthly-purchases/{year}",
+                routeTemplate: "api/clients/{entity}/monthly-purchases/{year}",
                 defaults: new { controller = "Clients", action = "MonthlyPurchases" }
                 );
 
-            // GET api/clients/{id}/daily-purchases/{month}/{year}
+            // GET api/clients/{entity}/daily-purchases/{month}/{year}
             config.Routes.MapHttpRoute(
                 name: "DailyPurchases",
-                routeTemplate: "api/clients/{id}/daily-purchases/{month}/{year}",
+                routeTemplate: "api/clients/{entity}/daily-purchases/{month}/{year}",
                 defaults: new { controller = "Clients", action = "DailyPurchases" }
                 );
 
-            // GET api/clients/{id}/top-products
+            // GET api/clients/{entity}/top-products
             config.Routes.MapHttpRoute(
                 name: "Monthly Purchases",
-                routeTemplate: "api/clients/{id}/top-products",
+                routeTemplate: "api/clients/{entity}/top-products",
                 defaults: new { controller = "Clients", action = "TopProducts" }
             );
+
+            // GET api/clients/{entity}/ce
+            config.Routes.MapHttpRoute(
+                name: "CostsVsEarnings",
+                routeTemplate: "api/clients/{entity}/ce",
+                defaults: new { controller = "Clients", action = "CostsVsEarnings" }
+            );
+
 
             //--------------- Suppliers ---------------//
 

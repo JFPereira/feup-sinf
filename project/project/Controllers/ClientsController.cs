@@ -17,13 +17,15 @@ namespace project.Controllers
         // GET: api/clients/
         public IEnumerable<Lib_Primavera.Model.Cliente> Get()
         {
+            // return all clients
             return Lib_Primavera.PriIntegration.ListaClientes();
         }
 
-        // GET api/clients/{id}
+        // GET api/clients/{entity}
         [System.Web.Http.HttpGet]
-        public Cliente GetClient(string id)
+        public Cliente GetClient(string entity)
         {
+            // return the target client through entity
             Lib_Primavera.Model.Cliente cliente = Lib_Primavera.PriIntegration.GetCliente(id);
             if (cliente == null)
             {
@@ -77,9 +79,9 @@ namespace project.Controllers
             return result;
         }
 
-        // GET api/clients/{id}/top-products
+        // GET api/clients/{entity}/top-products
         [System.Web.Http.HttpGet]
-        public List<Items.TopProductsItem> TopProducts(string id)
+        public List<Items.TopProductsItem> TopProducts(string entity)
         {
             List<Lib_Primavera.Model.LinhaDocVenda> allProducts = Lib_Primavera.PriIntegration.topClientProducts(id);
             List<TopProductsItem> result = new List<TopProductsItem>();
@@ -119,9 +121,9 @@ namespace project.Controllers
         // static variable to the total elements of the purchases graphics
         public int totalElems = 0;
 
-        // GET api/clients/{id}/daily-purchases/{month}/{year}
+        // GET api/clients/{entity}/daily-purchases/{month}/{year}
         [System.Web.Http.HttpGet]
-        public List<Items.DailyPurchasesItem> DailyPurchases(string id, string month, string year)
+        public List<Items.DailyPurchasesItem> DailyPurchases(string entity, string month, string year)
         {
             // date interval between the target sales documents
             string dateStart, dateEnd;
@@ -179,9 +181,9 @@ namespace project.Controllers
             return days.OrderBy(e => e.day).ToList(); ;
         }
 
-        // GET api/clients/{id}/monthly-purchases/{year}
+        // GET api/clients/{entity}/monthly-purchases/{year}
         [System.Web.Http.HttpGet]
-        public List<Items.MonthlyPurchasesItem> MonthlyPurchases(string id, string year)
+        public List<Items.MonthlyPurchasesItem> MonthlyPurchases(string entity, string year)
         {
             // date interval between the target sales documents
             string dateStart, dateEnd;
@@ -249,7 +251,7 @@ namespace project.Controllers
             return months.OrderBy(e => e.month).ToList(); ;
         }
 
-        // process the date interval and assign the total elements that will have the WS DailyPurchases/MonthlyPurchases
+        // process the date interval and assign the total elements that the WS DailyPurchases/MonthlyPurchases will need
         public List<string> processDates(string month, string year)
         {
             List<string> dates = new List<string>();
@@ -302,6 +304,13 @@ namespace project.Controllers
             result.averagePurchaseCost = totalPurchaseVolume / result.numPurchases;
 
             return result;
+        }
+
+        // GET api/clients/{entity}/ce
+        [System.Web.Http.HttpGet]
+        public string CostsVsEarnings(string entity)
+        {
+            return "ola";
         }
     }
 }
