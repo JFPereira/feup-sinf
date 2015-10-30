@@ -416,7 +416,7 @@ namespace project.Lib_Primavera
                         TotalMerc = objList.Valor("TotalMerc"),
                         TotalIva = objList.Valor("TotalIva"),
                         LinhasDoc = null,
-                        Data = objList.Valor("Data"),
+                        Datatime = objList.Valor("Data"),
                         Serie = null
                     });
 
@@ -883,7 +883,7 @@ namespace project.Lib_Primavera
                         TotalMerc = objList.Valor("TotalMerc"),
                         TotalIva = objList.Valor("TotalIva"),
                         LinhasDoc = null,
-                        Data = objList.Valor("Data"),
+                        Datatime = objList.Valor("Data"),
                         Serie = null
                     });
 
@@ -1071,6 +1071,42 @@ namespace project.Lib_Primavera
                 }
 
                 return listProducts;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.CabecDoc> getDailyPurchases(string client_id, string dateStart, string dateEnd)
+        {
+            StdBELista objList;
+
+            List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte FROM CabecDoc WHERE '" + dateStart + "' <= CONVERT(DATE, CabecDoc.Data) AND CONVERT(DATE, CabecDoc.Data) <= '" + dateEnd + "'");
+                while (!objList.NoFim())
+                {
+                    sales.Add(new Model.CabecDoc
+                    {
+                        Id = null,
+                        Entidade = client_id,
+                        Nome = objList.Valor("Nome"),
+                        NumDoc = objList.Valor("NumDoc"),
+                        NumContribuinte = objList.Valor("NumContribuinte"),
+                        TotalMerc = 0,
+                        TotalIva = 0,
+                        LinhasDoc = null,
+                        Datatime = objList.Valor("Data"),
+                        Serie = null
+                    });
+
+                    objList.Seguinte();
+                }
+
+                return sales;
             }
             else
                 return null;

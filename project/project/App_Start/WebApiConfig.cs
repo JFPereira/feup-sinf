@@ -58,7 +58,7 @@ namespace project
             // GET api/clients/daily-purchases/{month}
             config.Routes.MapHttpRoute(
                 name: "DailyPurchases",
-                routeTemplate: "api/clients/daily-purchases/{month}",
+                routeTemplate: "api/clients/{id}/daily-purchases/{month}/{year}",
                 defaults: new { controller = "Clients", action = "DailyPurchases" }
                 );
 

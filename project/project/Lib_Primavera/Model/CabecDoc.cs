@@ -50,7 +50,7 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-        public DateTime Data
+        public DateTime Datatime
         {
             get;
             set;
@@ -63,6 +63,12 @@ namespace project.Lib_Primavera.Model
         }
 
         public List<Model.LinhaDocVenda> LinhasDoc
+        {
+            get;
+            set;
+        }
+
+        public string Data
         {
             get;
             set;

@@ -124,9 +124,58 @@ namespace project.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public string DailyPurchases(string month)
+        public List<Lib_Primavera.Model.CabecDoc> DailyPurchases(string id, string month, string year)
         {
-            return month;
+            string dateStart, dateEnd;
+
+            List<string> dates = new List<string>();
+
+            if (checkMonth(month))
+            {
+                dates = processDates(month, year);
+
+                dateStart = dates.ElementAt(0);
+                dateEnd = dates.ElementAt(1);
+            }
+            else
+                return null;
+
+            List<Lib_Primavera.Model.CabecDoc> docs = Lib_Primavera.PriIntegration.getDailyPurchases(id, dateStart, dateEnd);
+
+            return docs;
+        }
+
+        static List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+
+        public List<string> processDates(string month, string year)
+        {
+            List<string>dates = new List<string>();
+
+            if (month != null)
+            {
+                dates.Add("" + year + "-" + (months.IndexOf(month) + 1) + "-" + "01");
+
+                if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december")
+                    dates.Add("" + year + "-" + (months.IndexOf(month) + 1).ToString() + "-31");
+                else if (month == "april" || month == "june" || month == "september" || month == "november")
+                    dates.Add("" + year + "-" + (months.IndexOf(month) + 1).ToString() + "-30");
+                else
+                    dates.Add("" + year + "-" + (months.IndexOf(month) + 1).ToString() + "-28");
+            }
+            else
+            {
+                dates.Add("" + year + "-01-01");
+                dates.Add("" + year + "-12-31");
+            }
+
+            return dates;
+        }
+
+        public bool checkMonth(string month)
+        {
+            bool result = (months.Exists(e => e == month)) ?  true :  false;
+
+            return result;
         }
 
         //--------------- REST Methods ---------------//

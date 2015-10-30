@@ -28,7 +28,7 @@ namespace project.Controllers
                         entity = sale.Entidade,
                         numDoc = sale.NumDoc,
                         purchaseValue = sale.TotalMerc + sale.TotalIva,
-                        date = sale.Data,
+                        date = sale.Datatime,
                         numPurchases = Lib_Primavera.PriIntegration.numPurchases(sale.Entidade)
                     });
             }
