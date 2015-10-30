@@ -39,7 +39,7 @@ namespace project.Controllers
 
         // GET api/clients/top
         [System.Web.Http.HttpGet]
-        public List<TopClientsItem> TopClients()
+        public List<Items.TopClientsItem> TopClients()
         {
             List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
             List<TopClientsItem> result = new List<TopClientsItem>();
@@ -76,13 +76,6 @@ namespace project.Controllers
 
             return result;
         }
-        /*public HttpResponseMessage TopClients()
-        {
-            int i = 49;
-            var json = new JavaScriptSerializer().Serialize(i);
-            var response = Request.CreateResponse(HttpStatusCode.OK, json);
-            return response;
-        }*/
 
         // GET api/clients/{id}/top-products
         [System.Web.Http.HttpGet]
@@ -128,7 +121,7 @@ namespace project.Controllers
 
         // GET api/clients/{id}/daily-purchases/{month}/{year}
         [System.Web.Http.HttpGet]
-        public List<DailyPurchasesItem> DailyPurchases(string id, string month, string year)
+        public List<Items.DailyPurchasesItem> DailyPurchases(string id, string month, string year)
         {
             // date interval between the target sales documents
             string dateStart, dateEnd;
@@ -193,6 +186,7 @@ namespace project.Controllers
         // static variable to the list of available months
         static List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
 
+        // process the date interval and assign the total elements that will have the WS DailyPurchases/MonthlyPurchases
         public List<string> processDates(string month, string year)
         {
             List<string>dates = new List<string>();
@@ -231,72 +225,15 @@ namespace project.Controllers
             return result;
         }
 
-        //--------------- REST Methods ---------------//
-        public HttpResponseMessage Post(Lib_Primavera.Model.Cliente cliente)
+        // GET api/clients/{id}/apc
+        [System.Web.Http.HttpGet]
+        public Items.APCItem AveragePurchaseCost(string id)
         {
-            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
-            erro = Lib_Primavera.PriIntegration.InsereClienteObj(cliente);
+            Items.APCItem result = new Items.APCItem();
 
-            if (erro.Erro == 0)
-            {
-                var response = Request.CreateResponse(
-                   HttpStatusCode.Created, cliente);
-                string uri = Url.Link("DefaultApi", new { CodCliente = cliente.CodCliente });
-                response.Headers.Location = new Uri(uri);
-                return response;
-            }
 
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
-        }
 
-        public HttpResponseMessage Put(string id, Lib_Primavera.Model.Cliente cliente)
-        {
-            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
-
-            try
-            {
-                erro = Lib_Primavera.PriIntegration.UpdCliente(cliente);
-                if (erro.Erro == 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, erro.Descricao);
-                }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, erro.Descricao);
-                }
-            }
-
-            catch (Exception exc)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
-            }
-        }
-
-        public HttpResponseMessage Delete(string id)
-        {
-            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
-
-            try
-            {
-                erro = Lib_Primavera.PriIntegration.DelCliente(id);
-
-                if (erro.Erro == 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, erro.Descricao);
-                }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, erro.Descricao);
-                }
-            }
-
-            catch (Exception exc)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
-            }
+            return result;
         }
     }
 }

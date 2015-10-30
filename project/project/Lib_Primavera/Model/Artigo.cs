@@ -30,7 +30,11 @@ namespace project.Lib_Primavera.Model
             get;
             set;
         }
-
+        public double PrecoMedio
+        {
+            get;
+            set;
+        }
         public double Custo
         {
             get;

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace project.Lib_Primavera.Model
 {
@@ -46,6 +44,12 @@ namespace project.Lib_Primavera.Model
         }
 
         public DateTime Data
+        {
+            get;
+            set;
+        }
+
+        public List<Model.LinhaDocVenda> LinhasDoc
         {
             get;
             set;

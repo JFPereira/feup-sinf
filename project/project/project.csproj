@@ -299,9 +299,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Items\APCItem.cs" />
     <Compile Include="Items\DailyPurchasesItem.cs" />
     <Compile Include="Items\FinancialInfo.cs" />
     <Compile Include="Items\GlobalFinancialItem.cs" />
+    <Compile Include="Items\RegionalSSItem.cs" />
     <Compile Include="Items\RegSalesBookingItem.cs" />
     <Compile Include="Items\TopSalesCountry.cs" />
     <Compile Include="Items\SalesBookingItem.cs" />
@@ -415,7 +417,9 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
