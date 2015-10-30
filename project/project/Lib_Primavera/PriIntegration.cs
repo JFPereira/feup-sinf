@@ -239,6 +239,7 @@ namespace project.Lib_Primavera
 
         }
 
+        //returns the number of purchases of an entity 
         public static int numPurchases(string entity)
         {
             int numPurchases = 0;
@@ -1010,6 +1011,7 @@ namespace project.Lib_Primavera
             return sales;
         }
 
+        //returns total amount of money made from selling the item prod, with contraints year,month and day
         public static double getSalesProd(string controller, string prod, string year, string month, string day)
         {
             StdBELista objList;
@@ -1306,19 +1308,19 @@ namespace project.Lib_Primavera
             else
                 return null;
         }
-
+		
+        //checks if month string is correct
         public static string checkMonth(string month)
         {
-            List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
 
-            if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
-                month = (months.IndexOf(month) + 1).ToString();
-            else month = null;
+            if (month != "01" && month != "03" && month != "05" && month != "07" && month != "08" && month != "10" && month != "12" && month != "04" && month != "06" && month != "09" && month != "11" && month != "02")
+				month = null;
 
             return month;
 
         }
 
+        //returns a list for sales booking per region
         public static List<RegSalesBookingItem> getSalesBookingReg(string controller, string year, string month, string day)
         {
             List<RegSalesBookingItem> returnList = new List<RegSalesBookingItem>();
@@ -1370,6 +1372,7 @@ namespace project.Lib_Primavera
 
             return returnList;
         }
+
 
         public static List<Model.CabecDoc> getClientPurchases(string entity)
         {

@@ -26,7 +26,7 @@ namespace project.Controllers
         public Cliente GetClient(string entity)
         {
             // return the target client through entity
-            Lib_Primavera.Model.Cliente cliente = Lib_Primavera.PriIntegration.GetCliente(id);
+            Lib_Primavera.Model.Cliente cliente = Lib_Primavera.PriIntegration.GetCliente(entity);
             if (cliente == null)
             {
                 throw new HttpResponseException(
@@ -83,7 +83,7 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public List<Items.TopProductsItem> TopProducts(string entity)
         {
-            List<Lib_Primavera.Model.LinhaDocVenda> allProducts = Lib_Primavera.PriIntegration.topClientProducts(id);
+            List<Lib_Primavera.Model.LinhaDocVenda> allProducts = Lib_Primavera.PriIntegration.topClientProducts(entity);
             List<TopProductsItem> result = new List<TopProductsItem>();
 
             double totalProductSalesVolume = 0;
@@ -144,7 +144,7 @@ namespace project.Controllers
             dateEnd = dates.ElementAt(1);
 
             // get all the target sales docs
-            docs = Lib_Primavera.PriIntegration.getClientDailyPurchases(id, dateStart, dateEnd);
+            docs = Lib_Primavera.PriIntegration.getClientDailyPurchases(entity, dateStart, dateEnd);
 
             foreach (Lib_Primavera.Model.CabecDoc doc in docs)
             {
@@ -207,7 +207,7 @@ namespace project.Controllers
             dateEnd = dates.ElementAt(1);
 
             // get all the target sales docs
-            docs = Lib_Primavera.PriIntegration.getClientDailyPurchases(id, dateStart, dateEnd);
+            docs = Lib_Primavera.PriIntegration.getClientDailyPurchases(entity, dateStart, dateEnd);
 
             foreach (Lib_Primavera.Model.CabecDoc doc in docs)
             {
