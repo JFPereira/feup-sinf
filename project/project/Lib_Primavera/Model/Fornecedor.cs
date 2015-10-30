@@ -24,6 +24,7 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
+
         public string NumContribuinte
         {
             get;

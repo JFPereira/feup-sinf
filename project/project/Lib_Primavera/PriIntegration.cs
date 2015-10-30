@@ -561,6 +561,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
+
         #endregion fornecedor
 
         #region DocCompra
@@ -610,7 +611,7 @@ namespace project.Lib_Primavera
                         objListLin.Seguinte();
                     }
 
-                    dc.LinhasDoc = listlindc;
+                    dc.LinhasCompras = listlindc;
 
                     listdc.Add(dc);
                     objListCab.Seguinte();
@@ -643,7 +644,7 @@ namespace project.Lib_Primavera
                     myGR.set_Tipodoc("VGR");
                     myGR.set_TipoEntidade("F");
                     // Linhas do documento para a lista de linhas
-                    lstlindv = dc.LinhasDoc;
+                    lstlindv = dc.LinhasCompras;
                     PriEngine.Engine.Comercial.Compras.PreencheDadosRelacionados(myGR, rl);
                     foreach (Model.LinhaDocCompra lin in lstlindv)
                     {
@@ -697,6 +698,42 @@ namespace project.Lib_Primavera
             }
 
             return total;
+        }
+
+        public static List<Model.DocCompra> getPurchases()
+        {
+            StdBELista objList;
+
+            List<Model.DocCompra> purchases = new List<Model.DocCompra>();
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT CabecCompras.DataDoc, CabecCompras.Entidade, CabecCompras.Nome, CabecCompras.NumDoc, CabecCompras.NumContribuinte, CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
+                while (!objList.NoFim())
+                {
+                    purchases.Add(new Model.DocCompra
+                    {
+                        id = null,
+                        Entidade = objList.Valor("Entidade"),
+                        Nome = objList.Valor("Nome"),
+                        NumDoc = objList.Valor("NumDoc"),
+                        NumContribuinte = objList.Valor("NumContribuinte"),
+                        TotalMerc = objList.Valor("TotalMerc"),
+                        TotalIva = objList.Valor("TotalIva"),
+                        LinhasCompras = null,
+                        Data = objList.Valor("DataDoc"),
+                        Serie = null
+                    });
+
+                    objList.Seguinte();
+                }
+
+                return purchases;
+            }
+            else
+                return null;
         }
 
         #endregion DocCompra
