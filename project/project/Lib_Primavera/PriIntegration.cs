@@ -843,6 +843,29 @@ namespace project.Lib_Primavera
             return total;
         }
 
+        public static double getProductMonthlyPurchases(int month, int year, string cod)
+        {
+            double total = 0;
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras WHERE LinhasCompras.IdCabecCompras = CabecCompras.Id AND LinhasCompras.Artigo = '" + cod + "' AND MONTH(CabecCompras.DataDoc) = " + month + " AND YEAR(CabecCompras.DataDoc) = " + year);
+
+                while (!objList.NoFim())
+                {
+                    total += objList.Valor("TotalMerc");
+                    total += objList.Valor("TotalIVA");
+
+                    objList.Seguinte();
+                }
+            }
+
+            return total;
+        }
+
         #endregion DocCompra
 
         #region DocsVenda
@@ -1265,6 +1288,29 @@ namespace project.Lib_Primavera
             {
                 StdBELista objList = PriEngine.Engine.Consulta(
                     "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE MONTH(CabecDoc.Data) = " + month + " AND YEAR(CabecDoc.Data) = " + year);
+
+                while (!objList.NoFim())
+                {
+                    total += objList.Valor("TotalMerc");
+                    total += objList.Valor("TotalIVA");
+
+                    objList.Seguinte();
+                }
+            }
+
+            return total;
+        }
+
+        public static double getProductMonthlySales(int month, int year, string cod)
+        {
+            double total = 0;
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE LinhasDoc.IdCabecDoc = CabeckDoc.Id AND LinhasDoc.Artigo = '" + cod + "' AND MONTH(CabecDoc.Data) = " + month + " AND YEAR(CabecDoc.Data) = " + year);
 
                 while (!objList.NoFim())
                 {
