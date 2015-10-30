@@ -302,6 +302,7 @@
     <Compile Include="Items\DailyPurchasesItem.cs" />
     <Compile Include="Items\FinancialInfo.cs" />
     <Compile Include="Items\GlobalFinancialItem.cs" />
+    <Compile Include="Items\RegionalSSItem.cs" />
     <Compile Include="Items\RegSalesBookingItem.cs" />
     <Compile Include="Items\TopSalesCountry.cs" />
     <Compile Include="Items\SalesBookingItem.cs" />

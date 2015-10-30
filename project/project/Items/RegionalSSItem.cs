@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace project.Items
 {
-    public class RegSalesBookingItem
+    public class RegionalSSItem
     {
         public string pais
         {
@@ -13,7 +14,7 @@ namespace project.Items
             set;
         }
 
-        public double valorVendas
+        public double percentagem
         {
             get;
             set;

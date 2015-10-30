@@ -1412,6 +1412,18 @@ namespace project.Lib_Primavera
                 return null;
         }
 
+        public static string checkMonth(string month)
+        {
+            List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+
+            if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
+                month = (months.IndexOf(month) + 1).ToString();
+            else month = null;
+
+            return month;
+
+        }
+
         public static List<RegSalesBookingItem> getSalesBookingReg(string controller, string year, string month, string day)
         {
             List<RegSalesBookingItem> returnList = new List<RegSalesBookingItem>();
@@ -1419,11 +1431,7 @@ namespace project.Lib_Primavera
 
             bool companyInitialized = initCompany();
 
-            List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
-
-            if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
-                month = (months.IndexOf(month) + 1).ToString();
-            else month = null;
+            month = checkMonth(month);
 
             if (companyInitialized)
             {
@@ -1442,7 +1450,7 @@ namespace project.Lib_Primavera
                 {
                     if (month == null) return null;
                     objList = PriEngine.Engine.Consulta(
-                                                "SELECT Clientes.Pais, LinhasDoc.Quantidade, LinhasDoc.PrecUnit FROM Clientes, CabecDoc, LinhasDoc WHERE CabecDoc.Entidade = Clientes.Cliente AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND DATEPART(year, CabecDoc.Data) = " + year + " AND DATEPART(month, CabecDoc.Data) = " + month + " AND DATEPART(day, CabecDoc.Data) = " + day);
+                            "SELECT Clientes.Pais, LinhasDoc.Quantidade, LinhasDoc.PrecUnit FROM Clientes, CabecDoc, LinhasDoc WHERE CabecDoc.Entidade = Clientes.Cliente AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND DATEPART(year, CabecDoc.Data) = " + year + " AND DATEPART(month, CabecDoc.Data) = " + month + " AND DATEPART(day, CabecDoc.Data) = " + day);
                 }
                 else return null;
 
@@ -1466,6 +1474,69 @@ namespace project.Lib_Primavera
             }
 
             return returnList;
+        }
+
+        public static double getPercentage(string controller, string year, string month, string day, string pais)
+        {
+            StdBELista objList;
+            double returnDouble = 0;
+
+            bool companyInitialized = initCompany();
+
+            month = checkMonth(month);
+
+            if (companyInitialized)
+            {
+                if (controller == "year")
+                {
+                    objList = PriEngine.Engine.Consulta(
+                            "SELECT Clientes.Pais, LinhasDoc.Quantidade, LinhasDoc.PrecUnit FROM Clientes, CabecDoc, LinhasDoc WHERE CabecDoc.Entidade = Clientes.Cliente AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND DATEPART(year, CabecDoc.Data) = " + year + " AND Clientes.Pais = '" + pais + "'");
+                }
+                else if (controller == "month")
+                {
+                    if (month == null) return 0;
+                    objList = PriEngine.Engine.Consulta(
+                           "SELECT Clientes.Pais, LinhasDoc.Quantidade, LinhasDoc.PrecUnit FROM Clientes, CabecDoc, LinhasDoc WHERE CabecDoc.Entidade = Clientes.Cliente AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND DATEPART(year, CabecDoc.Data) = " + year + " AND DATEPART(month, CabecDoc.Data) = " + month + " AND Clientes.Pais = '" + pais + "'");
+                }
+                else if (controller == "day")
+                {
+                    if (month == null) return 0;
+                    objList = PriEngine.Engine.Consulta(
+                            "SELECT Clientes.Pais, LinhasDoc.Quantidade, LinhasDoc.PrecUnit FROM Clientes, CabecDoc, LinhasDoc WHERE CabecDoc.Entidade = Clientes.Cliente AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND DATEPART(year, CabecDoc.Data) = " + year + " AND DATEPART(month, CabecDoc.Data) = " + month + " AND DATEPART(day, CabecDoc.Data) = " + day + " AND Clientes.Pais = '" + pais + "'");
+                }
+                else return 0;
+
+                while (!objList.NoFim())
+                {
+                    returnDouble += objList.Valor("Quantidade") * objList.Valor("PrecUnit");
+                    objList.Seguinte();
+                }
+            }
+
+            return returnDouble;
+        }
+
+        public static List<string> getAllCountries()
+        {
+            StdBELista objList;
+            List<string> countries = new List<string>();
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta(
+                           "SELECT DISTINCT Clientes.Pais FROM Clientes");
+                while (!objList.NoFim())
+                {
+                    if(objList.Valor("Pais") != "")
+                        countries.Add(objList.Valor("Pais"));
+                    objList.Seguinte();
+                }
+               
+            }
+            return countries;
+
         }
 
         #endregion DocsVenda
