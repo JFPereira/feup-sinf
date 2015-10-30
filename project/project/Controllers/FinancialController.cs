@@ -53,11 +53,11 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public FinancialYearInfo FinancialYtD(int year)
         {
+            FinancialYearInfo result = new FinancialYearInfo();
+
             // DB queries
             List<CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
             List<DocCompra> purchases = Lib_Primavera.PriIntegration.getPurchases();
-
-            FinancialYearInfo result = new FinancialYearInfo();
 
             // Sales
             foreach (var entry in sales)
