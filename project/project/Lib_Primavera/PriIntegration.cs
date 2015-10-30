@@ -1311,9 +1311,8 @@ namespace project.Lib_Primavera
         {
             List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
 
-            if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
-                month = (months.IndexOf(month) + 1).ToString();
-            else month = null;
+            if (month != "01" && month != "03" && month != "05" && month != "07" && month != "08" && month != "10" && month != "12" && month != "04" && month != "06" && month != "09" && month != "11" && month != "02")
+				month = null;
 
             return month;
 
