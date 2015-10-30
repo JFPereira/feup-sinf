@@ -95,7 +95,28 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public List<List<double>> PurchasesYoY(int year)
         {
-            return Lib_Primavera.PriIntegration.getPurchasesYoY(year);
+            List<List<double>> result = new List<List<double>>();
+            for (int i = 0; i < 12; i++)
+                result.Add(new List<double> { -1, -1 });
+
+            // DB query
+            List<DocCompra> purchases = Lib_Primavera.PriIntegration.getPurchases();
+
+            // Purchases total amount
+            foreach (var entry in purchases)
+            {
+                if (entry.Data.Year == year || entry.Data.Year == year - 1)
+                {
+                    double amount = -1 * (entry.TotalMerc + entry.TotalIva);
+
+                    if (result[entry.Data.Month - 1][entry.Data.Year - year + 1] == -1)
+                        result[entry.Data.Month - 1][entry.Data.Year - year + 1] = amount;
+                    else
+                        result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
+                }
+            }
+
+            return result;
         }
 
         // GET api/financial/sales
