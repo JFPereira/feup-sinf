@@ -325,10 +325,9 @@ namespace project.Lib_Primavera
             {
                 objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.PrecUnit from LinhasDoc WHERE Artigo = '" + artigo.CodArtigo + "'");
                 
-                if (objList.NoFim()) return null;
-                else
-                {
+                while (!objList.NoFim()){
                     precos.Add(objList.Valor("PrecUnit"));
+                    objList.Seguinte();
                 }
 
                 return precos;
