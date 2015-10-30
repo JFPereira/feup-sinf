@@ -15,8 +15,10 @@ using project.Items;
 
 namespace project.Lib_Primavera
 {
+
     public class PriIntegration
     {
+
         # region Helpers
 
         private static bool initCompany()
@@ -734,53 +736,6 @@ namespace project.Lib_Primavera
                 erro.Descricao = ex.Message;
                 return erro;
             }
-        }
-
-        public static FinancialYearInfo getFinancialYtD(int year)
-        {
-
-            FinancialYearInfo result = new FinancialYearInfo();
-
-            bool companyInitialized = initCompany();
-
-            if (companyInitialized)
-            {
-                // Purchases
-                StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecCompras.DataVencimento, CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
-
-                while (!objList.NoFim())
-                {
-                    DateTime date = objList.Valor("DataVencimento");
-
-                    if (date.Year == year)
-                    {
-                        result.purchases -= objList.Valor("TotalMerc");
-                        result.purchases -= objList.Valor("TotalIVA");
-                    }
-
-                    objList.Seguinte();
-                }
-
-                // Sales
-                objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.DataVencimento, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
-
-                while (!objList.NoFim())
-                {
-                    DateTime date = objList.Valor("DataVencimento");
-
-                    if (date.Year == year)
-                    {
-                        result.sales += objList.Valor("TotalMerc");
-                        result.sales += objList.Valor("TotalIVA");
-                    }
-
-                    objList.Seguinte();
-                }
-            }
-
-            return result;
         }
 
         public static double getPurchasesTotal()
@@ -1559,5 +1514,7 @@ namespace project.Lib_Primavera
         }
 
         #endregion DocsVenda
+
     }
+
 }
