@@ -1063,26 +1063,53 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static int getSalesProd(string controller, string name)
+        public static double getSalesProd(string controller, string prod, string year, string month, string day)
         {
+            StdBELista objList;
 
-            int quantity = 0;
-
+            double quantity = 0;
             bool companyInitialized = initCompany();
 
-            if (companyInitialized)
-            {
-                if (controller == "year")
-                    quantity = PriEngine.Engine.Consulta("SELECT sum(LinhasDoc.Quantidade) as quantity FROM LinhasDoc,CabecDoc WHERE CabecDoc.Data.Year = DateTime.Now.Year AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.DescArtigo = " + name).Valor("quantity");
-                else if (controller == "month")
-                    quantity = PriEngine.Engine.Consulta("SELECT sum(LinhasDoc.Quantidade) as quantity FROM LinhasDoc,CabecDoc WHERE CabecDoc.Data.Month = DateTime.Now.Month AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.DescArtigo = " + name).Valor("quantity");
-                else if (controller == "day")
-                    quantity = PriEngine.Engine.Consulta("SELECT sum(LinhasDoc.Quantidade) as quantity FROM LinhasDoc,CabecDoc WHERE CabecDoc.Data.Day = DateTime.Now.Day AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.DescArtigo = " + name).Valor("quantity");
+            List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+
+            if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
+                month = (months.IndexOf(month) + 1).ToString();
+
+                if (companyInitialized)
+                {
+                    if (controller == "year")
+                    {
+                        objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade AS quantity, LinhasDoc.PrecUnit AS price FROM LinhasDoc,CabecDoc WHERE DATEPART(year, CabecDoc.Data) = " + year + " AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.Artigo = " + prod);
+                        while (!objList.NoFim())
+                        {
+                            quantity += objList.Valor("quantity")*objList.Valor("price");
+                            objList.Seguinte();
+                        }
+                    }
+                    else if (controller == "month")
+                    {
+                        objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade AS quantity, LinhasDoc.PrecUnit AS price FROM LinhasDoc,CabecDoc WHERE DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year + " AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.Artigo = " + prod);
+                        while (!objList.NoFim())
+                        {
+                            quantity += objList.Valor("quantity") * objList.Valor("price");
+                            objList.Seguinte();
+                        }
+                    }
+                    else if (controller == "day")
+                    {
+                        objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade AS quantity, LinhasDoc.PrecUnit AS price FROM LinhasDoc,CabecDoc WHERE DATEPART(dd,CabecDoc.Data) = " + day + " AND DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = DATEPART(yyyy,GETDATE()) AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.Artigo = " + prod);
+                        while (!objList.NoFim())
+                        {
+                            quantity += objList.Valor("quantity") * objList.Valor("price");
+                            objList.Seguinte();
+                        }
+                    }
 
 
-                return quantity;
 
-            }
+                    return quantity;
+
+                }
             return -1;
 
         }

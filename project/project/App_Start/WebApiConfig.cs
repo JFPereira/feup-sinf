@@ -95,11 +95,26 @@ namespace project
                 defaults: new { controller = "Sales", action = "TopSales" }
             );
 
-            // GET api/sales/top/status
+            // GET api/sales/booking/{year}
             config.Routes.MapHttpRoute(
-                name: "SalesBooking",
-                routeTemplate: "api/sales/booking",
-                defaults: new { controller = "Sales", action = "SalesBooking" }
+                name: "SalesBookingY",
+                routeTemplate: "api/sales/booking/{year}",
+                defaults: new { controller = "Sales", action = "SalesBookingY" },
+                constraints: new { }
+            );
+
+            // GET api/sales/booking/{year}/{month}
+            config.Routes.MapHttpRoute(
+                name: "SalesBookingM",
+                routeTemplate: "api/sales/booking/{year}/{month}",
+                defaults: new { controller = "Sales", action = "SalesBookingM" }
+            );
+
+            // GET api/sales/booking/{year}/{month}/{day}
+            config.Routes.MapHttpRoute(
+                name: "SalesBookingD",
+                routeTemplate: "api/sales/booking/{year}/{month}/{day}",
+                defaults: new { controller = "Sales", action = "SalesBookingD" }
             );
 
             //--------------- Financial ---------------//
