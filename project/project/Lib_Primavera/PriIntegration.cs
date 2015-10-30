@@ -1392,7 +1392,7 @@ namespace project.Lib_Primavera
                         TotalMerc = docsList.Valor("TotalMerc"),
                         TotalIva = docsList.Valor("TotalIva"),
                         Data = docsList.Valor("Data"),
-                        LinhasDoc = getLinesSalesDoc(docsList.Valor("Id"))
+                        LinhasDoc = getSalesDocLines(docsList.Valor("Id"))
                     });
 
                     docsList.Seguinte();
@@ -1404,7 +1404,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static List<Model.LinhaDocVenda> getLinesSalesDoc(string doc_id)
+        public static List<Model.LinhaDocVenda> getSalesDocLines(string doc_id)
         {
             List<Model.LinhaDocVenda> linesDoc = new List<Model.LinhaDocVenda>();
 
@@ -1429,6 +1429,43 @@ namespace project.Lib_Primavera
                         TotalILiquido = linesList.Valor("TotalILiquido"),
                         TotalIva = linesList.Valor("TotalIva"),
                         PrecoLiquido = linesList.Valor("PrecoLiquido")
+                    });
+
+                    linesList.Seguinte();
+                }
+
+                return linesDoc;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.LinhaDocVenda> getSalesDocLinesByClient(string entity)
+        {
+            List<Model.LinhaDocVenda> linesDoc = new List<Model.LinhaDocVenda>();
+
+            StdBELista linesList;
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                linesList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.Quantidade, LinhasDoc.Unidade, LinhasDoc.DescontoComercial, LinhasDoc.PrecUnit, LinhasDoc.TotalILiquido, LinhasDoc.TotalIva, LinhasDoc.PrecoLiquido, LinhasDoc.PCM FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.Entidade = '" + entity + "'");
+
+                while (!linesList.NoFim())
+                {
+                    linesDoc.Add(new Model.LinhaDocVenda
+                    {
+                        Artigo = linesList.Valor("Artigo"),
+                        Descricao = linesList.Valor("Descricao"),
+                        Quantidade = linesList.Valor("Quantidade"),
+                        Unidade = linesList.Valor("Unidade"),
+                        DescontoComercial = linesList.Valor("DescontoComercial"),
+                        PrecoUnitario = linesList.Valor("PrecUnit"),
+                        TotalILiquido = linesList.Valor("TotalILiquido"),
+                        TotalIva = linesList.Valor("TotalIva"),
+                        PrecoLiquido = linesList.Valor("PrecoLiquido"),
+                        PrecoCustoMedio = linesList.Valor("PCM")
                     });
 
                     linesList.Seguinte();

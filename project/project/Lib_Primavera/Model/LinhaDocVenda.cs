@@ -68,5 +68,11 @@ namespace project.Lib_Primavera.Model
              get;
              set;
          }
+
+         public double PrecoCustoMedio
+         {
+             get;
+             set;
+         }
     }
 }

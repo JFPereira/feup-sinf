@@ -31,6 +31,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -300,6 +302,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Items\APCItem.cs" />
+    <Compile Include="Items\CostsVsEarningsItem.cs" />
     <Compile Include="Items\DailyPurchasesItem.cs" />
     <Compile Include="Items\FinancialInfo.cs" />
     <Compile Include="Items\GlobalFinancialItem.cs" />

@@ -308,9 +308,21 @@ namespace project.Controllers
 
         // GET api/clients/{entity}/ce
         [System.Web.Http.HttpGet]
-        public string CostsVsEarnings(string entity)
+        public CostsVsEarningsItem CostsVsEarnings(string entity)
         {
-            return "ola";
+            // gets all lines in sales docs with all the products sold
+            List<LinhaDocVenda> allSoldProducts = Lib_Primavera.PriIntegration.getSalesDocLinesByClient(entity);
+            CostsVsEarningsItem result = new CostsVsEarningsItem();
+
+            foreach (LinhaDocVenda product in allSoldProducts)
+            {
+                result.totalCost += (product.PrecoCustoMedio * product.Quantidade);
+                result.totalEarning += (product.PrecoUnitario * product.Quantidade);
+            }
+
+            result.profit = result.totalEarning - result.totalCost;
+
+            return result;
         }
     }
 }
