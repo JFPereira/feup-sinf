@@ -820,6 +820,29 @@ namespace project.Lib_Primavera
                 return null;
         }
 
+        public static double getMonthlyPurchases(int month, int year)
+        {
+            double total = 0;
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras WHERE MONTH(CabecCompras.DataDoc) = " + month + " AND YEAR(CabecCompras.DataDoc) = " + year );
+
+                while (!objList.NoFim())
+                {
+                    total += objList.Valor("TotalMerc");
+                    total += objList.Valor("TotalIVA");
+
+                    objList.Seguinte();
+                }
+            }
+
+            return total;
+        }
+
         #endregion DocCompra
 
         #region DocsVenda
@@ -1230,6 +1253,29 @@ namespace project.Lib_Primavera
             }
             else
                 return null;
+        }
+
+        public static double getMonthlySales(int month, int year)
+        {
+            double total = 0;
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE MONTH(CabecDoc.Data) = " + month + " AND YEAR(CabecDoc.Data) = " + year);
+
+                while (!objList.NoFim())
+                {
+                    total += objList.Valor("TotalMerc");
+                    total += objList.Valor("TotalIVA");
+
+                    objList.Seguinte();
+                }
+            }
+
+            return total;
         }
 
         public static List<Model.CabecDoc> getDailyPurchases(string client_id, string dateStart, string dateEnd)
