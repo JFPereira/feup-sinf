@@ -392,7 +392,7 @@ namespace project.Lib_Primavera
             else
                 return null;
         }
-        
+
         public static Lib_Primavera.Model.Artigo GetTopClientesArtigo(Model.Artigo artigo)
         {
             StdBELista objList;
@@ -400,7 +400,7 @@ namespace project.Lib_Primavera
             List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
 
             bool companyInitialized = initCompany();
-            
+
             if (companyInitialized)
             {
                 objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND LinhasDoc.Artigo = " + artigo.CodArtigo);
@@ -462,7 +462,7 @@ namespace project.Lib_Primavera
             }
             else
                 return null;
-       
+
         }
 
         public static List<Model.Artigo> ListaArtigos()
@@ -698,6 +698,41 @@ namespace project.Lib_Primavera
             }
 
             return total;
+        }
+
+        public static List<List<double>> getPurchasesYoY(int year)
+        {
+            List<List<double>> result = new List<List<double>>();
+
+            for (int i = 0; i < 12; i++)
+                result.Add(new List<double> { -1, -1 });
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecCompras.DataVencimento, CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
+
+                while (!objList.NoFim())
+                {
+                    DateTime date = objList.Valor("DataVencimento");
+
+                    if (date.Year == year || date.Year == year - 1)
+                    {
+                        double amount = -1 * (objList.Valor("TotalMerc") + objList.Valor("TotalIVA"));
+
+                        if (result[date.Month - 1][date.Year - year + 1] == -1)
+                            result[date.Month - 1][date.Year - year + 1] = amount;
+                        else
+                            result[date.Month - 1][date.Year - year + 1] += amount;
+                    }
+
+                    objList.Seguinte();
+                }
+            }
+
+            return result;
         }
 
         public static List<Model.DocCompra> getPurchases()

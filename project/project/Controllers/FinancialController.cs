@@ -36,6 +36,13 @@ namespace project.Controllers
             return Lib_Primavera.PriIntegration.getPurchasesTotal();
         }
 
+        // GET api/financial/purchases/yoy/{year}
+        [System.Web.Http.HttpGet]
+        public List<List<double>> PurchasesYoY(int year)
+        {
+            return Lib_Primavera.PriIntegration.getPurchasesYoY(year);
+        }
+
         // GET api/financial/sales
         [System.Web.Http.HttpGet]
         public double Sales()
