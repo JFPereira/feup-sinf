@@ -1074,6 +1074,7 @@ namespace project.Lib_Primavera
 
             if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
                 month = (months.IndexOf(month) + 1).ToString();
+            else month = null;
 
                 if (companyInitialized)
                 {
@@ -1088,6 +1089,7 @@ namespace project.Lib_Primavera
                     }
                     else if (controller == "month")
                     {
+                        if (month == null) { return 0; }
                         objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade AS quantity, LinhasDoc.PrecUnit AS price FROM LinhasDoc,CabecDoc WHERE DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year + " AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.Artigo = " + prod);
                         while (!objList.NoFim())
                         {
@@ -1097,7 +1099,8 @@ namespace project.Lib_Primavera
                     }
                     else if (controller == "day")
                     {
-                        objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade AS quantity, LinhasDoc.PrecUnit AS price FROM LinhasDoc,CabecDoc WHERE DATEPART(dd,CabecDoc.Data) = " + day + " AND DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = DATEPART(yyyy,GETDATE()) AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.Artigo = " + prod);
+                        if (month == null) { return 0; }
+                        objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade AS quantity, LinhasDoc.PrecUnit AS price FROM LinhasDoc,CabecDoc WHERE DATEPART(dd,CabecDoc.Data) = " + day + " AND DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year + " AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.Artigo = " + prod);
                         while (!objList.NoFim())
                         {
                             quantity += objList.Valor("quantity") * objList.Valor("price");
@@ -1385,6 +1388,59 @@ namespace project.Lib_Primavera
             }
             else
                 return null;
+        }
+
+        public static List<RegSalesBookingItem> getSalesBookingReg(string controller, string year, string month, string day)
+        {
+            List<RegSalesBookingItem> returnList = new List<RegSalesBookingItem>();
+            StdBELista objList;
+
+            bool companyInitialized = initCompany();
+
+            List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+
+            if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
+                month = (months.IndexOf(month) + 1).ToString();
+            else month = null;
+
+            if (companyInitialized)
+            {
+                if (controller == "year")
+                {
+                    objList = PriEngine.Engine.Consulta(
+                            "SELECT Clientes.Pais, LinhasDoc.Quantidade, LinhasDoc.PrecUnit FROM Clientes, CabecDoc, LinhasDoc WHERE CabecDoc.Entidade = Clientes.Cliente AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND DATEPART(year, CabecDoc.Data) = " + year);
+                }
+                else if (controller == "month")
+                {
+                    if(month == null) return null;
+                     objList = PriEngine.Engine.Consulta(
+                            "SELECT Clientes.Pais, LinhasDoc.Quantidade, LinhasDoc.PrecUnit FROM Clientes, CabecDoc, LinhasDoc WHERE CabecDoc.Entidade = Clientes.Cliente AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND DATEPART(year, CabecDoc.Data) = " + year + " AND DATEPART(month, CabecDoc.Data) = " + month);
+                }
+                else if (controller == "day")
+                {
+                    if(month == null) return null;
+                    objList = PriEngine.Engine.Consulta(
+                                                "SELECT Clientes.Pais, LinhasDoc.Quantidade, LinhasDoc.PrecUnit FROM Clientes, CabecDoc, LinhasDoc WHERE CabecDoc.Entidade = Clientes.Cliente AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND DATEPART(year, CabecDoc.Data) = " + year + " AND DATEPART(month, CabecDoc.Data) = " + month + " AND DATEPART(day, CabecDoc.Data) = " + day);
+                }
+                else return null;
+                
+                while(!objList.NoFim()){
+                    if(returnList.Exists(e => e.pais == objList.Valor("Pais"))){
+                        returnList.Find(e => e.pais == objList.Valor("Pais")).valorVendas += objList.Valor("Quantidade") * objList.Valor("PrecUnit");
+                    }
+                    else
+                        returnList.Add(new RegSalesBookingItem{
+                            pais = objList.Valor("Pais"),
+                            valorVendas = objList.Valor("Quantidade") * objList.Valor("PrecUnit")
+                        });
+                    objList.Seguinte();
+                }
+
+                returnList = returnList.OrderBy(e => e.valorVendas).Reverse().ToList();
+                    
+            }
+
+            return returnList;
         }
 
         #endregion DocsVenda

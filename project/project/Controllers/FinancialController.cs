@@ -91,6 +91,27 @@ namespace project.Controllers
             return Lib_Primavera.PriIntegration.getTop10SalesCountries();
         }
 
+        // GET api/financial/salesbooking/{year}
+        [System.Web.Http.HttpGet]
+        public List<RegSalesBookingItem> SalesBookingRegY(string year)
+        {
+            return Lib_Primavera.PriIntegration.getSalesBookingReg("year",year,null,null);
+        }
+
+        // GET api/financial/salesbooking/{year}/{month}
+        [System.Web.Http.HttpGet]
+        public List<RegSalesBookingItem> SalesBookingRegM(string year, string month)
+        {
+            return Lib_Primavera.PriIntegration.getSalesBookingReg("month", year, month, null);
+        }
+
+        // GET api/financial/salesbooking/{year}/{month}/{day}
+        [System.Web.Http.HttpGet]
+        public List<RegSalesBookingItem> SalesBookingRegD(string year, string month, string day)
+        {
+            return Lib_Primavera.PriIntegration.getSalesBookingReg("day", year, month, day);
+        }
+
     }
 
 }

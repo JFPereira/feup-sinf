@@ -38,7 +38,7 @@ namespace project.Controllers
             return result;
         }
 
-        // GET api/sales/booking/{year}
+        // GET api/sales/psb/{year}
         [System.Web.Http.HttpGet]
         public List<SalesBookingItem> SalesBookingY(string year)
         {
@@ -58,7 +58,7 @@ namespace project.Controllers
             return returnList;
         }
 
-        // GET api/sales/booking/{year}/{month}
+        // GET api/sales/psb/{year}/{month}
         [System.Web.Http.HttpGet]
         public List<SalesBookingItem> SalesBookingM(string year, string month)
         {
@@ -80,7 +80,7 @@ namespace project.Controllers
             return returnList;
         }
 
-        // GET api/sales/booking/{year}/{month}/{day}
+        // GET api/sales/psb/{year}/{month}/{day}
         [System.Web.Http.HttpGet]
         public List<SalesBookingItem> SalesBookingD(string year, string month, string day)
         {

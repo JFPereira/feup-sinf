@@ -94,25 +94,25 @@ namespace project
                 defaults: new { controller = "Sales", action = "TopSales" }
             );
 
-            // GET api/sales/booking/{year}
+            // GET api/sales/psb/{year}
             config.Routes.MapHttpRoute(
                 name: "SalesBookingY",
-                routeTemplate: "api/sales/booking/{year}",
+                routeTemplate: "api/sales/psb/{year}",
                 defaults: new { controller = "Sales", action = "SalesBookingY" },
                 constraints: new { }
             );
 
-            // GET api/sales/booking/{year}/{month}
+            // GET api/sales/psb/{year}/{month}
             config.Routes.MapHttpRoute(
                 name: "SalesBookingM",
-                routeTemplate: "api/sales/booking/{year}/{month}",
+                routeTemplate: "api/sales/psb/{year}/{month}",
                 defaults: new { controller = "Sales", action = "SalesBookingM" }
             );
 
-            // GET api/sales/booking/{year}/{month}/{day}
+            // GET api/sales/psb/{year}/{month}/{day}
             config.Routes.MapHttpRoute(
                 name: "SalesBookingD",
-                routeTemplate: "api/sales/booking/{year}/{month}/{day}",
+                routeTemplate: "api/sales/psb/{year}/{month}/{day}",
                 defaults: new { controller = "Sales", action = "SalesBookingD" }
             );
 
@@ -175,6 +175,28 @@ namespace project
                 name: "FinancialTop10Sales",
                 routeTemplate: "api/financial/top10sales",
                 defaults: new { controller = "Financial", action = "Top10SalesCountries" }
+            );
+
+            // GET api/financial/salesbooking/{year}
+            config.Routes.MapHttpRoute(
+                name: "RegSalesBookingY",
+                routeTemplate: "api/financial/salesbooking/{year}",
+                defaults: new { controller = "Financial", action = "SalesBookingRegY" },
+                constraints: new { }
+            );
+
+            // GET api/financial/salesbooking/{year}/{month}
+            config.Routes.MapHttpRoute(
+                name: "RegSalesBookingM",
+                routeTemplate: "api/financial/salesbooking/{year}/{month}",
+                defaults: new { controller = "Financial", action = "SalesBookingRegM" }
+            );
+
+            // GET api/sales/salesbooking/{year}/{month}/{day}
+            config.Routes.MapHttpRoute(
+                name: "RegSalesBookingD",
+                routeTemplate: "api/financial/salesbooking/{year}/{month}/{day}",
+                defaults: new { controller = "Financial", action = "SalesBookingRegD" }
             );
 
             //--------------- Defaut Route ---------------//
