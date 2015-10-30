@@ -1136,29 +1136,6 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static double getSalesTotal()
-        {
-            double total = 0;
-
-            bool companyInitialized = initCompany();
-
-            if (companyInitialized)
-            {
-                StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
-
-                while (!objList.NoFim())
-                {
-                    total += objList.Valor("TotalMerc");
-                    total += objList.Valor("TotalIVA");
-
-                    objList.Seguinte();
-                }
-            }
-
-            return total;
-        }
-
         public static List<List<double>> getSalesYoY(int year)
         {
             List<List<double>> result = new List<List<double>>();
