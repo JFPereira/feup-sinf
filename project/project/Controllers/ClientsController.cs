@@ -154,7 +154,7 @@ namespace project.Controllers
                 return null;
 
             // get all the target sales docs
-            docs = Lib_Primavera.PriIntegration.getDailyPurchases(id, dateStart, dateEnd);
+            docs = Lib_Primavera.PriIntegration.getClientDailyPurchases(id, dateStart, dateEnd);
 
             foreach (Lib_Primavera.Model.CabecDoc doc in docs) {
                 if (days.Exists(e => e.day == doc.Datatime.Day))

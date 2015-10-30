@@ -1351,7 +1351,7 @@ namespace project.Lib_Primavera
             return total;
         }
 
-        public static List<Model.CabecDoc> getDailyPurchases(string client_id, string dateStart, string dateEnd)
+        public static List<Model.CabecDoc> getClientDailyPurchases(string client_id, string dateStart, string dateEnd)
         {
             StdBELista objList;
 
@@ -1361,7 +1361,7 @@ namespace project.Lib_Primavera
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva, CabecDoc.Data, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte FROM CabecDoc WHERE '" + dateStart + "' <= CONVERT(DATE, CabecDoc.Data) AND CONVERT(DATE, CabecDoc.Data) <= '" + dateEnd + "'");
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva, CabecDoc.Data, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte FROM CabecDoc WHERE '" + dateStart + "' <= CONVERT(DATE, CabecDoc.Data) AND CONVERT(DATE, CabecDoc.Data) <= '" + dateEnd + "' AND CabecDoc.Entidade = '" + client_id + "'");
                 while (!objList.NoFim())
                 {
                     sales.Add(new Model.CabecDoc
