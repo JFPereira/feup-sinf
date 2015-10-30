@@ -135,21 +135,17 @@ namespace project.Controllers
             // list with the final core view items
             List<Items.DailyPurchasesItem> days = new List<DailyPurchasesItem>();
 
-            // validate month obtained in route
-            if (checkMonth(month))
-            {
-                dates = processDates(month, year);
+            // processing dates
+            dates = processDates(month, year);
 
-                dateStart = dates.ElementAt(0);
-                dateEnd = dates.ElementAt(1);
-            }
-            else
-                return null;
+            dateStart = dates.ElementAt(0);
+            dateEnd = dates.ElementAt(1);
 
             // get all the target sales docs
             docs = Lib_Primavera.PriIntegration.getClientDailyPurchases(id, dateStart, dateEnd);
 
-            foreach (Lib_Primavera.Model.CabecDoc doc in docs) {
+            foreach (Lib_Primavera.Model.CabecDoc doc in docs)
+            {
                 if (days.Exists(e => e.day == doc.Data.Day))
                 {
                     days.Find(e => e.day == doc.Data.Day).numPurchase++;
@@ -183,28 +179,98 @@ namespace project.Controllers
             return days.OrderBy(e => e.day).ToList(); ;
         }
 
-        // static variable to the list of available months
-        static List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+        // GET api/clients/{id}/monthly-purchases/{year}
+        [System.Web.Http.HttpGet]
+        public List<Items.MonthlyPurchasesItem> MonthlyPurchases(string id, string year)
+        {
+            // date interval between the target sales documents
+            string dateStart, dateEnd;
+
+            // list to save the dates which would be process on route
+            List<string> dates = new List<string>();
+
+            // list with all the target sales docs
+            List<Lib_Primavera.Model.CabecDoc> docs = new List<CabecDoc>();
+
+            // list with the final core view items
+            List<Items.MonthlyPurchasesItem> months = new List<MonthlyPurchasesItem>();
+
+            // processing dates
+            dates = processDates(null, year);
+
+            // start date for search
+            dateStart = dates.ElementAt(0);
+
+            // end date for search
+            dateEnd = dates.ElementAt(1);
+
+            // get all the target sales docs
+            docs = Lib_Primavera.PriIntegration.getClientDailyPurchases(id, dateStart, dateEnd);
+
+            foreach (Lib_Primavera.Model.CabecDoc doc in docs)
+            {
+                if (months.Exists(e => e.month == doc.Data.Month.ToString()))
+                {
+                    months.Find(e => e.month == doc.Data.Month.ToString()).numPurchase++;
+                    months.Find(e => e.month == doc.Data.Month.ToString()).salesVolume += (doc.TotalIva + doc.TotalMerc);
+                }
+                else
+                {
+                    months.Add(new MonthlyPurchasesItem
+                    {
+                        month = doc.Data.Month.ToString(),
+                        numPurchase = 1,
+                        salesVolume = (doc.TotalMerc + doc.TotalIva)
+                    });
+                }
+            }
+
+            //adding remaining months that have not a purchase
+            for (int month = 1; month <= totalElems; month++)
+            {
+                string month_str;
+
+                if (month < 10)
+                    month_str = "0" + month.ToString();
+                else
+                    month_str = month.ToString();
+
+                if (!months.Exists(e => e.month == month.ToString()))
+                {
+                    months.Add(new MonthlyPurchasesItem
+                    {
+                        month = month_str,
+                        numPurchase = 0,
+                        salesVolume = 0
+                    });
+                }
+            }
+
+            return months.OrderBy(e => e.month).ToList(); ;
+        }
 
         // process the date interval and assign the total elements that will have the WS DailyPurchases/MonthlyPurchases
         public List<string> processDates(string month, string year)
         {
-            List<string>dates = new List<string>();
+            List<string> dates = new List<string>();
 
             if (month != null)
             {
-                dates.Add("" + year + "-" + (months.IndexOf(month) + 1) + "-" + "01");
+                dates.Add("" + year + "-" + month + "-" + "01");
 
-                if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december") {
-                    dates.Add("" + year + "-" + (months.IndexOf(month) + 1).ToString() + "-31");
+                if (month == "01" || month == "03" || month == "05" || month == "07" || month == "08" || month == "10" || month == "12")
+                {
+                    dates.Add("" + year + "-" + month + "-31");
                     totalElems = 31;
                 }
-                else if (month == "april" || month == "june" || month == "september" || month == "november") {
-                    dates.Add("" + year + "-" + (months.IndexOf(month) + 1).ToString() + "-30");
+                else if (month == "04" || month == "06" || month == "09" || month == "11")
+                {
+                    dates.Add("" + year + "-" + month + "-30");
                     totalElems = 30;
                 }
-                else {
-                    dates.Add("" + year + "-" + (months.IndexOf(month) + 1).ToString() + "-28");
+                else
+                {
+                    dates.Add("" + year + "-02-28");
                     totalElems = 28;
                 }
             }
@@ -218,14 +284,7 @@ namespace project.Controllers
             return dates;
         }
 
-        public bool checkMonth(string month)
-        {
-            bool result = (months.Exists(e => e == month)) ?  true :  false;
-
-            return result;
-        }
-
-        // GET api/clients/{id}/apc
+        // GET api/clients/{entity}/apc
         [System.Web.Http.HttpGet]
         public APCItem AveragePurchaseCost(string entity)
         {
@@ -233,12 +292,12 @@ namespace project.Controllers
 
             double totalPurchaseVolume = 0;
 
-            result.docs = Lib_Primavera.PriIntegration.getClientPurchases(entity);
+            result.details = Lib_Primavera.PriIntegration.getClientPurchases(entity);
 
-            result.numPurchases = result.docs.Count();
+            result.numPurchases = result.details.Count();
 
             for (int i = 0; i < result.numPurchases; i++)
-                totalPurchaseVolume += (result.docs.ElementAt(i).TotalMerc + result.docs.ElementAt(i).TotalIva);
+                totalPurchaseVolume += (result.details.ElementAt(i).TotalMerc + result.details.ElementAt(i).TotalIva);
 
             result.averagePurchaseCost = totalPurchaseVolume / result.numPurchases;
 

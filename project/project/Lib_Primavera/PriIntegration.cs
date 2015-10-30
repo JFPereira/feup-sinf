@@ -1308,6 +1308,40 @@ namespace project.Lib_Primavera
                 return null;
         }
 
+        public static List<Model.CabecDoc> getClientMonthlyPurchases(string client_id, string dateStart, string dateEnd)
+        {
+            StdBELista objList;
+
+            List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva, CabecDoc.Data, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte FROM CabecDoc WHERE '" + dateStart + "' <= CONVERT(DATE, CabecDoc.Data) AND CONVERT(DATE, CabecDoc.Data) <= '" + dateEnd + "' AND CabecDoc.Entidade = '" + client_id + "'");
+                while (!objList.NoFim())
+                {
+                    sales.Add(new Model.CabecDoc
+                    {
+                        Entidade = client_id,
+                        Nome = objList.Valor("Nome"),
+                        NumDoc = objList.Valor("NumDoc"),
+                        NumContribuinte = objList.Valor("NumContribuinte"),
+                        TotalMerc = objList.Valor("TotalMerc"),
+                        TotalIva = objList.Valor("TotalIva"),
+                        LinhasDoc = null,
+                        Data = objList.Valor("Data"),
+                    });
+
+                    objList.Seguinte();
+                }
+
+                return sales;
+            }
+            else
+                return null;
+        }
+
         public static string checkMonth(string month)
         {
             List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };

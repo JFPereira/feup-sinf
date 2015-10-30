@@ -2,25 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using project.Lib_Primavera;
 
 namespace project.Items
 {
-    public class APCItem
+    public class MonthlyPurchasesItem
     {
-        public double averagePurchaseCost
+        public string month
         {
             get;
             set;
         }
 
-        public int numPurchases
+        public int numPurchase
         {
             get;
             set;
         }
 
-        public List<Lib_Primavera.Model.CabecDoc> details
+        public double salesVolume
         {
             get;
             set;
