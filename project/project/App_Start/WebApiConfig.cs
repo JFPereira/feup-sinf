@@ -58,7 +58,7 @@ namespace project
             // GET api/clients/{id}/apc
             config.Routes.MapHttpRoute(
                 name: "AveragePurchaseCost",
-                routeTemplate: "api/clients/{id}/apc",
+                routeTemplate: "api/clients/{entity}/apc",
                 defaults: new { controller = "Clients", action = "AveragePurchaseCost" }
                 );
 

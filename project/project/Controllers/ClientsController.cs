@@ -88,17 +88,17 @@ namespace project.Controllers
 
             foreach (LinhaDocVenda product in allProducts)
             {
-                if (result.Exists(e => e.codArtigo == product.CodArtigo))
+                if (result.Exists(e => e.codArtigo == product.Artigo))
                 {
-                    result.Find(e => e.codArtigo == product.CodArtigo).quantity += product.Quantidade;
-                    result.Find(e => e.codArtigo == product.CodArtigo).salesVolume += product.PrecoLiquido;
+                    result.Find(e => e.codArtigo == product.Artigo).quantity += product.Quantidade;
+                    result.Find(e => e.codArtigo == product.Artigo).salesVolume += product.PrecoLiquido;
                 }
                 else
                 {
                     result.Add(new TopProductsItem
                     {
-                        codArtigo = product.CodArtigo,
-                        description = product.DescArtigo,
+                        codArtigo = product.Artigo,
+                        description = product.Descricao,
                         quantity = product.Quantidade,
                         salesVolume = product.PrecoLiquido,
                         percentage = ""
@@ -227,11 +227,20 @@ namespace project.Controllers
 
         // GET api/clients/{id}/apc
         [System.Web.Http.HttpGet]
-        public Items.APCItem AveragePurchaseCost(string id)
+        public APCItem AveragePurchaseCost(string entity)
         {
-            Items.APCItem result = new Items.APCItem();
+            APCItem result = new APCItem();
 
+            double totalPurchaseVolume = 0;
 
+            result.docs = Lib_Primavera.PriIntegration.getClientPurchases(entity);
+
+            result.numPurchases = result.docs.Count();
+
+            for (int i = 0; i < result.numPurchases; i++)
+                totalPurchaseVolume += (result.docs.ElementAt(i).TotalMerc + result.docs.ElementAt(i).TotalIva);
+
+            result.averagePurchaseCost = totalPurchaseVolume / result.numPurchases;
 
             return result;
         }

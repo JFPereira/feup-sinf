@@ -9,13 +9,13 @@ namespace project.Lib_Primavera.Model
     public class LinhaDocCompra
     {
 
-        public string CodArtigo
+        public string Artigo
         {
             get;
             set;
         }
 
-        public string DescArtigo
+        public string Descricao
         {
             get;
             set;

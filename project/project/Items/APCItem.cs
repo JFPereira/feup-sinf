@@ -8,7 +8,7 @@ namespace project.Items
 {
     public class APCItem
     {
-        public double totalPurchaseVolume
+        public double averagePurchaseCost
         {
             get;
             set;

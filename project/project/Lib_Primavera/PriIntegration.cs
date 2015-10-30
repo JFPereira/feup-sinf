@@ -431,16 +431,13 @@ namespace project.Lib_Primavera
                 {
                     sales.Add(new Model.CabecDoc
                     {
-                        Id = null,
                         Entidade = objList.Valor("Entidade"),
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
                         TotalMerc = objList.Valor("TotalMerc"),
                         TotalIva = objList.Valor("TotalIva"),
-                        LinhasDoc = null,
                         Datatime = objList.Valor("Data"),
-                        Serie = null
                     });
 
                     objList.Seguinte();
@@ -540,12 +537,12 @@ namespace project.Lib_Primavera
                 {
                     listProducts.Add(new Model.LinhaDocVenda
                     {
-                        CodArtigo = objList.Valor("Artigo"),
-                        DescArtigo = objList.Valor("Descricao"),
+                        Artigo = objList.Valor("Artigo"),
+                        Descricao = objList.Valor("Descricao"),
                         TotalILiquido = objList.Valor("TotalILiquido"),
                         TotalIva = objList.Valor("TotalIva"),
                         Quantidade = objList.Valor("Quantidade"),
-                        Desconto = 0,
+                        DescontoComercial = 0,
                         IdCabecDoc = "",
                         Unidade = "",
                         PrecoUnitario = 0,
@@ -658,8 +655,8 @@ namespace project.Lib_Primavera
                     {
                         lindc = new Model.LinhaDocCompra();
                         lindc.IdCabecDoc = objListLin.Valor("idCabecCompras");
-                        lindc.CodArtigo = objListLin.Valor("Artigo");
-                        lindc.DescArtigo = objListLin.Valor("Descricao");
+                        lindc.Artigo = objListLin.Valor("Artigo");
+                        lindc.Descricao = objListLin.Valor("Descricao");
                         lindc.Quantidade = objListLin.Valor("Quantidade");
                         lindc.Unidade = objListLin.Valor("Unidade");
                         lindc.Desconto = objListLin.Valor("Desconto1");
@@ -710,7 +707,7 @@ namespace project.Lib_Primavera
                     PriEngine.Engine.Comercial.Compras.PreencheDadosRelacionados(myGR, rl);
                     foreach (Model.LinhaDocCompra lin in lstlindv)
                     {
-                        PriEngine.Engine.Comercial.Compras.AdicionaLinha(myGR, lin.CodArtigo, lin.Quantidade, lin.Armazem, "", lin.PrecoUnitario, lin.Desconto);
+                        PriEngine.Engine.Comercial.Compras.AdicionaLinha(myGR, lin.Artigo, lin.Quantidade, lin.Armazem, "", lin.PrecoUnitario, lin.Desconto);
                     }
 
 
@@ -1104,16 +1101,13 @@ namespace project.Lib_Primavera
                 {
                     sales.Add(new Model.CabecDoc
                     {
-                        Id = null,
                         Entidade = objList.Valor("Entidade"),
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
                         TotalMerc = objList.Valor("TotalMerc"),
                         TotalIva = objList.Valor("TotalIva"),
-                        LinhasDoc = null,
                         Datatime = objList.Valor("Data"),
-                        Serie = null
                     });
 
                     objList.Seguinte();
@@ -1196,11 +1190,11 @@ namespace project.Lib_Primavera
                 {
                     lindv = new Model.LinhaDocVenda();
                     lindv.IdCabecDoc = objList.Valor("idCabecDoc");
-                    lindv.CodArtigo = objList.Valor("Artigo");
-                    lindv.DescArtigo = objList.Valor("Descricao");
+                    lindv.Artigo = objList.Valor("Artigo");
+                    lindv.Descricao = objList.Valor("Descricao");
                     lindv.Quantidade = objList.Valor("Quantidade");
                     lindv.Unidade = objList.Valor("Unidade");
-                    lindv.Desconto = objList.Valor("Desconto1");
+                    lindv.DescontoComercial = objList.Valor("Desconto1");
                     lindv.PrecoUnitario = objList.Valor("PrecUnit");
                     lindv.TotalILiquido = objList.Valor("TotalILiquido");
                     lindv.TotalIva = objList.Valor("TotalIva");
@@ -1392,7 +1386,6 @@ namespace project.Lib_Primavera
                 {
                     sales.Add(new Model.CabecDoc
                     {
-                        Id = null,
                         Entidade = client_id,
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
@@ -1401,7 +1394,6 @@ namespace project.Lib_Primavera
                         TotalIva = objList.Valor("TotalIva"),
                         LinhasDoc = null,
                         Datatime = objList.Valor("Data"),
-                        Serie = null
                     });
 
                     objList.Seguinte();
@@ -1481,31 +1473,68 @@ namespace project.Lib_Primavera
         {
             List<Model.CabecDoc> docs = new List<Model.CabecDoc>();
 
-            StdBELista objList;
+            StdBELista docsList;
+            
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                docsList = PriEngine.Engine.Consulta("SELECT CabecDoc.Id, CabecDoc.TotalMerc, CabecDoc.TotalIva, CabecDoc.Data, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte FROM CabecDoc WHERE CabecDoc.Entidade = '" + entity + "'");
+                while (!docsList.NoFim())
+                {
+                    docs.Add(new Model.CabecDoc
+                    {
+                        id = docsList.Valor("Id"),
+                        Entidade = entity,
+                        Nome = docsList.Valor("Nome"),
+                        NumDoc = docsList.Valor("NumDoc"),
+                        NumContribuinte = docsList.Valor("NumContribuinte"),
+                        TotalMerc = docsList.Valor("TotalMerc"),
+                        TotalIva = docsList.Valor("TotalIva"),
+                        Datatime = docsList.Valor("Data"),
+                        LinhasDoc = getLinesSalesDoc(docsList.Valor("Id"))
+                    });
+
+                    docsList.Seguinte();
+                }
+
+                return docs;
+            }
+            else
+                return null;
+        }
+
+        public static List<Model.LinhaDocVenda> getLinesSalesDoc(string doc_id)
+        {
+            List<Model.LinhaDocVenda> linesDoc = new List<Model.LinhaDocVenda>();
+
+            StdBELista linesList;
 
             bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Entidade, CabecDoc.TotalMerc, CabecDoc.TotalIva, CabecDoc.Data, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte FROM CabecDoc WHERE CabecDoc.Entidade = '" + entity + "'");
-                while (!objList.NoFim())
+                linesList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.Quantidade, LinhasDoc.Unidade, LinhasDoc.DescontoComercial, LinhasDoc.PrecUnit, LinhasDoc.TotalILiquido, LinhasDoc.TotalIva, LinhasDoc.PrecoLiquido FROM LinhasDoc WHERE LinhasDoc.IdCabecDoc = '" + doc_id + "'");
+
+                while (!linesList.NoFim())
                 {
-                    docs.Add(new Model.CabecDoc
+                    linesDoc.Add(new Model.LinhaDocVenda
                     {
-                        Entidade = entity,
-                        Nome = objList.Valor("Nome"),
-                        NumDoc = objList.Valor("NumDoc"),
-                        NumContribuinte = objList.Valor("NumContribuinte"),
-                        TotalMerc = objList.Valor("TotalMerc"),
-                        TotalIva = objList.Valor("TotalIva"),
-                        LinhasDoc = null,
-                        Datatime = objList.Valor("Data"),
+                        Artigo = linesList.Valor("Artigo"),
+                        Descricao = linesList.Valor("Descricao"),
+                        Quantidade = linesList.Valor("Quantidade"),
+                        Unidade = linesList.Valor("Unidade"),
+                        DescontoComercial = linesList.Valor("DescontoComercial"),
+                        PrecoUnitario = linesList.Valor("PrecUnit"),
+                        TotalILiquido = linesList.Valor("TotalILiquido"),
+                        TotalIva = linesList.Valor("TotalIva"),
+                        PrecoLiquido = linesList.Valor("PrecoLiquido")
                     });
 
-                    objList.Seguinte();
+                    linesList.Seguinte();
                 }
 
-                return docs;
+                return linesDoc;
             }
             else
                 return null;

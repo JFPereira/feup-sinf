@@ -9,13 +9,13 @@ namespace project.Lib_Primavera.Model
     {
 
 
-        public string CodArtigo
+        public string Artigo
         {
             get;
             set;
         }
 
-         public string DescArtigo
+         public string Descricao
         {
             get;
             set;
@@ -39,7 +39,7 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-         public double Desconto
+         public double DescontoComercial
         {
             get;
             set;

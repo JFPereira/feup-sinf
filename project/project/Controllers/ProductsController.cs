@@ -79,7 +79,7 @@ namespace project.Controllers
 
             foreach (LinhaDocVenda product in products)
             {
-                string cod = product.CodArtigo;
+                string cod = product.Artigo;
                     if (result.Exists(e => e.codArtigo == cod))
                     {
                         result.Find(e => e.codArtigo == cod).salesVolume += (product.PrecoLiquido);
@@ -89,7 +89,7 @@ namespace project.Controllers
                     {
                         result.Add(new TopProductsItem
                         {
-                            description = product.DescArtigo,
+                            description = product.Descricao,
                             codArtigo = cod,
                             salesVolume = product.TotalILiquido,
                             quantity = product.Quantidade,

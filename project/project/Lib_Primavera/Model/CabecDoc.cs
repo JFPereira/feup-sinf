@@ -7,6 +7,12 @@ namespace project.Lib_Primavera.Model
 {
     public class CabecDoc
     {
+        public string id
+        {
+            get;
+            set;
+        }
+
         public string Entidade
         {
             get;
