@@ -677,6 +677,55 @@ namespace project.Lib_Primavera
             }
         }
 
+        public static FinancialInfo getFinancialYtD(int year)
+        {
+            FinancialInfo result = new FinancialInfo();
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                // Purchases
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecCompras.DataVencimento, CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
+
+                while (!objList.NoFim())
+                {
+                    DateTime date = objList.Valor("DataVencimento");
+
+                    if (date.Year == year)
+                    {
+                        result.purchases -= objList.Valor("TotalMerc");
+                        result.purchases -= objList.Valor("TotalIVA");
+                    }
+
+                    objList.Seguinte();
+                }
+
+                // Sales
+                objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecDoc.DataVencimento, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
+
+                while (!objList.NoFim())
+                {
+                    DateTime date = objList.Valor("DataVencimento");
+
+                    if (date.Year == year)
+                    {
+                        result.sales += objList.Valor("TotalMerc");
+                        result.sales += objList.Valor("TotalIVA");
+                    }
+
+                    objList.Seguinte();
+                }
+
+                // Revenue
+                result.revenue = result.sales - result.purchases;
+            }
+
+            return result;
+        }
+
         public static double getPurchasesTotal()
         {
             double total = 0;

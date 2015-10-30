@@ -29,6 +29,13 @@ namespace project.Controllers
             return "Tamos tesos. No money. Ja tas Cândido";
         }
 
+        // GET api/financial/ytd/{year}
+        [System.Web.Http.HttpGet]
+        public FinancialInfo FinancialYtD(int year)
+        {
+            return Lib_Primavera.PriIntegration.getFinancialYtD(year);
+        }
+
         // GET api/financial/purchases
         [System.Web.Http.HttpGet]
         public double Purchases()
