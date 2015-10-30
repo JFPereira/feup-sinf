@@ -14,6 +14,7 @@ namespace project.Controllers
 {
     public class SalesController : ApiController
     {
+        //returns 10 top sales of all time
         // GET api/sales/top
         [System.Web.Http.HttpGet]
         public List<TopSalesItem> TopSales()
@@ -38,6 +39,7 @@ namespace project.Controllers
             return result;
         }
 
+        //returns a list with the 10 top products and volume of sales in a year
         // GET api/sales/psb/{year}
         [System.Web.Http.HttpGet]
         public List<SalesBookingItem> SalesBookingY(string year)
@@ -58,6 +60,7 @@ namespace project.Controllers
             return returnList;
         }
 
+        //returns a list with the 10 top products and volume of sales in a certain year and month
         // GET api/sales/psb/{year}/{month}
         [System.Web.Http.HttpGet]
         public List<SalesBookingItem> SalesBookingM(string year, string month)
@@ -80,6 +83,7 @@ namespace project.Controllers
             return returnList;
         }
 
+        //returns a list with the 10 top products and volume of sales in a certain year, month and day
         // GET api/sales/psb/{year}/{month}/{day}
         [System.Web.Http.HttpGet]
         public List<SalesBookingItem> SalesBookingD(string year, string month, string day)
@@ -100,6 +104,7 @@ namespace project.Controllers
             return returnList;
         }
 
+        //returns the regional sales status, which is the percentage of volume of sales each region has in a certain year
         // GET api/sales/rss/{year}
         [System.Web.Http.HttpGet]
         public List<RegionalSSItem> RegionalSSY(string year)
@@ -130,6 +135,7 @@ namespace project.Controllers
             return returnList;
         }
 
+        //returns the regional sales status, which is the percentage of volume of sales each region has in a certain year and month
         // GET api/sales/rss/{year}/{month}
         [System.Web.Http.HttpGet]
         public List<RegionalSSItem> RegionalSSM(string year, string month)
@@ -159,6 +165,7 @@ namespace project.Controllers
             return returnList;
         }
 
+        //returns the regional sales status, which is the percentage of volume of sales each region has in a certain year, month and day
         // GET api/sales/rss/{year}/{month}/{day}
         [System.Web.Http.HttpGet]
         public List<RegionalSSItem> RegionalSSD(string year, string month, string day)
