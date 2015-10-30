@@ -5,8 +5,10 @@ using System.Web;
 
 namespace project.Lib_Primavera.Model
 {
+
     public class CabecDoc
     {
+
         public string Entidade
         {
             get;
@@ -18,7 +20,6 @@ namespace project.Lib_Primavera.Model
             get;
             set;
         }
-
 
         public string Nome
         {
@@ -32,7 +33,7 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-        public double TotalMerc  
+        public double TotalMerc
         {
             get;
             set;
@@ -44,34 +45,12 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-        public string Id
+        public DateTime Data
         {
             get;
             set;
         }
 
-        public DateTime Datatime
-        {
-            get;
-            set;
-        }
-
-        public string Serie
-        {
-            get;
-            set;
-        }
-
-        public List<Model.LinhaDocVenda> LinhasDoc
-        {
-            get;
-            set;
-        }
-
-        public string Data
-        {
-            get;
-            set;
-        }
     }
+
 }

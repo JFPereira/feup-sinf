@@ -51,9 +51,14 @@ namespace project.Controllers
 
         // GET api/financial/ytd/{year}
         [System.Web.Http.HttpGet]
-        public FinancialInfo FinancialYtD(int year)
+        public FinancialYearInfo FinancialYtD(int year)
         {
-            return Lib_Primavera.PriIntegration.getFinancialYtD(year);
+            FinancialYearInfo result = Lib_Primavera.PriIntegration.getFinancialYtD(year);
+
+            // Revenue
+            result.revenue = result.sales - result.purchases;
+
+            return result;
         }
 
         // GET api/financial/purchases
@@ -95,7 +100,7 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public List<RegSalesBookingItem> SalesBookingRegY(string year)
         {
-            return Lib_Primavera.PriIntegration.getSalesBookingReg("year",year,null,null);
+            return Lib_Primavera.PriIntegration.getSalesBookingReg("year", year, null, null);
         }
 
         // GET api/financial/salesbooking/{year}/{month}

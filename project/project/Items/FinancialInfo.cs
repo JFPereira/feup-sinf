@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace project.Items
+﻿namespace project.Items
 {
 
-    public class FinancialInfo
+    public class FinancialYearInfo
     {
 
+        // year total purchases
         public double purchases
         {
             get;
             set;
         }
 
-        public double revenue
+        // year total sales
+        public double sales
         {
             get;
             set;
         }
 
-        public double sales
+        // year total revenue (sales - purchases)
+        public double revenue
         {
             get;
             set;

@@ -408,16 +408,13 @@ namespace project.Lib_Primavera
                 {
                     sales.Add(new Model.CabecDoc
                     {
-                        Id = null,
                         Entidade = objList.Valor("Entidade"),
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
                         TotalMerc = objList.Valor("TotalMerc"),
                         TotalIva = objList.Valor("TotalIva"),
-                        LinhasDoc = null,
-                        Datatime = objList.Valor("Data"),
-                        Serie = null
+                        Data = objList.Valor("Data"),
                     });
 
                     objList.Seguinte();
@@ -677,9 +674,10 @@ namespace project.Lib_Primavera
             }
         }
 
-        public static FinancialInfo getFinancialYtD(int year)
+        public static FinancialYearInfo getFinancialYtD(int year)
         {
-            FinancialInfo result = new FinancialInfo();
+
+            FinancialYearInfo result = new FinancialYearInfo();
 
             bool companyInitialized = initCompany();
 
@@ -718,9 +716,6 @@ namespace project.Lib_Primavera
 
                     objList.Seguinte();
                 }
-
-                // Revenue
-                result.revenue = result.sales - result.purchases;
             }
 
             return result;
@@ -786,20 +781,21 @@ namespace project.Lib_Primavera
 
         public static List<Model.DocCompra> getPurchases()
         {
-            StdBELista objList;
-
             List<Model.DocCompra> purchases = new List<Model.DocCompra>();
 
             bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecCompras.DataDoc, CabecCompras.Entidade, CabecCompras.Nome, CabecCompras.NumDoc, CabecCompras.NumContribuinte, CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecCompras.DataDoc, CabecCompras.Entidade, CabecCompras.Nome, CabecCompras.NumDoc, CabecCompras.NumContribuinte, CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
+
                 while (!objList.NoFim())
                 {
                     purchases.Add(new Model.DocCompra
                     {
                         id = null,
+                        Data = objList.Valor("DataDoc"),
                         Entidade = objList.Valor("Entidade"),
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
@@ -807,17 +803,14 @@ namespace project.Lib_Primavera
                         TotalMerc = objList.Valor("TotalMerc"),
                         TotalIva = objList.Valor("TotalIva"),
                         LinhasCompras = null,
-                        Data = objList.Valor("DataDoc"),
                         Serie = null
                     });
 
                     objList.Seguinte();
                 }
-
-                return purchases;
             }
-            else
-                return null;
+
+            return purchases;
         }
 
         public static double getMonthlyPurchases(int month, int year)
@@ -1029,38 +1022,33 @@ namespace project.Lib_Primavera
 
         public static List<Model.CabecDoc> getSales()
         {
-            StdBELista objList;
-
             List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
 
             bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
+                StdBELista objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
+
                 while (!objList.NoFim())
                 {
                     sales.Add(new Model.CabecDoc
                     {
-                        Id = null,
+                        Data = objList.Valor("Data"),
                         Entidade = objList.Valor("Entidade"),
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
                         TotalMerc = objList.Valor("TotalMerc"),
                         TotalIva = objList.Valor("TotalIva"),
-                        LinhasDoc = null,
-                        Datatime = objList.Valor("Data"),
-                        Serie = null
                     });
 
                     objList.Seguinte();
                 }
-
-                return sales;
             }
-            else
-                return null;
+
+            return sales;
         }
 
         public static double getSalesProd(string controller, string prod, string year, string month, string day)
@@ -1275,12 +1263,9 @@ namespace project.Lib_Primavera
 
             List<Model.LinhaDocVenda> listProducts = new List<Model.LinhaDocVenda>();
 
-            bool companyInitialize = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
+            bool companyInitialized = initCompany();
 
-            if (companyInitialize)
+            if (companyInitialized)
             {
                 objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.TotalIva, LinhasDoc.PrecoLiquido, LinhasDoc.TotalILiquido, LinhasDoc.Quantidade FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.Entidade = '" + client_id + "'");
                 while (!objList.NoFim())
@@ -1369,16 +1354,13 @@ namespace project.Lib_Primavera
                 {
                     sales.Add(new Model.CabecDoc
                     {
-                        Id = null,
                         Entidade = client_id,
                         Nome = objList.Valor("Nome"),
                         NumDoc = objList.Valor("NumDoc"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
                         TotalMerc = objList.Valor("TotalMerc"),
                         TotalIva = objList.Valor("TotalIva"),
-                        LinhasDoc = null,
-                        Datatime = objList.Valor("Data"),
-                        Serie = null
+                        Data = objList.Valor("Data"),
                     });
 
                     objList.Seguinte();
