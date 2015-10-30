@@ -79,7 +79,16 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public double Purchases()
         {
-            return Lib_Primavera.PriIntegration.getPurchasesTotal();
+            double result = 0;
+
+            // DB query
+            List<DocCompra> purchases = Lib_Primavera.PriIntegration.getPurchases();
+
+            // Purchases total amount
+            foreach (var entry in purchases)
+                result -= entry.TotalMerc + entry.TotalIva;
+
+            return result;
         }
 
         // GET api/financial/purchases/yoy/{year}
