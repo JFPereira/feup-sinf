@@ -67,11 +67,5 @@ namespace project.Lib_Primavera.Model
             get;
             set;
         }
-
-        public string Data
-        {
-            get;
-            set;
-        }
     }
 }
