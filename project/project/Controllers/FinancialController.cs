@@ -24,9 +24,29 @@ namespace project.Controllers
 
         // GET api/financial/global
         [System.Web.Http.HttpGet]
-        public string Global()
+        public List<GlobalFinancialItem> Global()
         {
-            return "Tamos tesos. No money. Ja tas Cândido";
+            List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
+            string month = DateTime.Now.Month.ToString();
+            string year = DateTime.Now.Year.ToString();
+            int m = Int32.Parse(month);
+            int y = Int32.Parse(year);
+            for (int i = 1; i < m + 1; i++)
+            {
+                double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
+                double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
+                global.Add(new GlobalFinancialItem
+                {
+                    Ano = y,
+                    Mes = i,
+                    Compras = sale,
+                    Vendas = purchase
+                    
+                });
+            }
+
+            global = global.OrderBy(e => e.Mes).ToList();
+            return global;
         }
 
         // GET api/financial/ytd/{year}

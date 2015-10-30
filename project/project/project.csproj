@@ -300,6 +300,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Items\FinancialInfo.cs" />
+    <Compile Include="Items\GlobalFinancialItem.cs" />
     <Compile Include="Items\TopSalesCountry.cs" />
     <Compile Include="Items\SalesBookingItem.cs" />
     <Compile Include="Items\TopClientsItem.cs" />
