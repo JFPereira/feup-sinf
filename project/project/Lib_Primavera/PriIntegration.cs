@@ -314,6 +314,29 @@ namespace project.Lib_Primavera
                 return null;
         }
 
+        public static List<double> GetTodosPrecosArtigo(Model.Artigo artigo)
+        {
+            List<double> precos = new List<double>();
+            StdBELista objList;
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.PrecUnit from LinhasDoc WHERE Artigo = '" + artigo.CodArtigo + "'");
+                
+                if (objList.NoFim()) return null;
+                else
+                {
+                    precos.Add(objList.Valor("PrecUnit"));
+                }
+
+                return precos;
+            }
+            else
+                return null;
+        }
+
         public static Lib_Primavera.Model.Artigo GetVendasArtigo(Model.Artigo artigo)
         {
             StdBELista objList;
