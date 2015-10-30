@@ -829,7 +829,7 @@ namespace project.Lib_Primavera
             if (companyInitialized)
             {
                 StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras WHERE MONTH(CabecCompras.DataDoc) = " + month + " AND YEAR(CabecCompras.DataDoc) = " + year );
+                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras WHERE MONTH(CabecCompras.DataDoc) = " + month + " AND YEAR(CabecCompras.DataDoc) = " + year);
 
                 while (!objList.NoFim())
                 {
