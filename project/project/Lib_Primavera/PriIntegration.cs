@@ -41,11 +41,7 @@ namespace project.Lib_Primavera
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
-
-                //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
-
                 objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo FROM  CLIENTES");
-
 
                 while (!objList.NoFim())
                 {
@@ -1372,7 +1368,6 @@ namespace project.Lib_Primavera
 
             return returnList;
         }
-
 
         public static List<Model.CabecDoc> getClientPurchases(string entity)
         {
