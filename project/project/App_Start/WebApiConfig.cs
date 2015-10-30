@@ -66,8 +66,7 @@ namespace project
             config.Routes.MapHttpRoute(
                 name: "Monthly Purchases",
                 routeTemplate: "api/clients/{id}/top-products",
-                defaults: new { controller = "Clients", action = "TopProducts" },
-                constraints: new { id = "[0-9]+" }
+                defaults: new { controller = "Clients", action = "TopProducts" }
             );
 
             //--------------- Suppliers ---------------//

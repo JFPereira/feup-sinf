@@ -1279,7 +1279,7 @@ namespace project.Lib_Primavera
 
             if (companyInitialize)
             {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.TotalIva, LinhasDoc.PrecoLiquido, LinhasDoc.TotalILiquido, LinhasDoc.Quantidade FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.Entidade = " + client_id);
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.TotalIva, LinhasDoc.PrecoLiquido, LinhasDoc.TotalILiquido, LinhasDoc.Quantidade FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.Entidade = '" + client_id + "'");
                 while (!objList.NoFim())
                 {
                     listProducts.Add(new Model.LinhaDocVenda
