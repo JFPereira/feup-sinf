@@ -51,16 +51,44 @@ namespace project.Controllers
 
         // GET api/financial/ytd/{year}
         [System.Web.Http.HttpGet]
-        public FinancialInfo FinancialYtD(int year)
+        public FinancialYearInfo FinancialYtD(int year)
         {
-            return Lib_Primavera.PriIntegration.getFinancialYtD(year);
+            FinancialYearInfo result = new FinancialYearInfo();
+
+            // DB queries
+            List<CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
+            List<DocCompra> purchases = Lib_Primavera.PriIntegration.getPurchases();
+
+            // Sales
+            foreach (var entry in sales)
+                if (entry.Data.Year == year)
+                    result.sales += entry.TotalMerc + entry.TotalIva;
+
+            // Purchases
+            foreach (var entry in purchases)
+                if (entry.Data.Year == year)
+                    result.purchases -= entry.TotalMerc + entry.TotalIva;
+
+            // Revenue
+            result.revenue = result.sales - result.purchases;
+
+            return result;
         }
 
         // GET api/financial/purchases
         [System.Web.Http.HttpGet]
         public double Purchases()
         {
-            return Lib_Primavera.PriIntegration.getPurchasesTotal();
+            double result = 0;
+
+            // DB query
+            List<DocCompra> purchases = Lib_Primavera.PriIntegration.getPurchases();
+
+            // Purchases total amount
+            foreach (var entry in purchases)
+                result -= entry.TotalMerc + entry.TotalIva;
+
+            return result;
         }
 
         // GET api/financial/purchases/yoy/{year}
@@ -74,7 +102,16 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public double Sales()
         {
-            return Lib_Primavera.PriIntegration.getSalesTotal();
+            double result = 0;
+
+            // DB query
+            List<CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
+
+            // Purchases total amount
+            foreach (var entry in sales)
+                result += entry.TotalMerc + entry.TotalIva;
+
+            return result;
         }
 
         // GET api/financial/sales/yoy/{year}
@@ -95,7 +132,7 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public List<RegSalesBookingItem> SalesBookingRegY(string year)
         {
-            return Lib_Primavera.PriIntegration.getSalesBookingReg("year",year,null,null);
+            return Lib_Primavera.PriIntegration.getSalesBookingReg("year", year, null, null);
         }
 
         // GET api/financial/salesbooking/{year}/{month}

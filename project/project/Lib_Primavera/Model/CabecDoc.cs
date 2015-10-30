@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace project.Lib_Primavera.Model
 {
+
     public class CabecDoc
     {
         public string id
@@ -25,7 +24,6 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-
         public string Nome
         {
             get;
@@ -38,7 +36,7 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-        public double TotalMerc  
+        public double TotalMerc
         {
             get;
             set;
@@ -50,7 +48,7 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-        public DateTime Datatime
+        public DateTime Data
         {
             get;
             set;
@@ -61,5 +59,7 @@ namespace project.Lib_Primavera.Model
             get;
             set;
         }
+
     }
+
 }

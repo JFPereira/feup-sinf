@@ -150,16 +150,16 @@ namespace project.Controllers
             docs = Lib_Primavera.PriIntegration.getClientDailyPurchases(id, dateStart, dateEnd);
 
             foreach (Lib_Primavera.Model.CabecDoc doc in docs) {
-                if (days.Exists(e => e.day == doc.Datatime.Day))
+                if (days.Exists(e => e.day == doc.Data.Day))
                 {
-                    days.Find(e => e.day == doc.Datatime.Day).numPurchase++;
-                    days.Find(e => e.day == doc.Datatime.Day).salesVolume += (doc.TotalIva + doc.TotalMerc);
+                    days.Find(e => e.day == doc.Data.Day).numPurchase++;
+                    days.Find(e => e.day == doc.Data.Day).salesVolume += (doc.TotalIva + doc.TotalMerc);
                 }
                 else
                 {
                     days.Add(new DailyPurchasesItem
                     {
-                        day = doc.Datatime.Day,
+                        day = doc.Data.Day,
                         numPurchase = 1,
                         salesVolume = (doc.TotalMerc + doc.TotalIva)
                     });
