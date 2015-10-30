@@ -52,12 +52,13 @@ namespace project.Controllers
 
             foreach (CabecDoc sale in sales)
             {
+                // if the entity already exists then update the target values
                 if (result.Exists(e => e.entity == sale.Entidade))
                 {
                     result.Find(e => e.entity == sale.Entidade).salesVolume += (sale.TotalMerc + sale.TotalIva);
                     result.Find(e => e.entity == sale.Entidade).numPurchases++;
                 }
-                else
+                else // else create new item and add it to the list
                 {
                     result.Add(new TopClientsItem
                     {
@@ -73,8 +74,10 @@ namespace project.Controllers
                 totalSalesVolume += (sale.TotalMerc + sale.TotalIva);
             }
 
+            // take the top 10 clientes of the list and order them by sales volume
             result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
 
+            // calculate the percentage of each one
             foreach (TopClientsItem client in result)
                 client.percentage += Math.Round(client.salesVolume / totalSalesVolume * 100, 2) + " %";
 
@@ -85,19 +88,22 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public List<Items.TopProductsItem> TopProducts(string entity)
         {
-            List<Lib_Primavera.Model.LinhaDocVenda> allProducts = Lib_Primavera.PriIntegration.topClientProducts(entity);
+            // gets all lines in sales docs with all the products sold to the client
+            List<Lib_Primavera.Model.LinhaDocVenda> allProducts = Lib_Primavera.PriIntegration.getSalesDocLinesByClient(entity);
+
             List<TopProductsItem> result = new List<TopProductsItem>();
 
             double totalProductSalesVolume = 0;
 
             foreach (LinhaDocVenda product in allProducts)
             {
+                // if the product already exists then update the target values
                 if (result.Exists(e => e.codArtigo == product.Artigo))
                 {
                     result.Find(e => e.codArtigo == product.Artigo).quantity += product.Quantidade;
                     result.Find(e => e.codArtigo == product.Artigo).salesVolume += product.PrecoLiquido;
                 }
-                else
+                else // else create new item and add it to the list
                 {
                     result.Add(new TopProductsItem
                     {
@@ -112,8 +118,10 @@ namespace project.Controllers
                 totalProductSalesVolume += product.PrecoLiquido;
             }
 
+            // take the top 10 clientes of the list and order them by sales volume
             result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
 
+            // calculate the percentage of each one
             foreach (TopProductsItem product in result)
                 product.percentage += Math.Round(product.salesVolume / totalProductSalesVolume * 100, 2) + " %";
 
@@ -146,7 +154,7 @@ namespace project.Controllers
             dateEnd = dates.ElementAt(1);
 
             // get all the target sales docs
-            docs = Lib_Primavera.PriIntegration.getClientDailyPurchases(entity, dateStart, dateEnd);
+            docs = Lib_Primavera.PriIntegration.getClientPurchasesBetween(entity, dateStart, dateEnd);
 
             foreach (Lib_Primavera.Model.CabecDoc doc in docs)
             {
@@ -209,7 +217,7 @@ namespace project.Controllers
             dateEnd = dates.ElementAt(1);
 
             // get all the target sales docs
-            docs = Lib_Primavera.PriIntegration.getClientDailyPurchases(entity, dateStart, dateEnd);
+            docs = Lib_Primavera.PriIntegration.getClientPurchasesBetween(entity, dateStart, dateEnd);
 
             foreach (Lib_Primavera.Model.CabecDoc doc in docs)
             {
@@ -296,13 +304,17 @@ namespace project.Controllers
 
             double totalPurchaseVolume = 0;
 
+            // get all the purchases of the client
             result.details = Lib_Primavera.PriIntegration.getClientPurchases(entity);
 
+            // get the total number of purchases of the client
             result.numPurchases = result.details.Count();
 
+            // sum the total value of each client purchase
             for (int i = 0; i < result.numPurchases; i++)
                 totalPurchaseVolume += (result.details.ElementAt(i).TotalMerc + result.details.ElementAt(i).TotalIva);
 
+            // calculate the average of total value and number of purchases
             result.averagePurchaseCost = totalPurchaseVolume / result.numPurchases;
 
             return result;
@@ -312,7 +324,7 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public CostsVsEarningsItem CostsVsEarnings(string entity)
         {
-            // gets all lines in sales docs with all the products sold
+            // gets all lines in sales docs with all the products sold to the client
             List<LinhaDocVenda> allSoldProducts = Lib_Primavera.PriIntegration.getSalesDocLinesByClient(entity);
             CostsVsEarningsItem result = new CostsVsEarningsItem();
 
@@ -322,6 +334,7 @@ namespace project.Controllers
                 result.totalEarning += (product.PrecoUnitario * product.Quantidade);
             }
 
+            // calculate the diff between total earnings and total costs
             result.profit = result.totalEarning - result.totalCost;
 
             return result;

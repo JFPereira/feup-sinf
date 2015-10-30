@@ -518,45 +518,6 @@ namespace project.Lib_Primavera
 
         }
 
-        public static List<Model.LinhaDocVenda> topClientProducts(string client_id)
-        {
-            StdBELista objList;
-
-            List<Model.LinhaDocVenda> listProducts = new List<Model.LinhaDocVenda>();
-
-            bool companyInitialize = PriEngine.InitializeCompany(
-                project.Properties.Settings.Default.Company.Trim(),
-                project.Properties.Settings.Default.User.Trim(),
-                project.Properties.Settings.Default.Password.Trim());
-
-            if (companyInitialize)
-            {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.TotalIva, LinhasDoc.PrecoLiquido, LinhasDoc.TotalILiquido, LinhasDoc.Quantidade FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.Entidade = '" + client_id + "'");
-                while (!objList.NoFim())
-                {
-                    listProducts.Add(new Model.LinhaDocVenda
-                    {
-                        Artigo = objList.Valor("Artigo"),
-                        Descricao = objList.Valor("Descricao"),
-                        TotalILiquido = objList.Valor("TotalILiquido"),
-                        TotalIva = objList.Valor("TotalIva"),
-                        Quantidade = objList.Valor("Quantidade"),
-                        DescontoComercial = 0,
-                        IdCabecDoc = "",
-                        Unidade = "",
-                        PrecoUnitario = 0,
-                        PrecoLiquido = objList.Valor("PrecoLiquido")
-
-                    });
-                    objList.Seguinte();
-                }
-
-                return listProducts;
-            }
-            else
-                return null;
-        }
-
         #endregion Artigo
 
         #region Fornecedor
@@ -976,6 +937,7 @@ namespace project.Lib_Primavera
             return null;
         }*/
 
+        // get all the CabecDocs on the datebase
         public static List<Model.CabecDoc> getSales()
         {
             List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
@@ -1237,41 +1199,8 @@ namespace project.Lib_Primavera
             return total;
         }
 
-        public static List<Model.CabecDoc> getClientDailyPurchases(string client_id, string dateStart, string dateEnd)
-        {
-            StdBELista objList;
-
-            List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
-
-            bool companyInitialized = initCompany();
-
-            if (companyInitialized)
-            {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva, CabecDoc.Data, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte FROM CabecDoc WHERE '" + dateStart + "' <= CONVERT(DATE, CabecDoc.Data) AND CONVERT(DATE, CabecDoc.Data) <= '" + dateEnd + "' AND CabecDoc.Entidade = '" + client_id + "'");
-                while (!objList.NoFim())
-                {
-                    sales.Add(new Model.CabecDoc
-                    {
-                        Entidade = client_id,
-                        Nome = objList.Valor("Nome"),
-                        NumDoc = objList.Valor("NumDoc"),
-                        NumContribuinte = objList.Valor("NumContribuinte"),
-                        TotalMerc = objList.Valor("TotalMerc"),
-                        TotalIva = objList.Valor("TotalIva"),
-                        LinhasDoc = null,
-                        Data = objList.Valor("Data"),
-                    });
-
-                    objList.Seguinte();
-                }
-
-                return sales;
-            }
-            else
-                return null;
-        }
-
-        public static List<Model.CabecDoc> getClientMonthlyPurchases(string client_id, string dateStart, string dateEnd)
+        // get all the client CabecDocs between two dates
+        public static List<Model.CabecDoc> getClientPurchasesBetween(string client_id, string dateStart, string dateEnd)
         {
             StdBELista objList;
 
@@ -1404,6 +1333,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
+        // get all the product lines of one CabecDoc
         public static List<Model.LinhaDocVenda> getSalesDocLines(string doc_id)
         {
             List<Model.LinhaDocVenda> linesDoc = new List<Model.LinhaDocVenda>();
@@ -1440,6 +1370,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
+        // get all the product lines of the all clients CabecDocs
         public static List<Model.LinhaDocVenda> getSalesDocLinesByClient(string entity)
         {
             List<Model.LinhaDocVenda> linesDoc = new List<Model.LinhaDocVenda>();
