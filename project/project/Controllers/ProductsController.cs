@@ -23,6 +23,8 @@ namespace project.Controllers
         // GET api/products/{id}
         public Artigo GetProduct(string id)
         {
+            List<double> precos = new List<double>();
+            double sumPrecos = 0;
             Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
             if (artigo == null)
             {
@@ -33,6 +35,12 @@ namespace project.Controllers
             else
             {
                 artigo = Lib_Primavera.PriIntegration.GetPrecoArtigo(artigo);
+                precos = Lib_Primavera.PriIntegration.GetTodosPrecosArtigo(artigo);
+                foreach (double preco in precos)
+                {
+                    sumPrecos += preco;
+                }
+                artigo.PrecoMedio = sumPrecos / precos.Count;
                 artigo = Lib_Primavera.PriIntegration.GetVendasArtigo(artigo);
                 artigo = Lib_Primavera.PriIntegration.GetComprasArtigo(artigo);
                 artigo = Lib_Primavera.PriIntegration.GetTopClientesArtigo(artigo);

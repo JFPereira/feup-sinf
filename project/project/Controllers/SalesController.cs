@@ -89,7 +89,6 @@ namespace project.Controllers
 
             foreach (Lib_Primavera.Model.Artigo prod in allProd)
             {
-               
                 returnList.Add(new SalesBookingItem
                 {
                     nome = prod.DescArtigo,
@@ -100,5 +99,95 @@ namespace project.Controllers
 
             return returnList;
         }
+
+        // GET api/sales/rss/{year}
+        [System.Web.Http.HttpGet]
+        public List<RegionalSSItem> RegionalSSY(string year)
+        {
+            List<RegionalSSItem> returnList = new List<RegionalSSItem>();
+            List<string> countries = Lib_Primavera.PriIntegration.getAllCountries();
+
+            double totalValue = 0;
+            double thisValue = 0;
+
+            foreach (string country in countries)
+            {
+                thisValue = Lib_Primavera.PriIntegration.getPercentage("year", year, null, null, country);
+                totalValue += thisValue;
+                returnList.Add(new RegionalSSItem
+                {
+                    pais = country,
+                    percentagem = thisValue
+
+                });
+            }
+
+            foreach (RegionalSSItem item in returnList)
+            {
+                item.percentagem = 100.0 * item.percentagem / totalValue;
+            }
+
+            return returnList;
+        }
+
+        // GET api/sales/rss/{year}/{month}
+        [System.Web.Http.HttpGet]
+        public List<RegionalSSItem> RegionalSSM(string year, string month)
+        {
+            List<RegionalSSItem> returnList = new List<RegionalSSItem>();
+            List<string> countries = Lib_Primavera.PriIntegration.getAllCountries();
+            double totalValue = 0;
+            double thisValue = 0;
+
+            foreach (string country in countries)
+            {
+                thisValue = Lib_Primavera.PriIntegration.getPercentage("month", year, month, null, country);
+                totalValue += thisValue;
+                returnList.Add(new RegionalSSItem
+                {
+                    pais = country,
+                    percentagem = thisValue
+
+                });
+            }
+
+            foreach (RegionalSSItem item in returnList)
+            {
+                item.percentagem = 100.0 * item.percentagem / totalValue;
+            }
+
+            return returnList;
+        }
+
+        // GET api/sales/rss/{year}/{month}/{day}
+        [System.Web.Http.HttpGet]
+        public List<RegionalSSItem> RegionalSSD(string year, string month, string day)
+        {
+            List<RegionalSSItem> returnList = new List<RegionalSSItem>();
+            List<string> countries = Lib_Primavera.PriIntegration.getAllCountries();
+            double totalValue = 0;
+            double thisValue = 0;
+
+            foreach (string country in countries)
+            {
+                thisValue = Lib_Primavera.PriIntegration.getPercentage("day", year, month, day, country);
+                totalValue += thisValue;
+                returnList.Add(new RegionalSSItem
+                {
+                    pais = country,
+                    percentagem = thisValue
+
+                });
+            }
+
+            foreach (RegionalSSItem item in returnList)
+            {
+                item.percentagem = 100.0 * item.percentagem / totalValue;
+            }
+
+            return returnList;
+        }
+
+
     }
 }

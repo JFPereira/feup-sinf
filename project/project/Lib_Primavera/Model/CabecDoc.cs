@@ -44,19 +44,7 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-        public string Id
-        {
-            get;
-            set;
-        }
-
         public DateTime Datatime
-        {
-            get;
-            set;
-        }
-
-        public string Serie
         {
             get;
             set;
