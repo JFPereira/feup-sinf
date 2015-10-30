@@ -738,41 +738,6 @@ namespace project.Lib_Primavera
             }
         }
 
-        public static List<List<double>> getPurchasesYoY(int year)
-        {
-            List<List<double>> result = new List<List<double>>();
-
-            for (int i = 0; i < 12; i++)
-                result.Add(new List<double> { -1, -1 });
-
-            bool companyInitialized = initCompany();
-
-            if (companyInitialized)
-            {
-                StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecCompras.DataVencimento, CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
-
-                while (!objList.NoFim())
-                {
-                    DateTime date = objList.Valor("DataVencimento");
-
-                    if (date.Year == year || date.Year == year - 1)
-                    {
-                        double amount = -1 * (objList.Valor("TotalMerc") + objList.Valor("TotalIVA"));
-
-                        if (result[date.Month - 1][date.Year - year + 1] == -1)
-                            result[date.Month - 1][date.Year - year + 1] = amount;
-                        else
-                            result[date.Month - 1][date.Year - year + 1] += amount;
-                    }
-
-                    objList.Seguinte();
-                }
-            }
-
-            return result;
-        }
-
         public static List<Model.DocCompra> getPurchases()
         {
             List<Model.DocCompra> purchases = new List<Model.DocCompra>();
@@ -1377,7 +1342,7 @@ namespace project.Lib_Primavera
             List<Model.CabecDoc> docs = new List<Model.CabecDoc>();
 
             StdBELista docsList;
-            
+
             bool companyInitialized = initCompany();
 
             if (companyInitialized)
