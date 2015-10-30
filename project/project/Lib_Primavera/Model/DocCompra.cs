@@ -20,6 +20,12 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
+        public string Nome
+        {
+            get;
+            set;
+        }
+
 
         public string Entidade
         {
@@ -28,6 +34,12 @@ namespace project.Lib_Primavera.Model
         }
 
         public int NumDoc
+        {
+            get;
+            set;
+        }
+
+        public string NumContribuinte
         {
             get;
             set;
@@ -45,13 +57,19 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
+        public double TotalIva
+        {
+            get;
+            set;
+        }
+
         public string Serie
         {
             get;
             set;
         }
 
-        public List<Model.LinhaDocCompra> LinhasDoc
+        public List<Model.LinhaDocCompra> LinhasCompras
         {
             get;
             set;

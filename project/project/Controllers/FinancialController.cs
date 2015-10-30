@@ -29,11 +29,25 @@ namespace project.Controllers
             return "Tamos tesos. No money. Ja tas Cândido";
         }
 
+        // GET api/financial/ytd/{year}
+        [System.Web.Http.HttpGet]
+        public FinancialInfo FinancialYtD(int year)
+        {
+            return Lib_Primavera.PriIntegration.getFinancialYtD(year);
+        }
+
         // GET api/financial/purchases
         [System.Web.Http.HttpGet]
         public double Purchases()
         {
             return Lib_Primavera.PriIntegration.getPurchasesTotal();
+        }
+
+        // GET api/financial/purchases/yoy/{year}
+        [System.Web.Http.HttpGet]
+        public List<List<double>> PurchasesYoY(int year)
+        {
+            return Lib_Primavera.PriIntegration.getPurchasesYoY(year);
         }
 
         // GET api/financial/sales
@@ -43,7 +57,14 @@ namespace project.Controllers
             return Lib_Primavera.PriIntegration.getSalesTotal();
         }
 
-        // GET api/top10sales
+        // GET api/financial/sales/yoy/{year}
+        [System.Web.Http.HttpGet]
+        public List<List<double>> SalesYoY(int year)
+        {
+            return Lib_Primavera.PriIntegration.getSalesYoY(year);
+        }
+
+        // GET api/financial/top10sales
         [System.Web.Http.HttpGet]
         public List<TopSalesCountry> Top10SalesCountries()
         {

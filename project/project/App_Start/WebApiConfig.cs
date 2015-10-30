@@ -118,11 +118,27 @@ namespace project
                 defaults: new { controller = "Financial", action = "Global" }
             );
 
+            // GET api/financial/ytd/{year}
+            config.Routes.MapHttpRoute(
+                name: "FinancialYtD",
+                routeTemplate: "api/financial/ytd/{year}",
+                defaults: new { controller = "Financial", action = "FinancialYtD" },
+                constraints: new { year = "[0-9]+" }
+            );
+
             // GET api/financial/purchases
             config.Routes.MapHttpRoute(
                 name: "FinancialPurchases",
                 routeTemplate: "api/financial/purchases",
                 defaults: new { controller = "Financial", action = "Purchases" }
+            );
+
+            // GET api/financial/purchases/yoy/{year}
+            config.Routes.MapHttpRoute(
+                name: "FinancialPurchasesYoY",
+                routeTemplate: "api/financial/purchases/yoy/{year}",
+                defaults: new { controller = "Financial", action = "PurchasesYoY" },
+                constraints: new { year = "[0-9]+" }
             );
 
             // GET api/financial/sales
@@ -132,10 +148,18 @@ namespace project
                 defaults: new { controller = "Financial", action = "Sales" }
             );
 
-            // GET api/top10sales
+            // GET api/financial/sales/yoy/{year}
+            config.Routes.MapHttpRoute(
+                name: "FinancialSalesYoY",
+                routeTemplate: "api/financial/sales/yoy/{year}",
+                defaults: new { controller = "Financial", action = "SalesYoY" },
+                constraints: new { year = "[0-9]+" }
+            );
+
+            // GET api/financial/top10sales
             config.Routes.MapHttpRoute(
                 name: "FinancialTop10Sales",
-                routeTemplate: "api/top10sales",
+                routeTemplate: "api/financial/top10sales",
                 defaults: new { controller = "Financial", action = "Top10SalesCountries" }
             );
 

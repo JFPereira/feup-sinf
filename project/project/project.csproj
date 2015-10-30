@@ -299,11 +299,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Items\FinancialInfo.cs" />
     <Compile Include="Items\TopSalesCountry.cs" />
     <Compile Include="Items\SalesBookingItem.cs" />
     <Compile Include="Items\TopClientsItem.cs" />
     <Compile Include="Items\TopProductsItem.cs" />
     <Compile Include="Items\TopSalesItem.cs" />
+    <Compile Include="Items\TopSuppliersItem.cs" />
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
     <Compile Include="Lib_Primavera\Model\CabecDoc.cs" />
     <Compile Include="Lib_Primavera\Model\Cliente.cs" />
