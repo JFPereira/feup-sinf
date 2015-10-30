@@ -43,17 +43,19 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public List<Items.TopClientsItem> TopClients()
         {
+            // get all the sales docs
             List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
+
             List<TopClientsItem> result = new List<TopClientsItem>();
 
             double totalSalesVolume = 0;
 
             foreach (CabecDoc sale in sales)
             {
-                if (result.Exists(e => e.nif == sale.NumContribuinte))
+                if (result.Exists(e => e.entity == sale.Entidade))
                 {
-                    result.Find(e => e.nif == sale.NumContribuinte).salesVolume += (sale.TotalMerc + sale.TotalIva);
-                    result.Find(e => e.nif == sale.NumContribuinte).numPurchases++;
+                    result.Find(e => e.entity == sale.Entidade).salesVolume += (sale.TotalMerc + sale.TotalIva);
+                    result.Find(e => e.entity == sale.Entidade).numPurchases++;
                 }
                 else
                 {
