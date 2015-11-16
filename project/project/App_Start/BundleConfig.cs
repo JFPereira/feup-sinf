@@ -26,7 +26,7 @@ namespace project
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/css/site.css"));
 
             /* Twitter Bootstrap */
-            bundles.Add(new StyleBundle("~/Content/bootstrap").Include("~/Content/bootstrap/bootstrap-3.3.5/dist/css/bootstrap.css"));
+            bundles.Add(new StyleBundle("~/Content/bootstrap").Include("~/Content/sb-admin/bower_components/bootstrap/dist/css/bootstrap.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
