@@ -1,0 +1,18 @@
+﻿@model  System.Collections.Generic.IEnumerable<project.Lib_Primavera.Model.Cliente>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<ul>
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <h2>@Model.ElementAt(i).NomeCliente</h2>
+        <h3>@Model.ElementAt(i).Morada</h3>
+        <h3>@Model.ElementAt(i).NumContribuinte</h3>
+    }
+
+    @Html.TextBox("Test", ViewData["test"])
+</ul>
