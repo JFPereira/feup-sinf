@@ -1,0 +1,9 @@
+﻿.demo-container {
+    position: relative;
+    height: 400px;
+}
+
+#placeholder {
+    width: 550px;
+    height: 400px;
+}

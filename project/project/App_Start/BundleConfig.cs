@@ -8,6 +8,8 @@ namespace project
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
+            /***** Scripts *****/
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -23,10 +25,31 @@ namespace project
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/css/site.css"));
+            /* SB-Admin Flot */
+            bundles.Add(new ScriptBundle("~/Content/jquery-flot").Include(
+                       "~/Content/sb-admin-2/bower_components/flot/jquery.flot.js"));
+            /* SB-Admin Flot Pie */
+            bundles.Add(new ScriptBundle("~/Content/jquery-flot-pie").Include(
+                       "~/Content/sb-admin-2/bower_components/flot/jquery.flot.pie.js"));
 
-            /* Twitter Bootstrap */
-            bundles.Add(new StyleBundle("~/Content/bootstrap").Include("~/Content/sb-admin/bower_components/bootstrap/dist/css/bootstrap.css"));
+            /* Twitter Bootstrap JS */
+            bundles.Add(new ScriptBundle("~/Content/bootstrap").Include(
+                       "~/Content/sb-admin-2/bower_components/bootstrap/dist/js/bootstrap.js"));
+
+            /* Dashboard Flot Pie JS */
+            bundles.Add(new ScriptBundle("~/Scripts/clients-flot-pie").Include(
+                       "~/Scripts/dashboard/clients-flot-pie.js"));
+
+            /***** CSS *****/
+
+            /* Twitter Bootstrap CSS */
+            bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
+                       "~/Content/sb-admin-2/bower_components/bootstrap/dist/css/bootstrap.css"));
+
+            /* Main Dash CSS */
+            bundles.Add(new StyleBundle("~/Content/css/Home").Include("~/Content/css/Home.css"));
+
+            bundles.Add(new StyleBundle("~/Content/css/site").Include("~/Content/css/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

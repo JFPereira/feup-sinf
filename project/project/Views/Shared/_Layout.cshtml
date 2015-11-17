@@ -8,11 +8,20 @@
     <title>Dashboard</title>
 
     <!--Styles-->
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/Site")
     @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/css/Home")
+
+    
 
     <!--Scripts-->
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Content/jquery-flot")
+    @Scripts.Render("~/Content/jquery-flot-pie")
+
+    @Scripts.Render("~/Scripts/clients-flot-pie")
+
 </head>
 
 <body>
@@ -21,8 +30,5 @@
     }
 
     @RenderBody()
-
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

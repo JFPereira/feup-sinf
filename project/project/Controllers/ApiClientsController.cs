@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using project.Lib_Primavera.Model;
 using project.Items;
+using System.Globalization;
 
 namespace project.Controllers
 {
@@ -39,7 +40,7 @@ namespace project.Controllers
 
         // GET api/clients/top
         [System.Web.Http.HttpGet]
-        public List<Items.TopClientsItem> TopClients()
+        public HttpResponseMessage TopClients()
         {
             // get all the sales docs
             List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
@@ -77,9 +78,11 @@ namespace project.Controllers
 
             // calculate the percentage of each one
             foreach (TopClientsItem client in result)
-                client.percentage += Math.Round(client.salesVolume / totalSalesVolume * 100, 2) + " %";
+                client.percentage += Math.Round(client.salesVolume / totalSalesVolume * 100, 2).ToString(CultureInfo.GetCultureInfo("en-GB"));
 
-            return result;
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         // GET api/clients/{entity}/top-products
@@ -121,7 +124,7 @@ namespace project.Controllers
 
             // calculate the percentage of each one
             foreach (TopProductsItem product in result)
-                product.percentage += Math.Round(product.salesVolume / totalProductSalesVolume * 100, 2) + " %";
+                product.percentage += Math.Round(product.salesVolume / totalProductSalesVolume * 100, 2);
 
             return result;
         }
