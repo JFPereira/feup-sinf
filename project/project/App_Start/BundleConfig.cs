@@ -40,6 +40,9 @@ namespace project
             bundles.Add(new ScriptBundle("~/Scripts/clients-flot-pie").Include(
                        "~/Scripts/dashboard/clients-flot-pie.js"));
 
+            bundles.Add(new ScriptBundle("~/Scripts/products-flot-pie").Include(
+                       "~/Scripts/dashboard/products-flot-pie.js"));
+
             /***** CSS *****/
 
             /* Twitter Bootstrap CSS */

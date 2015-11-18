@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web.Http;
 using project.Lib_Primavera.Model;
 using project.Items;
+using System.Globalization;
 
 namespace project.Controllers
 {
@@ -70,7 +71,7 @@ namespace project.Controllers
 
         // GET api/products/top
         [System.Web.Http.HttpGet]
-        public List<TopProductsItem> TopProducts()
+        public HttpResponseMessage TopProducts()
         {
             List<Lib_Primavera.Model.LinhaDocVenda> products = Lib_Primavera.PriIntegration.getProductSales();
             List<TopProductsItem> result = new List<TopProductsItem>();
@@ -102,9 +103,12 @@ namespace project.Controllers
             result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
 
             foreach (TopProductsItem product in result)
-                product.percentage += Math.Round(product.salesVolume / totalSalesVolume * 100, 2) + " %";
+                product.percentage += Math.Round(product.salesVolume / totalSalesVolume * 100, 2).ToString(CultureInfo.GetCultureInfo("en-GB"));
 
-            return result;
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+           
         }
     }
 }
