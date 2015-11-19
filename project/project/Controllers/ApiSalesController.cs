@@ -16,7 +16,7 @@ namespace project.Controllers
         //returns 10 top sales of all time
         // GET api/sales/top
         [System.Web.Http.HttpGet]
-        public List<TopSalesItem> TopSales()
+        public HttpResponseMessage TopSales()
         {
             List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
             List<TopSalesItem> result = new List<TopSalesItem>();
@@ -35,7 +35,9 @@ namespace project.Controllers
 
             result = result.OrderBy(e => e.purchaseValue).Reverse().Take(10).ToList();
 
-            return result;
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         //returns a list with the 10 top products and volume of sales in a year

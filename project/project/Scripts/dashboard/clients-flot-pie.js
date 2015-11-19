@@ -13,7 +13,7 @@
 
             console.log(data);
 
-            $.plot("#placeholder", data, {
+            $.plot("#placeholderA", data, {
                 series: {
                     pie: {
                         show: true,
