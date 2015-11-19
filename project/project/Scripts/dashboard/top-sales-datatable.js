@@ -13,7 +13,7 @@
 
             console.log(dataS);
 
-            $('#topsales').DataTable({
+            $('#topsales').dataTable({
                 data: dataS,
                 columns: [
                     { title: "Entity" },

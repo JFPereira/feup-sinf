@@ -56,6 +56,7 @@ namespace project
 
             /* Main Dash CSS */
             bundles.Add(new StyleBundle("~/Content/css/Home").Include("~/Content/css/Home.css"));
+            bundles.Add(new StyleBundle("~/Content/css/jquery-datatables").Include("~/Content/sb-admin-2/bower_components/datatables/media/css/jquery.dataTables.css"));
 
             bundles.Add(new StyleBundle("~/Content/css/site").Include("~/Content/css/site.css"));
 
