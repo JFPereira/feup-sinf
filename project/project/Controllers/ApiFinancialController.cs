@@ -23,7 +23,7 @@ namespace project.Controllers
 
         // GET api/financial/global
         [System.Web.Http.HttpGet]
-        public List<GlobalFinancialItem> Global()
+        public HttpResponseMessage Global()
         {
             List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
             string month = DateTime.Now.Month.ToString();
@@ -38,14 +38,16 @@ namespace project.Controllers
                 {
                     Ano = y,
                     Mes = i,
-                    Compras = sale,
-                    Vendas = purchase
+                    Compras = purchase,
+                    Vendas = sale
 
                 });
             }
 
             global = global.OrderBy(e => e.Mes).ToList();
-            return global;
+            var json = new JavaScriptSerializer().Serialize(global);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         // GET api/financial/ytd/{year}
