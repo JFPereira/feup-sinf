@@ -12,8 +12,6 @@
                 dataG.push({ month: mes, sales: global[i].Vendas, purchases: global[i].Compras });
             });
 
-            var months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-
             console.log(dataG);
 
             new Morris.Line({
