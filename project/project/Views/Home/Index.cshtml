@@ -1,11 +1,115 @@
-﻿<div id="header">
-    <h2>Main Dash</h2>
-</div>
-<div id="content">Top Clients
-    <div class="demo-container">
-        <div id="placeholderA" class="demo-placeholder"></div>
-        <div id="placeholderB" class="demo-placeholder"></div>
-        <table id="topsales" class="compact" width="auto"></table>
-        
+﻿@section ExtraStyles {
+    <!-- Morris Charts CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.css")
+
+    <!-- DataTables CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css")
+
+    <!-- DataTables Responsive CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/datatables-responsive/css/dataTables.responsive.css")
+
+    <!-- Our Styles -->
+    @Styles.Render("~/Content/css/main-dash.css")
+}
+
+@section ExtraScripts {
+    <!-- Flot Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/excanvas.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js")
+
+    <!-- DataTables JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")
+
+    <!-- Our Scripts -->
+    @Scripts.Render("~/Scripts/clients-flot-pie")
+    @Scripts.Render("~/Scripts/products-flot-pie")
+    @Scripts.Render("~/Scripts/top-sales-datatable")
+}
+
+<div class="col-xs-12">
+    <h1>Main Dash</h1>
+    <hr>
+
+    <div class="col-xs-12 col-md-6 col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top 10 Clients</div>
+
+            <div class="panel-body">
+                <div class="flot-chart">
+                    <div id="placeholderA" class="flot-chart-content"></div>
+                </div>
+            </div>
+
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-6 col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top 10 Products</div>
+
+            <div class="panel-body">
+                <div class="flot-chart">
+                    <div id="placeholderB" class="flot-chart-content"></div>
+                </div>
+            </div>
+
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-6 col-lg-5">
+        <div class="panel panel-default">
+            <div class="panel-heading">Global Financial</div>
+
+            <div class="panel-body">
+                <div class="flot-chart">
+                    <div id="placeholderA" class="flot-chart-content"></div>
+                </div>
+            </div>
+
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-12 col-lg-7">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top Sales</div>
+
+            <div class="panel-body">
+                <table id="topsales" class="compact" width="auto"></table>
+            </div>
+
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>

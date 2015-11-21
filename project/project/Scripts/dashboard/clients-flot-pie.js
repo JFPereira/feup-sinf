@@ -1,5 +1,4 @@
 ﻿$(function () {
-
     $.ajax({
         dataType: "json",
         url: "http://localhost:49328/api/clients/top",
@@ -11,42 +10,32 @@
                 data.push({ label: clients[i].name, data: clients[i].percentage });
             });
 
-            console.log(data);
-
             $.plot("#placeholderA", data, {
                 series: {
                     pie: {
-                        show: true,
-                        radius: 1,
-                        label: {
-                            show: true,
-                            radius: 1,
-                            formatter: labelFormatter,
-                            background: {
-                                opacity: 0.8
-                            }
-                        }
+                        show: true
                     }
                 },
                 grid: {
-                    hoverable: true,
-                    clickable: false
+                    hoverable: true
                 },
-                legend: {
-                    show: true
+                tooltip: true,
+                tooltipOpts: {
+                    content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+                    shifts: {
+                        x: 20,
+                        y: 0
+                    }
                 }
             });
         }
     })
 });
 
-// A custom label formatter used by several of the plots
-
+// custom label formatter used by several of the plots
 function labelFormatter(label, series) {
     return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br />" + Math.round(series.percent) + "%</div>";
 }
-
-//
 
 function setCode(lines) {
     $("#code").text(lines.join("\n"));

@@ -291,7 +291,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Content Include="Content\css\Home.css" />
     <Compile Include="Controllers\ApiClientsController.cs" />
     <Compile Include="Controllers\ApiFinancialController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
@@ -337,7 +336,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Content\sb-admin-2\bower_components\bootstrap-social\.gitignore" />
+    <Content Include="Content\css\main-dash.css" />
     <Content Include="Content\sb-admin-2\bower_components\bootstrap-social\bootstrap-social.css" />
     <Content Include="Content\sb-admin-2\bower_components\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="Content\sb-admin-2\bower_components\bootstrap\dist\css\bootstrap-theme.min.css" />
@@ -494,7 +493,6 @@
     <Content Include="Content\sb-admin-2\bower_components\datatables-plugins\type-detection\ip-address.js" />
     <Content Include="Content\sb-admin-2\bower_components\datatables-plugins\type-detection\num-html.js" />
     <Content Include="Content\sb-admin-2\bower_components\datatables-plugins\type-detection\numeric-comma.js" />
-    <Content Include="Content\sb-admin-2\bower_components\datatables-responsive\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\datatables-responsive\css\dataTables.responsive.css" />
     <Content Include="Content\sb-admin-2\bower_components\datatables-responsive\docs\api\responsive.index%28%29.xml" />
     <Content Include="Content\sb-admin-2\bower_components\datatables-responsive\docs\api\responsive.rebuild%28%29.xml" />
@@ -548,7 +546,6 @@
     <Content Include="Content\sb-admin-2\bower_components\flot.tooltip\js\jquery.flot.tooltip.js" />
     <Content Include="Content\sb-admin-2\bower_components\flot.tooltip\js\jquery.flot.tooltip.min.js" />
     <Content Include="Content\sb-admin-2\bower_components\flot.tooltip\js\jquery.flot.tooltip.source.js" />
-    <Content Include="Content\sb-admin-2\bower_components\flot\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\flot\examples\ajax\index.html" />
     <Content Include="Content\sb-admin-2\bower_components\flot\examples\annotating\index.html" />
     <Content Include="Content\sb-admin-2\bower_components\flot\examples\axes-interacting\index.html" />
@@ -606,18 +603,14 @@
     <Content Include="Content\sb-admin-2\bower_components\flot\jquery.flot.time.js" />
     <Content Include="Content\sb-admin-2\bower_components\flot\jquery.js" />
     <Content Include="Content\sb-admin-2\bower_components\flot\LICENSE.txt" />
-    <Content Include="Content\sb-admin-2\bower_components\font-awesome\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\font-awesome\css\font-awesome.css" />
     <Content Include="Content\sb-admin-2\bower_components\font-awesome\css\font-awesome.min.css" />
-    <Content Include="Content\sb-admin-2\bower_components\holderjs\.gitattributes" />
-    <Content Include="Content\sb-admin-2\bower_components\holderjs\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\gulpfile.js" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\holder.js" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\src\augment.js" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\src\holder.js" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\src\ondomready.js" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\src\polyfills.js" />
-    <Content Include="Content\sb-admin-2\bower_components\holderjs\test\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\test\image.jpg" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\test\index.html" />
     <Content Include="Content\sb-admin-2\bower_components\jquery\dist\jquery.js" />
@@ -715,7 +708,6 @@
     <Content Include="Content\sb-admin-2\bower_components\metisMenu\src\metisMenu.js" />
     <Content Include="Content\sb-admin-2\bower_components\mocha\mocha.css" />
     <Content Include="Content\sb-admin-2\bower_components\mocha\mocha.js" />
-    <Content Include="Content\sb-admin-2\bower_components\morrisjs\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\morrisjs\examples\area-as-line.html" />
     <Content Include="Content\sb-admin-2\bower_components\morrisjs\examples\area.html" />
     <Content Include="Content\sb-admin-2\bower_components\morrisjs\examples\bar-colors.html" />
@@ -853,6 +845,7 @@
     <Content Include="Content\sb-admin-2\bower.json" />
     <Content Include="Content\sb-admin-2\bower_components\bootstrap-social\.bower.json" />
     <Content Include="Content\sb-admin-2\bower_components\bootstrap-social\.editorconfig" />
+    <Content Include="Content\sb-admin-2\bower_components\bootstrap-social\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\bootstrap-social\bootstrap-social.less" />
     <Content Include="Content\sb-admin-2\bower_components\bootstrap-social\bootstrap-social.scss" />
     <Content Include="Content\sb-admin-2\bower_components\bootstrap-social\bower.json" />
@@ -1015,6 +1008,7 @@
     <Content Include="Content\sb-admin-2\bower_components\datatables-plugins\README.md" />
     <Content Include="Content\sb-admin-2\bower_components\datatables-plugins\sorting\.DS_Store" />
     <Content Include="Content\sb-admin-2\bower_components\datatables-responsive\.bower.json" />
+    <Content Include="Content\sb-admin-2\bower_components\datatables-responsive\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\datatables-responsive\bower.json" />
     <Content Include="Content\sb-admin-2\bower_components\datatables-responsive\css\dataTables.responsive.scss" />
     <Content Include="Content\sb-admin-2\bower_components\datatables-responsive\examples\.DS_Store" />
@@ -1029,6 +1023,7 @@
     <Content Include="Content\sb-admin-2\bower_components\flot.tooltip\.bower.json" />
     <Content Include="Content\sb-admin-2\bower_components\flot.tooltip\bower.json" />
     <Content Include="Content\sb-admin-2\bower_components\flot\.bower.json" />
+    <Content Include="Content\sb-admin-2\bower_components\flot\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\flot\.travis.yml" />
     <Content Include="Content\sb-admin-2\bower_components\flot\API.md" />
     <Content Include="Content\sb-admin-2\bower_components\flot\component.json" />
@@ -1068,6 +1063,7 @@
     <Content Include="Content\sb-admin-2\bower_components\flot\PLUGINS.md" />
     <Content Include="Content\sb-admin-2\bower_components\flot\README.md" />
     <Content Include="Content\sb-admin-2\bower_components\font-awesome\.bower.json" />
+    <Content Include="Content\sb-admin-2\bower_components\font-awesome\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\font-awesome\.npmignore" />
     <Content Include="Content\sb-admin-2\bower_components\font-awesome\bower.json" />
     <Content Include="Content\sb-admin-2\bower_components\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -1104,11 +1100,14 @@
     <Content Include="Content\sb-admin-2\bower_components\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\sb-admin-2\bower_components\font-awesome\scss\_variables.scss" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\.bower.json" />
+    <Content Include="Content\sb-admin-2\bower_components\holderjs\.gitattributes" />
+    <Content Include="Content\sb-admin-2\bower_components\holderjs\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\.jshintrc" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\bower.json" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\composer.json" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\package.json" />
     <Content Include="Content\sb-admin-2\bower_components\holderjs\README.md" />
+    <Content Include="Content\sb-admin-2\bower_components\holderjs\test\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\jquery\.bower.json" />
     <Content Include="Content\sb-admin-2\bower_components\jquery\bower.json" />
     <Content Include="Content\sb-admin-2\bower_components\jquery\dist\jquery.min.map" />
@@ -1125,6 +1124,7 @@
     <Content Include="Content\sb-admin-2\bower_components\mocha\media\logo.svg" />
     <Content Include="Content\sb-admin-2\bower_components\mocha\Readme.md" />
     <Content Include="Content\sb-admin-2\bower_components\morrisjs\.bower.json" />
+    <Content Include="Content\sb-admin-2\bower_components\morrisjs\.gitignore" />
     <Content Include="Content\sb-admin-2\bower_components\morrisjs\.travis.yml" />
     <Content Include="Content\sb-admin-2\bower_components\morrisjs\bower.json" />
     <Content Include="Content\sb-admin-2\bower_components\morrisjs\bower.travis.json" />
@@ -1192,7 +1192,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="Content\css\Site.css" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />

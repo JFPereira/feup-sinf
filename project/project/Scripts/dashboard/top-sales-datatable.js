@@ -1,5 +1,4 @@
 ﻿$(function () {
-
     $.ajax({
         dataType: "json",
         url: "http://localhost:49328/api/sales/top",
@@ -8,10 +7,8 @@
 
             var dataS = [];
             $.each(sales, function (i) {
-                dataS.push([sales[i].entity, sales[i].purchaseValue, sales[i].numPurchases ]);
+                dataS.push([sales[i].entity, sales[i].purchaseValue, sales[i].numPurchases]);
             });
-
-            console.log(dataS);
 
             $('#topsales').dataTable({
                 data: dataS,

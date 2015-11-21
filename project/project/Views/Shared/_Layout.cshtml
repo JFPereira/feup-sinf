@@ -1,40 +1,56 @@
 ﻿<!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Dashboard</title>
+    <title>SINF Dashboard 360</title>
 
-    <!--Styles-->
-    @Styles.Render("~/Content/css/Site")
-    @Styles.Render("~/Content/bootstrap")
-    @Styles.Render("~/Content/css/Home")
-    @Styles.Render("~/Content/css/jquery-datatables")
+    <!-- Bootstrap Core CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/bootstrap/dist/css/bootstrap.min.css")
 
-    
+    <!-- MetisMenu CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/metisMenu/dist/metisMenu.min.css")
 
-    <!--Scripts-->
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/Content/jquery-flot")
-    @Scripts.Render("~/Content/jquery-flot-pie")
-    @Scripts.Render("~/Content/jquery-datatables")
+    <!-- Extra Styles -->
+    @RenderSection("ExtraStyles", false)
 
+    <!-- Custom CSS -->
+    @Styles.Render("~/Content/sb-admin-2/dist/css/sb-admin-2.css")
 
-    @Scripts.Render("~/Scripts/clients-flot-pie")
-    @Scripts.Render("~/Scripts/products-flot-pie")
-    @Scripts.Render("~/Scripts/top-sales-datatable")
-    
+    <!-- Custom Fonts -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/font-awesome/css/font-awesome.min.css")
 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
-
 <body>
-    @{
-        Html.RenderPartial("_Navbar");
-    }
+    @{ Html.RenderPartial("_navbar"); }
 
-    @RenderBody()
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-lg-offset-1 col-lg-10">@RenderBody()</div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/jquery/dist/jquery.min.js")
+
+    <!-- Bootstrap Core JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/bootstrap/dist/js/bootstrap.min.js")
+
+    <!-- Metis Menu Plugin JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/metisMenu/dist/metisMenu.min.js")
+
+    <!-- Extra Scripts -->
+    @RenderSection("ExtraScripts", false)
+
+    <!-- Custom Theme JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/dist/js/sb-admin-2.js")
 </body>
 </html>
