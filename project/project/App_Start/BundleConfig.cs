@@ -35,6 +35,12 @@ namespace project
             bundles.Add(new ScriptBundle("~/Content/jquery-datatables").Include(
                        "~/Content/sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.js"));
 
+            bundles.Add(new ScriptBundle("~/Content/jquery-morris").Include(
+                       "~/Content/sb-admin-2/bower_components/morrisjs/morris.js"));
+
+            bundles.Add(new ScriptBundle("~/Content/jquery-raphael").Include(
+                      "~/Content/sb-admin-2/bower_components/raphael/raphael.js"));
+
             /* Twitter Bootstrap JS */
             bundles.Add(new ScriptBundle("~/Content/bootstrap").Include(
                        "~/Content/sb-admin-2/bower_components/bootstrap/dist/js/bootstrap.js"));
@@ -47,6 +53,8 @@ namespace project
                        "~/Scripts/dashboard/products-flot-pie.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/top-sales-datatable").Include("~/Scripts/dashboard/top-sales-datatable.js"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/global-financial-morris").Include("~/Scripts/dashboard/global-financial-morris.js"));
 
             /***** CSS *****/
 

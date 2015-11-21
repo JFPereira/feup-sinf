@@ -8,6 +8,9 @@
     <!-- DataTables Responsive CSS -->
     @Styles.Render("~/Content/sb-admin-2/bower_components/datatables-responsive/css/dataTables.responsive.css")
 
+    <!-- Morris Charts CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.css")
+
     <!-- Our Styles -->
     @Styles.Render("~/Content/css/main-dash.css")
 }
@@ -24,6 +27,10 @@
     <!-- DataTables JavaScript -->
     @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.min.js")
     @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")
+
+    <!-- Morris Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
 
     <!-- Our Scripts -->
     @Scripts.Render("~/Scripts/clients-flot-pie")
@@ -81,7 +88,7 @@
 
             <div class="panel-body">
                 <div class="flot-chart">
-                    <div id="placeholderA" class="flot-chart-content"></div>
+                    <div id="globalfinancial" class="flot-chart-content"></div>
                 </div>
             </div>
 
