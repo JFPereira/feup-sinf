@@ -7,7 +7,7 @@
 
             var data = [];
             $.each(clients, function (i) {
-                data.push({ label: clients[i].name, data: clients[i].percentage });
+                data.push({ label: clients[i].entity + " - " + clients[i].name, data: clients[i].percentage});
             });
 
             $.plot("#placeholderA", data, {
@@ -17,7 +17,8 @@
                     }
                 },
                 grid: {
-                    hoverable: true
+                    hoverable: true,
+                    clickable: true
                 },
                 tooltip: true,
                 tooltipOpts: {
@@ -26,6 +27,19 @@
                         x: 20,
                         y: 0
                     }
+                },
+                legend: {
+                    labelFormatter: function (label, series) {
+                        // series is the series object for the label
+                        return '<a href="#' + label + '">' + label + '</a>';
+                    }
+                }
+            });
+            
+            $("#placeholderA").bind("plotclick", function (event, legend) {
+
+                if (legend) {
+                    alert("You clicked at " + legend.labelFormatter);
                 }
             });
         }
