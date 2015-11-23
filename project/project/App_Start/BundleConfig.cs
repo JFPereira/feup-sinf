@@ -56,6 +56,8 @@ namespace project
 
             bundles.Add(new ScriptBundle("~/Scripts/global-financial-morris").Include("~/Scripts/dashboard/global-financial-morris.js"));
 
+            bundles.Add(new ScriptBundle("~/Scripts/shipments").Include("~/Scripts/dashboard/shipments.js"));
+
             /***** CSS *****/
 
             /* Twitter Bootstrap CSS */
