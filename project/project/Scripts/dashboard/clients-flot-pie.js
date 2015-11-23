@@ -10,7 +10,7 @@
                 data.push({ label: clients[i].entity + " - " + clients[i].name, data: clients[i].percentage});
             });
 
-            $.plot("#placeholderA", data, {
+            var plot = $.plot("#placeholderA", data, {
                 series: {
                     pie: {
                         show: true
@@ -30,27 +30,21 @@
                 },
                 legend: {
                     labelFormatter: function (label, series) {
-                        // series is the series object for the label
-                        return '<a href="#' + label + '">' + label + '</a>';
+                        // split the string label into an array with the entity and name of the company
+                        var entity_name = label.split(' - ');
+                        return '<a class="pie-legend" href="Clients/' + entity_name[0] + '">' + entity_name[1] + '</a>';
                     }
                 }
             });
-            
-            $("#placeholderA").bind("plotclick", function (event, legend) {
 
-                if (legend) {
-                    alert("You clicked at " + legend.labelFormatter);
+            $("#placeholderA").bind("plotclick", function (event, pos, item) {
+                if (item) {
+                    alert(item.series.label);
+                    // split the string label in entity
+                    var entity = item.series.label.split(' - ')[0];
+                    $(location).attr('href', 'Clients/' + entity);
                 }
             });
         }
     })
 });
-
-// custom label formatter used by several of the plots
-function labelFormatter(label, series) {
-    return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br />" + Math.round(series.percent) + "%</div>";
-}
-
-function setCode(lines) {
-    $("#code").text(lines.join("\n"));
-}
