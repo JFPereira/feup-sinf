@@ -33,11 +33,11 @@
     @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
 
     <!-- Our Scripts -->
-    @Scripts.Render("~/Scripts/clients-flot-pie")
-    @Scripts.Render("~/Scripts/products-flot-pie")
-    @Scripts.Render("~/Scripts/top-sales-datatable")
-    @Scripts.Render("~/Scripts/shipments")
-
+    @Scripts.Render("~/Scripts/dashboard/clients-flot-pie.js")
+    @Scripts.Render("~/Scripts/dashboard/products-flot-pie.js")
+    @Scripts.Render("~/Scripts/dashboard/global-financial-morris.js")
+    @Scripts.Render("~/Scripts/dashboard/top-sales-datatable.js")
+    @Scripts.Render("~/Scripts/dashboard/shipments.js")
 }
 
 <div class="col-xs-12">
@@ -89,9 +89,7 @@
             <div class="panel-heading">Global Financial</div>
 
             <div class="panel-body">
-                <div class="flot-chart">
-                    <div id="globalfinancial" class="flot-chart-content"></div>
-                </div>
+                <div id="globalfinancial"></div>
             </div>
 
             <a href="#">
@@ -109,7 +107,9 @@
             <div class="panel-heading">Top Sales</div>
 
             <div class="panel-body">
-                <table id="topsales" class="compact" width="auto"></table>
+                <div class="dataTable_wrapper">
+                    <table id="topsales" class="table table-bordered table-hover table-striped" width="auto"></table>
+                </div>
             </div>
 
             <a href="#">
@@ -121,6 +121,7 @@
             </a>
         </div>
     </div>
+
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -128,10 +129,14 @@
                     <div class="col-xs-3">
                         <i class="fa fa-clock-o fa-5x"></i>
                     </div>
-                    <div id="lateshipments" class="col-xs-9 text-right">
+
+                    <div class="col-xs-9 text-right">
+                        <div id="lateshipments" class="huge"></div>
+                        <div>Late Shipments</div>
                     </div>
                 </div>
             </div>
+
             <a href="#">
                 <div class="panel-footer">
                     <span class="pull-left">View Details</span>
