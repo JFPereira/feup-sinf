@@ -310,6 +310,7 @@
     <Compile Include="Items\MonthlyPurchasesItem.cs" />
     <Compile Include="Items\RegionalSSItem.cs" />
     <Compile Include="Items\RegSalesBookingItem.cs" />
+    <Compile Include="Items\ShipmentsItem.cs" />
     <Compile Include="Items\TopSalesCountry.cs" />
     <Compile Include="Items\SalesBookingItem.cs" />
     <Compile Include="Items\TopClientsItem.cs" />

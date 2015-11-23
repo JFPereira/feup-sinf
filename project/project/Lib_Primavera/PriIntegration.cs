@@ -483,6 +483,30 @@ namespace project.Lib_Primavera
                 return null;
 
         }
+        public static double GetShipments()
+        {
+            double delayed = 0;
+            StdBELista objList;
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT LinhasInternos.QntSatisfeita, LinhasInternos.Quantidade from LinhasInternos");
+
+                while (!objList.NoFim())
+                {
+                    double satis = objList.Valor("QntSatisfeita");
+                    double quant = objList.Valor("Quantidade");
+                    delayed += quant - satis;
+                    objList.Seguinte();
+                }
+
+                return delayed;
+            }
+            else
+                return 0;
+        }
 
         public static List<Model.Artigo> ListaArtigos()
         {

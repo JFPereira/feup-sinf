@@ -110,5 +110,19 @@ namespace project.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
            
         }
+
+        // GET api/products/shipments
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage Shipments()
+        {
+            double delayed = Lib_Primavera.PriIntegration.GetShipments();
+
+            var json = new JavaScriptSerializer().Serialize(delayed);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+
+        }
+
+
     }
 }
