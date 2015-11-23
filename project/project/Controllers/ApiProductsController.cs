@@ -123,6 +123,18 @@ namespace project.Controllers
 
         }
 
+        // GET api/products/shipments/{id}
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage ProductShipments(string id)
+        {
+            double delayed = Lib_Primavera.PriIntegration.GetProductShipments(id);
+
+            var json = new JavaScriptSerializer().Serialize(delayed);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+
+        }
+
 
     }
 }
