@@ -40,10 +40,91 @@ namespace project.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
+        //returns 10 top sales of all time
+        // GET api/sales/top/{year}
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage TopSalesY(string year)
+        {
+            List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSalesBy("year", year, null,null);
+            List<TopSalesItem> result = new List<TopSalesItem>();
+
+            foreach (Lib_Primavera.Model.CabecDoc sale in sales)
+            {
+                result.Add(new TopSalesItem
+                {
+                    entity = sale.Entidade,
+                    numDoc = sale.NumDoc,
+                    purchaseValue = sale.TotalMerc + sale.TotalIva,
+                    date = sale.Data,
+                    numPurchases = Lib_Primavera.PriIntegration.numPurchases(sale.Entidade)
+                });
+            }
+
+            result = result.OrderBy(e => e.purchaseValue).Reverse().Take(10).ToList();
+
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+
+        //returns 10 top sales of all time
+        // GET api/sales/top/{year}/{month}
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage TopSalesM(string year, string month)
+        {
+            List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSalesBy("month", year, month, null);
+            List<TopSalesItem> result = new List<TopSalesItem>();
+
+            foreach (Lib_Primavera.Model.CabecDoc sale in sales)
+            {
+                result.Add(new TopSalesItem
+                {
+                    entity = sale.Entidade,
+                    numDoc = sale.NumDoc,
+                    purchaseValue = sale.TotalMerc + sale.TotalIva,
+                    date = sale.Data,
+                    numPurchases = Lib_Primavera.PriIntegration.numPurchases(sale.Entidade)
+                });
+            }
+
+            result = result.OrderBy(e => e.purchaseValue).Reverse().Take(10).ToList();
+
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+
+        //returns 10 top sales of all time
+        // GET api/sales/top/{year}/{month}/{day}
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage TopSalesD(string year, string month, string day)
+        {
+            List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSalesBy("day", year, month, day);
+            List<TopSalesItem> result = new List<TopSalesItem>();
+
+            foreach (Lib_Primavera.Model.CabecDoc sale in sales)
+            {
+                result.Add(new TopSalesItem
+                {
+                    entity = sale.Entidade,
+                    numDoc = sale.NumDoc,
+                    purchaseValue = sale.TotalMerc + sale.TotalIva,
+                    date = sale.Data,
+                    numPurchases = Lib_Primavera.PriIntegration.numPurchases(sale.Entidade)
+                });
+            }
+
+            result = result.OrderBy(e => e.purchaseValue).Reverse().Take(10).ToList();
+
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+
         //returns a list with the 10 top products and volume of sales in a year
         // GET api/sales/psb/{year}
         [System.Web.Http.HttpGet]
-        public List<SalesBookingItem> SalesBookingY(string year)
+        public HttpResponseMessage SalesBookingY(string year)
         {
             List<SalesBookingItem> returnList = new List<SalesBookingItem>();
             List<Lib_Primavera.Model.Artigo> allProd = Lib_Primavera.PriIntegration.ListaArtigos();
@@ -58,13 +139,15 @@ namespace project.Controllers
             }
             returnList = returnList.OrderBy(e => e.valorVendas).Reverse().Take(10).ToList();
 
-            return returnList;
+            var json = new JavaScriptSerializer().Serialize(returnList);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         //returns a list with the 10 top products and volume of sales in a certain year and month
         // GET api/sales/psb/{year}/{month}
         [System.Web.Http.HttpGet]
-        public List<SalesBookingItem> SalesBookingM(string year, string month)
+        public HttpResponseMessage SalesBookingM(string year, string month)
         {
             List<SalesBookingItem> returnList = new List<SalesBookingItem>();
             List<Lib_Primavera.Model.Artigo> allProd = Lib_Primavera.PriIntegration.ListaArtigos();
@@ -81,13 +164,15 @@ namespace project.Controllers
             }
             returnList = returnList.OrderBy(e => e.valorVendas).Reverse().Take(10).ToList();
 
-            return returnList;
+            var json = new JavaScriptSerializer().Serialize(returnList);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         //returns a list with the 10 top products and volume of sales in a certain year, month and day
         // GET api/sales/psb/{year}/{month}/{day}
         [System.Web.Http.HttpGet]
-        public List<SalesBookingItem> SalesBookingD(string year, string month, string day)
+        public HttpResponseMessage SalesBookingD(string year, string month, string day)
         {
             List<SalesBookingItem> returnList = new List<SalesBookingItem>();
             List<Lib_Primavera.Model.Artigo> allProd = Lib_Primavera.PriIntegration.ListaArtigos();
@@ -102,13 +187,15 @@ namespace project.Controllers
             }
             returnList = returnList.OrderBy(e => e.valorVendas).Reverse().Take(10).ToList();
 
-            return returnList;
+            var json = new JavaScriptSerializer().Serialize(returnList);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         //returns the regional sales status, which is the percentage of volume of sales each region has in a certain year
         // GET api/sales/rss/{year}
         [System.Web.Http.HttpGet]
-        public List<RegionalSSItem> RegionalSSY(string year)
+        public HttpResponseMessage RegionalSSY(string year)
         {
             List<RegionalSSItem> returnList = new List<RegionalSSItem>();
             List<string> countries = Lib_Primavera.PriIntegration.getAllCountries();
@@ -123,23 +210,33 @@ namespace project.Controllers
                 returnList.Add(new RegionalSSItem
                 {
                     pais = country,
-                    percentagem = thisValue
+                    percentagem = thisValue,
+                    valor = thisValue
 
                 });
             }
 
             foreach (RegionalSSItem item in returnList)
             {
-                item.percentagem = 100.0 * item.percentagem / totalValue;
+                if (item.valor == 0)
+                {
+                    item.percentagem = 0;
+                }
+                else
+                {
+                    item.percentagem = 100.0 * item.percentagem / totalValue;
+                }
             }
 
-            return returnList;
+            var json = new JavaScriptSerializer().Serialize(returnList);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         //returns the regional sales status, which is the percentage of volume of sales each region has in a certain year and month
         // GET api/sales/rss/{year}/{month}
         [System.Web.Http.HttpGet]
-        public List<RegionalSSItem> RegionalSSM(string year, string month)
+        public HttpResponseMessage RegionalSSM(string year, string month)
         {
             List<RegionalSSItem> returnList = new List<RegionalSSItem>();
             List<string> countries = Lib_Primavera.PriIntegration.getAllCountries();
@@ -153,23 +250,33 @@ namespace project.Controllers
                 returnList.Add(new RegionalSSItem
                 {
                     pais = country,
-                    percentagem = thisValue
+                    percentagem = thisValue,
+                    valor = thisValue
 
                 });
             }
 
             foreach (RegionalSSItem item in returnList)
             {
-                item.percentagem = 100.0 * item.percentagem / totalValue;
+                if (item.valor == 0)
+                {
+                    item.percentagem = 0;
+                }
+                else
+                {
+                    item.percentagem = 100.0 * item.percentagem / totalValue;
+                }
             }
 
-            return returnList;
+            var json = new JavaScriptSerializer().Serialize(returnList);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         //returns the regional sales status, which is the percentage of volume of sales each region has in a certain year, month and day
         // GET api/sales/rss/{year}/{month}/{day}
         [System.Web.Http.HttpGet]
-        public List<RegionalSSItem> RegionalSSD(string year, string month, string day)
+        public HttpResponseMessage RegionalSSD(string year, string month, string day)
         {
             List<RegionalSSItem> returnList = new List<RegionalSSItem>();
             List<string> countries = Lib_Primavera.PriIntegration.getAllCountries();
@@ -183,17 +290,26 @@ namespace project.Controllers
                 returnList.Add(new RegionalSSItem
                 {
                     pais = country,
-                    percentagem = thisValue
+                    percentagem = thisValue,
+                    valor = thisValue
 
                 });
             }
-
             foreach (RegionalSSItem item in returnList)
             {
-                item.percentagem = 100.0 * item.percentagem / totalValue;
+                if (item.valor == 0)
+                {
+                    item.percentagem = 0;
+                }
+                else
+                {
+                    item.percentagem = 100.0 * item.percentagem / totalValue;
+                }
             }
 
-            return returnList;
+            var json = new JavaScriptSerializer().Serialize(returnList);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
 

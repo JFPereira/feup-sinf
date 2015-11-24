@@ -129,6 +129,27 @@ namespace project
                 defaults: new { controller = "ApiSales", action = "TopSales" }
             );
 
+            // GET api/sales/top/{year}
+            config.Routes.MapHttpRoute(
+                name: "SalesTopY",
+                routeTemplate: "api/sales/top/{year}",
+                defaults: new { controller = "ApiSales", action = "TopSalesY" }
+            );
+
+            // GET api/sales/top/{year}/{month}
+            config.Routes.MapHttpRoute(
+                name: "SalesTopM",
+                routeTemplate: "api/sales/top/{year}/{month}",
+                defaults: new { controller = "ApiSales", action = "TopSalesM" }
+            );
+
+            // GET api/sales/top/{year}/{month}/{day}
+            config.Routes.MapHttpRoute(
+                name: "SalesTopD",
+                routeTemplate: "api/sales/top/{year}/{month}/{day}",
+                defaults: new { controller = "ApiSales", action = "TopSalesD" }
+            );
+
             // GET api/sales/psb/{year}
             config.Routes.MapHttpRoute(
                 name: "SalesBookingYear",
