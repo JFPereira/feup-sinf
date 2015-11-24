@@ -1222,11 +1222,8 @@
     <Content Include="Views\Clients\List.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Clients\Info.cshtml" />
-=======
     <Content Include="Views\Sales\Index.cshtml" />
->>>>>>> 03c1527453f37912f85fbbd84abb37d18971dd22
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
