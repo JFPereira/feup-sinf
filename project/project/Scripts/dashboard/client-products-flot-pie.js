@@ -1,16 +1,21 @@
 ﻿$(function () {
+
+    var entity = document.getElementById("client-id").getAttribute("value");
+
+    console.log(entity);
+
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49328/api/clients/top",
-        success: function (clients) {
-            clients = JSON.parse(clients);
+        url: "http://localhost:49328/api/clients/" + entity + "/top-products",
+        success: function (products) {
+            products = JSON.parse(products);
 
             var data = [];
-            $.each(clients, function (i) {
-                data.push({ label: clients[i].entity + " - " + clients[i].name, data: clients[i].percentage});
+            $.each(products, function (i) {
+                data.push({ label: products[i].codArtigo + " - " + products[i].description, data: products[i].percentage });
             });
 
-            var plot = $.plot("#placeholderA", data, {
+            var plot = $.plot("#clientPlaceholder", data, {
                 series: {
                     pie: {
                         show: true
@@ -31,18 +36,18 @@
                 legend: {
                     labelFormatter: function (label, series) {
                         // split the string label into an array with the entity and name of the company
-                        var entity_name = label.split(' - ');
+                        var productCod_description = label.split(' - ');
 
-                        return '<a class="pie-legend" href="/Clients/Index/' + entity_name[0] + '">' + entity_name[1] + '</a>';
+                        return '<a class="pie-legend" href="/Products/Index/' + productCod_description[0] + '">' + productCod_description[1] + '</a>';
                     }
                 }
             });
 
-            $("#placeholderA").bind("plotclick", function (event, pos, item) {
+            $("#clientPlaceholder").bind("plotclick", function (event, pos, item) {
                 if (item) {
                     // split the string label in entity
-                    var entity = item.series.label.split(' - ')[0];
-                    $(location).attr('href', '/Clients/Index/' + entity);
+                    var productCod = item.series.label.split(' - ')[0];
+                    $(location).attr('href', '/Products/Index/' + productCod);
                 }
             });
         }

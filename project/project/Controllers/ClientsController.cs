@@ -16,14 +16,21 @@ namespace project.Controllers
         //Clients/Index/{id}
         public ActionResult Index(string id)
         {
+            ViewData["entity"] = id;
+
+            return View();
+        }
+
+        //Clients/Info
+        public ActionResult Info(string id)
+        {
             ApiClientsController apiClients = new ApiClientsController();
             Cliente clientSearch = apiClients.GetClient(id);
 
-            return View(clientSearch);
+            return PartialView(clientSearch);
         }
 
         // GET: /Clients/List
-
         public async Task<ActionResult> List()
         {
             var httpClient = new HttpClient();

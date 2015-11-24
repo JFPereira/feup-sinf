@@ -1,9 +1,43 @@
-﻿@model project.Lib_Primavera.Model.Cliente
+﻿@section ExtraScripts {
+    <!-- Flot Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/excanvas.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js")
 
-@{
-    ViewBag.Title = @Model.CodCliente;
+    <!-- DataTables JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")
+
+    <!-- Morris Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
+
+    <!-- Our Scripts -->
+    @Scripts.Render("~/Scripts/dashboard/client-products-flot-pie.js")
 }
 
 <h2>Index</h2>
 
-<h3>Página do cliente @Model.NomeCliente</h3>
+<div>
+    <div>
+        <h3>Info do Cliente</h3>
+    </div>
+
+    <div>
+        @Html.Action("Info", ViewData["entity"]);
+    </div>
+
+    <div class="panel-body">
+        <div class="flot-chart">
+            <div id="clientPlaceholder" class="flot-chart-content"></div>
+        </div>
+    </div>
+
+    <div>
+        <input id="client-id" type="hidden" name="client-id" value=@Html.ViewData["entity"]>
+    </div>
+</div>
+

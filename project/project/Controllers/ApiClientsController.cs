@@ -87,7 +87,7 @@ namespace project.Controllers
 
         // GET api/clients/{entity}/top-products
         [System.Web.Http.HttpGet]
-        public List<Items.TopProductsItem> TopProducts(string entity)
+        public HttpResponseMessage TopProducts(string entity)
         {
             // gets all lines in sales docs with all the products sold to the client
             List<Lib_Primavera.Model.LinhaDocVenda> allProducts = Lib_Primavera.PriIntegration.getSalesDocLinesByClient(entity);
@@ -124,9 +124,11 @@ namespace project.Controllers
 
             // calculate the percentage of each one
             foreach (TopProductsItem product in result)
-                product.percentage += Math.Round(product.salesVolume / totalProductSalesVolume * 100, 2);
+                product.percentage += Math.Round(product.salesVolume / totalProductSalesVolume * 100, 2).ToString(CultureInfo.GetCultureInfo("en-GB"));
 
-            return result;
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         // static variable to the total elements of the purchases graphics
