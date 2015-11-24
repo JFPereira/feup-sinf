@@ -1035,20 +1035,20 @@ namespace project.Lib_Primavera
                 if (controller == "year")
                 {
                    objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE DATEPART(year, CabecDoc.Data) = " + year);
+                    "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva, LinhasDoc.Quantidade as quantity FROM CabecDoc, LinhasDoc WHERE CabecDoc.Id = LinhasDoc.IdCabecDoc AND DATEPART(year, CabecDoc.Data) = " + year);
                 }
 
                 else if (controller == "month")
                 {
                     if (month == null) return null;
                     objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year);
+                    "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva, LinhasDoc.Quantidade as quantity FROM CabecDoc, LinhasDoc WHERE CabecDoc.Id = LinhasDoc.IdCabecDoc AND DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year);
                 }
                 else if (controller == "day")
                 {
                     if (month == null) return null;
                     objList = PriEngine.Engine.Consulta(
-                   "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE DATEPART(dd,CabecDoc.Data) = " + day + " AND DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year);
+                   "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva, LinhasDoc.Quantidade as quantity FROM CabecDoc, LinhasDoc WHERE CabecDoc.Id = LinhasDoc.IdCabecDoc AND DATEPART(dd,CabecDoc.Data) = " + day + " AND DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year);
                 }
                 else return null;
 
@@ -1570,6 +1570,30 @@ namespace project.Lib_Primavera
 
             }
             return countries;
+        }
+
+        public static int numUnits(int NumDoc)
+        {
+            int numUnits = 0;
+            StdBELista objList;
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade as quantity FROM CabecDoc,LinhasDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.NumDoc = " + NumDoc);
+
+                while (!objList.NoFim())
+                {
+                    numUnits += objList.Valor("quantity");
+
+                    objList.Seguinte();
+                }
+
+                return numUnits;
+
+            }
+            return -1;
         }
 
         #endregion DocsVenda

@@ -34,7 +34,8 @@
 
     <!-- Our Scripts -->
     @Scripts.Render("~/Scripts/sales/RSS-table.js")
-    @Scripts.Render("~/Scripts/sales/sales-booking-morris.js")
+    @Scripts.Render("~/Scripts/sales/sales-booking-morris.js") 
+    @Scripts.Render("~/Scripts/sales/top-purchases-table.js")
 }
 
 <div class="col-xs-12">
@@ -60,7 +61,25 @@
             </a>
         </div>
     </div>
+    <div class="col-xs-12 col-md-12 col-lg-7">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top purchases 2015</div>
 
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table id="top-purchases" class="table table-bordered table-hover table-striped" width="auto"></table>
+                </div>
+            </div>
+
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
     <div class="col-xs-12 col-md-12 col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">Sales Booking 2015</div>

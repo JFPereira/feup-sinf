@@ -40,7 +40,7 @@ namespace project.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
-        //returns 10 top sales of all time
+        //returns 10 top sales of a certain year and month
         // GET api/sales/top/{year}
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopSalesY(string year)
@@ -56,7 +56,7 @@ namespace project.Controllers
                     numDoc = sale.NumDoc,
                     purchaseValue = sale.TotalMerc + sale.TotalIva,
                     date = sale.Data,
-                    numPurchases = Lib_Primavera.PriIntegration.numPurchases(sale.Entidade)
+                    numPurchases = Lib_Primavera.PriIntegration.numUnits(sale.NumDoc)
                 });
             }
 
@@ -67,7 +67,7 @@ namespace project.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
-        //returns 10 top sales of all time
+        //returns 10 top sales of a certain year and month
         // GET api/sales/top/{year}/{month}
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopSalesM(string year, string month)
@@ -83,7 +83,7 @@ namespace project.Controllers
                     numDoc = sale.NumDoc,
                     purchaseValue = sale.TotalMerc + sale.TotalIva,
                     date = sale.Data,
-                    numPurchases = Lib_Primavera.PriIntegration.numPurchases(sale.Entidade)
+                    numPurchases = Lib_Primavera.PriIntegration.numUnits(sale.NumDoc)
                 });
             }
 
@@ -94,7 +94,7 @@ namespace project.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
-        //returns 10 top sales of all time
+        //returns 10 top sales of a certain year, month and day
         // GET api/sales/top/{year}/{month}/{day}
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopSalesD(string year, string month, string day)
@@ -110,7 +110,7 @@ namespace project.Controllers
                     numDoc = sale.NumDoc,
                     purchaseValue = sale.TotalMerc + sale.TotalIva,
                     date = sale.Data,
-                    numPurchases = Lib_Primavera.PriIntegration.numPurchases(sale.Entidade)
+                    numPurchases = Lib_Primavera.PriIntegration.numUnits(sale.NumDoc)
                 });
             }
 
