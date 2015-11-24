@@ -1017,6 +1017,60 @@ namespace project.Lib_Primavera
             return sales;
         }
 
+        public static List<Model.CabecDoc> getSalesBy(string controller, string year, string month, string day)
+        {
+            List<Model.CabecDoc> sales = new List<Model.CabecDoc>();
+            StdBELista objList;
+
+            bool companyInitialized = initCompany();
+
+            List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
+
+            if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
+                month = (months.IndexOf(month) + 1).ToString();
+            else month = null;
+
+            if (companyInitialized)
+            {
+                if (controller == "year")
+                {
+                   objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva, LinhasDoc.Quantidade as quantity FROM CabecDoc, LinhasDoc WHERE CabecDoc.Id = LinhasDoc.IdCabecDoc AND DATEPART(year, CabecDoc.Data) = " + year);
+                }
+
+                else if (controller == "month")
+                {
+                    if (month == null) return null;
+                    objList = PriEngine.Engine.Consulta(
+                    "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva, LinhasDoc.Quantidade as quantity FROM CabecDoc, LinhasDoc WHERE CabecDoc.Id = LinhasDoc.IdCabecDoc AND DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year);
+                }
+                else if (controller == "day")
+                {
+                    if (month == null) return null;
+                    objList = PriEngine.Engine.Consulta(
+                   "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva, LinhasDoc.Quantidade as quantity FROM CabecDoc, LinhasDoc WHERE CabecDoc.Id = LinhasDoc.IdCabecDoc AND DATEPART(dd,CabecDoc.Data) = " + day + " AND DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year);
+                }
+                else return null;
+
+                while (!objList.NoFim())
+                {
+                    sales.Add(new Model.CabecDoc
+                    {
+                        Data = objList.Valor("Data"),
+                        Entidade = objList.Valor("Entidade"),
+                        Nome = objList.Valor("Nome"),
+                        NumDoc = objList.Valor("NumDoc"),
+                        NumContribuinte = objList.Valor("NumContribuinte"),
+                        TotalMerc = objList.Valor("TotalMerc"),
+                        TotalIva = objList.Valor("TotalIva"),
+                    });
+
+                    objList.Seguinte();
+                }
+            }
+
+            return sales;
+        }
         //returns total amount of money made from selling the item prod, with contraints year,month and day
         public static double getSalesProd(string controller, string prod, string year, string month, string day)
         {
@@ -1516,6 +1570,30 @@ namespace project.Lib_Primavera
 
             }
             return countries;
+        }
+
+        public static int numUnits(int NumDoc)
+        {
+            int numUnits = 0;
+            StdBELista objList;
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade as quantity FROM CabecDoc,LinhasDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.NumDoc = " + NumDoc);
+
+                while (!objList.NoFim())
+                {
+                    numUnits += objList.Valor("quantity");
+
+                    objList.Seguinte();
+                }
+
+                return numUnits;
+
+            }
+            return -1;
         }
 
         #endregion DocsVenda

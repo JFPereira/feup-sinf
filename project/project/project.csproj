@@ -291,6 +291,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Content Include="Content\css\sales-dash.css" />
     <Compile Include="Controllers\ApiClientsController.cs" />
     <Compile Include="Controllers\ApiFinancialController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
@@ -298,6 +299,7 @@
     <Compile Include="Controllers\ApiProductsController.cs" />
     <Compile Include="Controllers\ApiSalesController.cs" />
     <Compile Include="Controllers\ApiSuppliersController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\UtilitiesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -333,6 +335,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Content Include="Scripts\sales\RSS-table.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -1185,6 +1188,8 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\sales\sales-booking-morris.js" />
+    <Content Include="Scripts\sales\top-purchases-table.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1217,7 +1222,11 @@
     <Content Include="Views\Clients\List.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Clients\Info.cshtml" />
+=======
+    <Content Include="Views\Sales\Index.cshtml" />
+>>>>>>> 03c1527453f37912f85fbbd84abb37d18971dd22
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

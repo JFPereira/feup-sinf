@@ -20,5 +20,10 @@ namespace project.Items
             set;
         }
 
+        public double valor
+        {
+            get;
+            set;
+        }
     }
 }
