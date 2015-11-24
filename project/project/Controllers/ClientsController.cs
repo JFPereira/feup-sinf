@@ -13,8 +13,16 @@ namespace project.Controllers
 {
     public class ClientsController : Controller
     {
-        //
-        // GET: /Clients
+        //Clients/Index/{id}
+        public ActionResult Index(string id)
+        {
+            ApiClientsController apiClients = new ApiClientsController();
+            Cliente clientSearch = apiClients.GetClient(id);
+
+            return View(clientSearch);
+        }
+
+        // GET: /Clients/List
 
         public async Task<ActionResult> List()
         {

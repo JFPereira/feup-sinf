@@ -1215,6 +1215,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Clients\List.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
+    <Content Include="Views\Clients\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

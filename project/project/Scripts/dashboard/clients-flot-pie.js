@@ -32,17 +32,16 @@
                     labelFormatter: function (label, series) {
                         // split the string label into an array with the entity and name of the company
                         var entity_name = label.split(' - ');
-                        return '<a class="pie-legend" href="Clients/' + entity_name[0] + '">' + entity_name[1] + '</a>';
+                        return '<a class="pie-legend" href="Clients/Index/' + entity_name[0] + '">' + entity_name[1] + '</a>';
                     }
                 }
             });
 
             $("#placeholderA").bind("plotclick", function (event, pos, item) {
                 if (item) {
-                    alert(item.series.label);
                     // split the string label in entity
                     var entity = item.series.label.split(' - ')[0];
-                    $(location).attr('href', 'Clients/' + entity);
+                    $(location).attr('href', 'Clients/Index/' + entity);
                 }
             });
         }

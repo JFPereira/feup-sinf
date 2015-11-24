@@ -12,6 +12,7 @@ using Interop.IGcpBS800;
 //using Interop.StdBSSql800;
 
 using project.Items;
+using project.Lib_Primavera.Model;
 
 namespace project.Lib_Primavera
 {
@@ -65,30 +66,28 @@ namespace project.Lib_Primavera
 
         public static Lib_Primavera.Model.Cliente GetCliente(string codCliente)
         {
-            GcpBECliente objCli = new GcpBECliente();
+           Cliente cliente = new Cliente();
 
-            Model.Cliente myCli = new Model.Cliente();
+            bool companyInitialized = initCompany();
 
-            if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
+            if (companyInitialized)
             {
-
-                if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == true)
-                {
-                    objCli = PriEngine.Engine.Comercial.Clientes.Edita(codCliente);
-                    myCli.CodCliente = objCli.get_Cliente();
-                    myCli.NomeCliente = objCli.get_Nome();
-                    myCli.Moeda = objCli.get_Moeda();
-                    myCli.NumContribuinte = objCli.get_NumContribuinte();
-                    myCli.Morada = objCli.get_Morada();
-                    return myCli;
-                }
-                else
-                {
-                    return null;
+                StdBELista objCli = PriEngine.Engine.Consulta(
+                    "SELECT Clientes.Cliente, Clientes.Nome, Clientes.NumContrib, Clientes.Fac_Mor, Clientes.Moeda FROM Clientes WHERE Clientes.Cliente = " + codCliente);
+                if (objCli.NoFim()) return null;
+                else {
+                    cliente = new Cliente
+                    {
+                        CodCliente = objCli.Valor("Cliente"),
+                        NomeCliente = objCli.Valor("Nome"),
+                        NumContribuinte = objCli.Valor("NumContrib"),
+                        Morada = objCli.Valor("Fac_Mor"),
+                        Moeda = objCli.Valor("Moeda")
+                    };
                 }
             }
-            else
-                return null;
+
+            return cliente;
         }
 
         public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Cliente cliente)
