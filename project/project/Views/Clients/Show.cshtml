@@ -16,9 +16,12 @@
     <!-- Morris Charts JavaScript -->
     @Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
     @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.js")
 
     <!-- Our Scripts -->
-    @Scripts.Render("~/Scripts/dashboard/client-products-flot-pie.js")
+    @Scripts.Render("~/Scripts/clients/client-products-flot-pie.js")
+    @Scripts.Render("~/Scripts/clients/costs-earnings.js")
+    @Scripts.Render("~/Scripts/clients/client-products-flot-pie.js")
 }
 
 <div class="col-xs-12">
@@ -73,6 +76,45 @@
                     <div class="clearfix"></div>
                 </div>
             </a>
+        </div>
+    </div>
+
+    <div id="costs-earnings">
+        <div id="ce">
+            <div id="ce-graph"></div>
+        </div>
+    </div>
+
+    <div id="daily-purchases">
+        <div id="year">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    Dropdown Example
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">HTML</a></li>
+                    <li><a href="#">CSS</a></li>
+                    <li><a href="#">JavaScript</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="months">
+            <select>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
         </div>
     </div>
 </div>
