@@ -1483,12 +1483,13 @@ namespace project.Lib_Primavera
 
             if (companyInitialized)
             {
-                linesList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.Quantidade, LinhasDoc.Unidade, LinhasDoc.DescontoComercial, LinhasDoc.PrecUnit, LinhasDoc.TotalILiquido, LinhasDoc.TotalIva, LinhasDoc.PrecoLiquido, LinhasDoc.PCM FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.Entidade = '" + entity + "'");
+                linesList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Data, LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDoc.Quantidade, LinhasDoc.Unidade, LinhasDoc.DescontoComercial, LinhasDoc.PrecUnit, LinhasDoc.TotalILiquido, LinhasDoc.TotalIva, LinhasDoc.PrecoLiquido, LinhasDoc.PCM FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.Entidade = '" + entity + "'");
 
                 while (!linesList.NoFim())
                 {
                     linesDoc.Add(new Model.LinhaDocVenda
                     {
+                        Data = linesList.Valor("Data"),
                         Artigo = linesList.Valor("Artigo"),
                         Descricao = linesList.Valor("Descricao"),
                         Quantidade = linesList.Valor("Quantidade"),
@@ -1498,7 +1499,8 @@ namespace project.Lib_Primavera
                         TotalILiquido = linesList.Valor("TotalILiquido"),
                         TotalIva = linesList.Valor("TotalIva"),
                         PrecoLiquido = linesList.Valor("PrecoLiquido"),
-                        PrecoCustoMedio = linesList.Valor("PCM")
+                        PrecoCustoMedio = linesList.Valor("PCM"),
+
                     });
 
                     linesList.Seguinte();

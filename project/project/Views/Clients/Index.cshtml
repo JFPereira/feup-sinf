@@ -12,11 +12,13 @@
     @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")
 
     <!-- Morris Charts JavaScript -->
-    @Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.js")
     @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
 
     <!-- Our Scripts -->
-    @Scripts.Render("~/Scripts/dashboard/client-products-flot-pie.js")
+    @Scripts.Render("~/Scripts/clients/client-products-flot-pie.js")
+    @Scripts.Render("~/Scripts/clients/costs-earnings.js")
 }
 
 <h2>Index</h2>
@@ -27,17 +29,19 @@
     </div>
 
     <div>
-        @Html.Action("Info", ViewData["entity"]);
+        @Html.Action("Info", ViewData["entity"])
     </div>
 
     <div class="panel-body">
+        <input id="client-id" type="hidden" name="client-id" value=@Html.ViewData["entity"] />
+
         <div class="flot-chart">
             <div id="clientPlaceholder" class="flot-chart-content"></div>
         </div>
     </div>
 
-    <div>
-        <input id="client-id" type="hidden" name="client-id" value=@Html.ViewData["entity"]>
+    <div id="ce">
+        <div id="ce-graph"></div>
     </div>
 </div>
 

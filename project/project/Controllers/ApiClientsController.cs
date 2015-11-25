@@ -325,22 +325,31 @@ namespace project.Controllers
 
         // GET api/clients/{entity}/ce
         [System.Web.Http.HttpGet]
-        public CostsVsEarningsItem CostsVsEarnings(string entity)
+        public HttpResponseMessage CostsVsEarnings(string entity)
         {
             // gets all lines in sales docs with all the products sold to the client
             List<LinhaDocVenda> allSoldProducts = Lib_Primavera.PriIntegration.getSalesDocLinesByClient(entity);
             CostsVsEarningsItem result = new CostsVsEarningsItem();
 
+            double tCost = 0, tEarning = 0, prof = 0;
+
             foreach (LinhaDocVenda product in allSoldProducts)
             {
-                result.totalCost += (product.PrecoCustoMedio * product.Quantidade);
-                result.totalEarning += (product.PrecoUnitario * product.Quantidade);
+                tCost += (product.PrecoCustoMedio * product.Quantidade);
+                tEarning += (product.PrecoUnitario * product.Quantidade);
             }
 
             // calculate the diff between total earnings and total costs
-            result.profit = result.totalEarning - result.totalCost;
+            prof = tEarning - tCost;
 
-            return result;
+            result.totalCost = tCost.ToString(CultureInfo.GetCultureInfo("en-GB"));
+            result.totalEarning = tEarning.ToString(CultureInfo.GetCultureInfo("en-GB"));
+            result.profit = prof.ToString(CultureInfo.GetCultureInfo("en-GB"));
+            result.total = tEarning + tCost;
+
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
     }
 }

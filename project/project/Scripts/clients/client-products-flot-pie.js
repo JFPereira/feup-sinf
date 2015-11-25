@@ -2,8 +2,6 @@
 
     var entity = document.getElementById("client-id").getAttribute("value");
 
-    console.log(entity);
-
     $.ajax({
         dataType: "json",
         url: "http://localhost:49328/api/clients/" + entity + "/top-products",

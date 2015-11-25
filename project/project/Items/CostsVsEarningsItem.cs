@@ -7,19 +7,25 @@ namespace project.Items
 {
     public class CostsVsEarningsItem
     {
-        public double totalCost
+        public string totalCost
         {
             get;
             set;
         }
 
-        public double totalEarning
+        public string totalEarning
         {
             get;
             set;
         }
 
-        public double profit
+        public string profit
+        {
+            get;
+            set;
+        }
+
+        public double total
         {
             get;
             set;

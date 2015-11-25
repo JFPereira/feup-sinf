@@ -7,7 +7,11 @@ namespace project.Lib_Primavera.Model
 {
     public class LinhaDocVenda
     {
-
+        public DateTime Data
+        {
+            get;
+            set;
+        }
 
         public string Artigo
         {
@@ -15,64 +19,64 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-         public string Descricao
+        public string Descricao
         {
             get;
             set;
         }
 
-         public string IdCabecDoc
-         {
-             get;
-             set;
-         }
-
-         public double Quantidade
+        public string IdCabecDoc
         {
             get;
             set;
         }
 
-         public string Unidade
+        public double Quantidade
         {
             get;
             set;
         }
 
-         public double DescontoComercial
+        public string Unidade
         {
             get;
             set;
         }
 
-         public double PrecoUnitario
+        public double DescontoComercial
         {
             get;
             set;
         }
 
-         public double TotalILiquido
+        public double PrecoUnitario
         {
             get;
             set;
         }
 
-         public double TotalIva
+        public double TotalILiquido
         {
             get;
             set;
         }
 
-         public double PrecoLiquido
-         {
-             get;
-             set;
-         }
+        public double TotalIva
+        {
+            get;
+            set;
+        }
 
-         public double PrecoCustoMedio
-         {
-             get;
-             set;
-         }
+        public double PrecoLiquido
+        {
+            get;
+            set;
+        }
+
+        public double PrecoCustoMedio
+        {
+            get;
+            set;
+        }
     }
 }

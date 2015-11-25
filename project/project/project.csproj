@@ -335,6 +335,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Content Include="Scripts\clients\costs-earnings.js" />
     <Content Include="Scripts\sales\RSS-table.js" />
   </ItemGroup>
   <ItemGroup>
@@ -1168,7 +1169,7 @@
       <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
     </None>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Scripts\dashboard\client-products-flot-pie.js" />
+    <Content Include="Scripts\clients\client-products-flot-pie.js" />
     <Content Include="Scripts\dashboard\clients-flot-pie.js" />
     <Content Include="Scripts\dashboard\global-financial-morris.js" />
     <Content Include="Scripts\dashboard\products-flot-pie.js" />
