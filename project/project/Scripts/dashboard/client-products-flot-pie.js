@@ -6,7 +6,7 @@
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49328/api/clients/" + entity + "/top-products",
+        url: "http://localhost:49328/api/clients/" + entity + "/top-products",  
         success: function (products) {
             products = JSON.parse(products);
 

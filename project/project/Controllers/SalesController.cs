@@ -9,10 +9,14 @@ namespace project.Controllers
     public class SalesController : Controller
     {
         //
-        // GET: /Sales/
+        // GET: /Sales/{ano}/{mes}/{dia}
 
-        public ActionResult Index()
+        public ActionResult Index(string year, string month, string day)
         {
+            ViewData["year"] = year;
+            ViewData["month"] = month;
+            ViewData["day"] = day;
+            
             return View();
         }
 
