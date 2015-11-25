@@ -299,6 +299,7 @@
     <Compile Include="Controllers\ApiProductsController.cs" />
     <Compile Include="Controllers\ApiSalesController.cs" />
     <Compile Include="Controllers\ApiSuppliersController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\UtilitiesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -335,6 +336,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Content Include="Scripts\dashboard\product-clients-flot-pie.js" />
     <Content Include="Scripts\sales\RSS-table.js" />
   </ItemGroup>
   <ItemGroup>
@@ -1224,6 +1226,8 @@
     <Content Include="Views\Clients\Index.cshtml" />
     <Content Include="Views\Clients\Info.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
+    <Content Include="Views\Products\Info.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

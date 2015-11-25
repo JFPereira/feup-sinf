@@ -414,7 +414,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static Lib_Primavera.Model.Artigo GetTopClientesArtigo(Model.Artigo artigo)
+        public static List<Model.CabecDoc> GetTopClientesArtigo(string id)
         {
             StdBELista objList;
 
@@ -424,7 +424,7 @@ namespace project.Lib_Primavera
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND LinhasDoc.Artigo = " + artigo.CodArtigo);
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND LinhasDoc.Artigo = " + id);
                 while (!objList.NoFim())
                 {
                     sales.Add(new Model.CabecDoc
@@ -441,42 +441,8 @@ namespace project.Lib_Primavera
                     objList.Seguinte();
                 }
 
-                List<Items.TopClientsItem> result = new List<Items.TopClientsItem>();
+                return sales;
 
-                double totalSalesVolume = 0;
-
-                foreach (Model.CabecDoc sale in sales)
-                {
-                    if (result.Exists(e => e.nif == sale.NumContribuinte))
-                    {
-                        result.Find(e => e.nif == sale.NumContribuinte).salesVolume += (sale.TotalMerc + sale.TotalIva);
-                        result.Find(e => e.nif == sale.NumContribuinte).numPurchases++;
-                    }
-                    else
-                    {
-                        result.Add(new Items.TopClientsItem
-                        {
-                            entity = sale.Entidade,
-                            name = sale.Nome,
-                            nif = sale.NumContribuinte,
-                            salesVolume = sale.TotalMerc + sale.TotalIva,
-                            percentage = "",
-                            numPurchases = 1
-                        });
-                    }
-
-                    totalSalesVolume += (sale.TotalMerc + sale.TotalIva);
-                }
-
-                result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
-
-                foreach (Items.TopClientsItem client in result)
-                    client.percentage += Math.Round(client.salesVolume / totalSalesVolume * 100, 2) + " %";
-
-                artigo.TopClientes = result;
-
-
-                return artigo;
             }
             else
                 return null;

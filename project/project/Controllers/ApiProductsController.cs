@@ -43,8 +43,7 @@ namespace project.Controllers
                 artigo.PrecoMedio = sumPrecos / precos.Count;
                 artigo = Lib_Primavera.PriIntegration.GetVendasArtigo(artigo);
                 artigo = Lib_Primavera.PriIntegration.GetComprasArtigo(artigo);
-                artigo = Lib_Primavera.PriIntegration.GetTopClientesArtigo(artigo);
-                List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
+               /* List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
                 string month = DateTime.Now.Month.ToString();
                 string year = DateTime.Now.Year.ToString();
                 int m = Int32.Parse(month);
@@ -64,9 +63,52 @@ namespace project.Controllers
                 }
 
                 global = global.OrderBy(e => e.Mes).ToList();
-                artigo.VendasComprasMes = global;
+                artigo.VendasComprasMes = global;*/
                 return artigo;
             }
+        }
+
+        // GET api/products/{id}/top-clients
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage TopClients(string id)
+        {
+           
+            List<CabecDoc> sales = Lib_Primavera.PriIntegration.GetTopClientesArtigo(id);
+            List<TopClientsItem> result = new List<Items.TopClientsItem>();
+
+            double totalSalesVolume = 0;
+
+            foreach (CabecDoc sale in sales)
+            {
+                if (result.Exists(e => e.nif == sale.NumContribuinte))
+                {
+                    result.Find(e => e.nif == sale.NumContribuinte).salesVolume += (sale.TotalMerc + sale.TotalIva);
+                    result.Find(e => e.nif == sale.NumContribuinte).numPurchases++;
+                }
+                else
+                {
+                    result.Add(new Items.TopClientsItem
+                    {
+                        entity = sale.Entidade,
+                        name = sale.Nome,
+                        nif = sale.NumContribuinte,
+                        salesVolume = sale.TotalMerc + sale.TotalIva,
+                        percentage = "",
+                        numPurchases = 1
+                    });
+                }
+
+                totalSalesVolume += (sale.TotalMerc + sale.TotalIva);
+            }
+
+            result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
+
+            foreach (Items.TopClientsItem client in result)
+                client.percentage += Math.Round(client.salesVolume / totalSalesVolume * 100, 2).ToString(CultureInfo.GetCultureInfo("en-GB"));
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+            
         }
 
         // GET api/products/top
