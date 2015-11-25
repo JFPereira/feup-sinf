@@ -7,7 +7,7 @@
 
             var data = [];
             $.each(clients, function (i) {
-                data.push({ label: clients[i].entity + " - " + clients[i].name, data: clients[i].percentage});
+                data.push({ label: clients[i].entity + " - " + clients[i].name, data: clients[i].percentage });
             });
 
             var plot = $.plot("#placeholderA", data, {
@@ -33,7 +33,7 @@
                         // split the string label into an array with the entity and name of the company
                         var entity_name = label.split(' - ');
 
-                        return '<a class="pie-legend" href="/Clients/Index/' + entity_name[0] + '">' + entity_name[1] + '</a>';
+                        return '<a class="pie-legend" href="/Clients/Show/' + entity_name[0] + '">' + entity_name[1] + '</a>';
                     }
                 }
             });
@@ -42,7 +42,7 @@
                 if (item) {
                     // split the string label in entity
                     var entity = item.series.label.split(' - ')[0];
-                    $(location).attr('href', '/Clients/Index/' + entity);
+                    $(location).attr('href', '/Clients/Show/' + entity);
                 }
             });
         }

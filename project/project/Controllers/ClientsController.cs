@@ -13,12 +13,17 @@ namespace project.Controllers
 {
     public class ClientsController : Controller
     {
-        //Clients/Index/{id}
-        public ActionResult Index(string id)
+        //Clients/Show/{id}
+        public async Task<ActionResult> Show(string id)
         {
+            var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync("http://localhost:49328/api/clients/" + id);
+
+            var client = await response.Content.ReadAsAsync<Cliente>();
+
             ViewData["entity"] = id;
 
-            return View();
+            return View(client);
         }
 
         //Clients/Info
@@ -28,21 +33,6 @@ namespace project.Controllers
             Cliente clientSearch = apiClients.GetClient(id);
 
             return PartialView(clientSearch);
-        }
-
-        // GET: /Clients/List
-        public async Task<ActionResult> List()
-        {
-            var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync("http://localhost:49328/api/clients");
-
-            var clients = await response.Content.ReadAsAsync<IEnumerable<Cliente>>();
-
-            string test = "ola";
-
-            ViewData["test"] = test;
-
-            return View(clients);
         }
     }
 }

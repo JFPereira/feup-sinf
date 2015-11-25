@@ -4,7 +4,7 @@
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49328/api/clients/" + entity + "/top-products",
+        url: "http://localhost:49328/api/clients/" + entity + "/top-products",  
         success: function (products) {
             products = JSON.parse(products);
 
@@ -13,7 +13,7 @@
                 data.push({ label: products[i].codArtigo + " - " + products[i].description, data: products[i].percentage });
             });
 
-            var plot = $.plot("#clientPlaceholder", data, {
+            var plot = $.plot("#clientTopProductsPlaceholder", data, {
                 series: {
                     pie: {
                         show: true
@@ -41,7 +41,7 @@
                 }
             });
 
-            $("#clientPlaceholder").bind("plotclick", function (event, pos, item) {
+            $("#clientTopProductsPlaceholder").bind("plotclick", function (event, pos, item) {
                 if (item) {
                     // split the string label in entity
                     var productCod = item.series.label.split(' - ')[0];

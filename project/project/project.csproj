@@ -291,6 +291,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Content Include="Content\assets\favicon.ico" />
+    <Content Include="Content\assets\images\dashboard-icon.png" />
     <Content Include="Content\css\sales-dash.css" />
     <Compile Include="Controllers\ApiClientsController.cs" />
     <Compile Include="Controllers\ApiFinancialController.cs" />
@@ -1222,9 +1224,17 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Clients\List.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Clients\Index.cshtml" />
     <Content Include="Views\Clients\Info.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
+=======
+    <Content Include="Views\Clients\Show.cshtml" />
+    <Content Include="Views\Clients\Info.cshtml" />
+    <Content Include="Views\Sales\Index.cshtml" />
+    <Content Include="Views\Products\Info.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+>>>>>>> 22edfa47fed1c47a146cb66741a509d0152a2af6
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

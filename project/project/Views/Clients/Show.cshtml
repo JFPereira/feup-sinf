@@ -1,0 +1,78 @@
+﻿@model project.Lib_Primavera.Model.Cliente
+
+@section ExtraScripts {
+    <!-- Flot Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/excanvas.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js")
+
+    <!-- DataTables JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")
+
+    <!-- Morris Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
+
+    <!-- Our Scripts -->
+    @Scripts.Render("~/Scripts/dashboard/client-products-flot-pie.js")
+}
+
+<div class="col-xs-12">
+    <input id="client-id" type="hidden" name="client-id" value=@Html.ViewData["entity"]>
+
+    <h2>@Model.NomeCliente</h2>
+    <hr>
+
+    <div class="col-xs-12 col-md-6 col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top 10 Products</div>
+
+            <div class="panel-body">
+                <div class="flot-chart">
+                    <div id="clientTopProductsPlaceholder" class="flot-chart-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-6 col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Client Details</div>
+
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table id="topsales" class="table table-bordered table-hover table-striped" width="auto">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@@mdo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

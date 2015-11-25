@@ -14,10 +14,26 @@ namespace project
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+              name: "Sales",
+              url: "Sales/{year}/{month}/{day}",
+              defaults: new
+              {
+                  controller = "Sales",
+                  action = "Index",
+                  year = UrlParameter.Optional,
+                  month = UrlParameter.Optional,
+                  day = UrlParameter.Optional
+              }
+            );
+
+            routes.MapRoute(
                name: "Default",
                url: "{controller}/{action}/{id}",
                defaults: new { controller = "Home", action = "index", id = UrlParameter.Optional }
-           );
+            );
+
+            
+
         }
     }
 }
