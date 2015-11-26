@@ -25,6 +25,8 @@
                 // chart.
                 labels: ['Sales', 'Purchases'],
             });
+
+            $("#globalfinancialLoadingAnimation").remove();
         }
     })
 });

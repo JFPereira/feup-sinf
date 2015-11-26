@@ -7,6 +7,8 @@
 
             var domElem = document.getElementById('purchasesYtdPlaceholder');
             domElem.innerHTML = content;
+
+            $('#purchasesYtdPlaceholderLoadingAnimation').remove();
         }
     })
 });

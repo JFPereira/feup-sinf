@@ -52,6 +52,8 @@
                     $(location).attr('href', '/Clients/Index/' + clientCod);
                 }
             });
+
+            $("#productPlaceholderLoadingAnimation").remove();
         }
     })
 });

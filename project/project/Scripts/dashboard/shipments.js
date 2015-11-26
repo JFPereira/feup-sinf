@@ -7,6 +7,8 @@
 
             var s = document.getElementById('lateshipments');
             s.innerHTML = shipments;
+
+            $("#lateshipmentsLoadingAnimation").remove();
         }
     })
 });

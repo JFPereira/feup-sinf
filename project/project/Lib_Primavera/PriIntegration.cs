@@ -1109,41 +1109,6 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static List<List<double>> getSalesYoY(int year)
-        {
-            List<List<double>> result = new List<List<double>>();
-
-            for (int i = 0; i < 12; i++)
-                result.Add(new List<double> { -1, -1 });
-
-            bool companyInitialized = initCompany();
-
-            if (companyInitialized)
-            {
-                StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.DataVencimento, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc");
-
-                while (!objList.NoFim())
-                {
-                    DateTime date = objList.Valor("DataVencimento");
-
-                    if (date.Year == year || date.Year == year - 1)
-                    {
-                        double amount = objList.Valor("TotalMerc") + objList.Valor("TotalIVA");
-
-                        if (result[date.Month - 1][date.Year - year + 1] == -1)
-                            result[date.Month - 1][date.Year - year + 1] = amount;
-                        else
-                            result[date.Month - 1][date.Year - year + 1] += amount;
-                    }
-
-                    objList.Seguinte();
-                }
-            }
-
-            return result;
-        }
-
         public static List<TopSalesCountry> getTop10SalesCountries()
         {
             List<TopSalesCountry> result = new List<TopSalesCountry>();

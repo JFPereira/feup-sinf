@@ -98,7 +98,7 @@ namespace project.Controllers
         {
             List<List<double>> result = new List<List<double>>();
             for (int i = 0; i < 12; i++)
-                result.Add(new List<double> { -1, -1 });
+                result.Add(new List<double> { 0, 0 });
 
             // DB query
             List<DocCompra> purchases = Lib_Primavera.PriIntegration.getPurchases();
@@ -110,10 +110,7 @@ namespace project.Controllers
                 {
                     double amount = -1 * (entry.TotalMerc + entry.TotalIva);
 
-                    if (result[entry.Data.Month - 1][entry.Data.Year - year + 1] == -1)
-                        result[entry.Data.Month - 1][entry.Data.Year - year + 1] = amount;
-                    else
-                        result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
+                    result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
                 }
             }
 
@@ -140,7 +137,25 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public List<List<double>> SalesYoY(int year)
         {
-            return Lib_Primavera.PriIntegration.getSalesYoY(year);
+            List<List<double>> result = new List<List<double>>();
+            for (int i = 0; i < 12; i++)
+                result.Add(new List<double> { 0, 0 });
+
+            // DB query
+            List<CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
+
+            // Purchases total amount
+            foreach (var entry in sales)
+            {
+                if (entry.Data.Year == year || entry.Data.Year == year - 1)
+                {
+                    double amount = entry.TotalMerc + entry.TotalIva;
+
+                    result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
+                }
+            }
+
+            return result;
         }
 
         // GET api/financial/top10sales

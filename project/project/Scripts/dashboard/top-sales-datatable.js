@@ -18,6 +18,8 @@
                     { title: "Nr Purchases" }
                 ]
             });
+
+            $("#topsalesLoadingAnimation").remove();
         }
     })
 });

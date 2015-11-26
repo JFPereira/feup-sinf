@@ -7,6 +7,8 @@
 
             var domElem = document.getElementById('salesYtdPlaceholder');
             domElem.innerHTML = content;
+
+            $('#salesYtdPlaceholderLoadingAnimation').remove();
         }
     })
 });

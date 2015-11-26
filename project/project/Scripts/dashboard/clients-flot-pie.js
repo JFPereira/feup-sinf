@@ -45,6 +45,8 @@
                     $(location).attr('href', '/Clients/Show/' + entity);
                 }
             });
+
+            $("#placeholderALoadingAnimation").remove();
         }
     })
 });
