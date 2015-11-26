@@ -41,7 +41,6 @@ namespace project.Controllers
                     sumPrecos += preco;
                 }
                 artigo.PrecoMedio = sumPrecos / precos.Count;
-                artigo = Lib_Primavera.PriIntegration.GetComprasArtigo(artigo);
                /* List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
                 string month = DateTime.Now.Month.ToString();
                 string year = DateTime.Now.Year.ToString();
@@ -132,6 +131,64 @@ namespace project.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
 
         }
+
+        // GET api/products/{id}/purchases
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage Purchases(string id)
+        {
+            List<LinhaDocCompra> purchases = Lib_Primavera.PriIntegration.GetComprasArtigo(id);
+            double sum = 0;
+            double totalQuantity = 0;
+
+            ProductPurchasesItem result = new ProductPurchasesItem();
+            foreach (LinhaDocCompra purchase in purchases)
+            {
+                sum += (Math.Abs(purchase.Quantidade) * purchase.PrecoUnitario);
+                totalQuantity += Math.Abs(purchase.Quantidade);
+            }
+
+            result.Compras = sum;
+            result.Comprados = totalQuantity;
+
+
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+
+        }
+
+        // GET api/products/{id}/financial
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage Financial(string id)
+        {
+            List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
+            string month = DateTime.Now.Month.ToString();
+            string year = DateTime.Now.Year.ToString();
+            int m = Int32.Parse(month);
+            int y = Int32.Parse(year);
+            for (int i = 1; i < m + 1; i++)
+            {
+                double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
+                double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
+                global.Add(new GlobalFinancialItem
+                {
+                    Ano = y,
+                    Mes = i,
+                    Compras = Math.Abs(purchase),
+                    Vendas = sale
+
+                });
+            }
+
+            global = global.OrderBy(e => e.Mes).ToList();
+            var json = new JavaScriptSerializer().Serialize(global);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+
+        }
+
+
+        
        
         // GET api/products/top
         [System.Web.Http.HttpGet]

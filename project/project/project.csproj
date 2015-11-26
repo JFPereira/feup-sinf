@@ -302,6 +302,7 @@
     <Compile Include="Controllers\ApiProductsController.cs" />
     <Compile Include="Controllers\ApiSalesController.cs" />
     <Compile Include="Controllers\ApiSuppliersController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\UtilitiesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -313,6 +314,7 @@
     <Compile Include="Items\FinancialInfo.cs" />
     <Compile Include="Items\GlobalFinancialItem.cs" />
     <Compile Include="Items\MonthlyPurchasesItem.cs" />
+    <Compile Include="Items\ProductPurchasesItem.cs" />
     <Compile Include="Items\ProductSalesItem.cs" />
     <Compile Include="Items\RegionalSSItem.cs" />
     <Compile Include="Items\RegSalesBookingItem.cs" />
@@ -341,6 +343,8 @@
     </Compile>
     <Content Include="Scripts\clients\costs-earnings.js" />
     <Content Include="Scripts\clients\daily-purchases.js" />
+    <Content Include="Scripts\dashboard\product-clients-flot-pie.js" />
+    <Content Include="Scripts\dashboard\product-financial-morris.js" />
     <Content Include="Scripts\dashboard\product-shipments.js" />
     <Content Include="Scripts\dashboard\product-units-sold.js" />
     <Content Include="Scripts\sales\RSS-table.js" />
