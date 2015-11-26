@@ -313,6 +313,7 @@
     <Compile Include="Items\FinancialInfo.cs" />
     <Compile Include="Items\GlobalFinancialItem.cs" />
     <Compile Include="Items\MonthlyPurchasesItem.cs" />
+    <Compile Include="Items\ProductSalesItem.cs" />
     <Compile Include="Items\RegionalSSItem.cs" />
     <Compile Include="Items\RegSalesBookingItem.cs" />
     <Compile Include="Items\TopSalesCountry.cs" />
@@ -340,6 +341,8 @@
     </Compile>
     <Content Include="Scripts\clients\costs-earnings.js" />
     <Content Include="Scripts\clients\daily-purchases.js" />
+    <Content Include="Scripts\dashboard\product-shipments.js" />
+    <Content Include="Scripts\dashboard\product-units-sold.js" />
     <Content Include="Scripts\sales\RSS-table.js" />
   </ItemGroup>
   <ItemGroup>

@@ -32,6 +32,13 @@ namespace project
                 defaults: new { controller = "ApiProducts", action = "TopClients" }
             );
 
+            // GET api/products/{id}/sales
+            config.Routes.MapHttpRoute(
+                name: "Product Sales",
+                routeTemplate: "api/products/{id}/sales",
+                defaults: new { controller = "ApiProducts", action = "Sales" }
+            );
+
             // GET api/products/shipments
             config.Routes.MapHttpRoute(
                 name: "Shipments",

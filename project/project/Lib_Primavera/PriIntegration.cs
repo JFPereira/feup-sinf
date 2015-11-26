@@ -335,18 +335,16 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static Lib_Primavera.Model.Artigo GetVendasArtigo(Model.Artigo artigo)
+        public static List<LinhaDocVenda> GetVendasArtigo(string id)
         {
             StdBELista objList;
             Model.LinhaDocVenda lindv;
 
             List<Model.LinhaDocVenda> sales = new List<Model.LinhaDocVenda>();
-            double sum = 0;
-            double totalQuantity = 0;
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade, LinhasDoc.PrecUnit from LinhasDoc WHERE Artigo = '" + artigo.CodArtigo + "'");
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade, LinhasDoc.PrecUnit from LinhasDoc WHERE Artigo = '" + id + "'");
                 sales = new List<Model.LinhaDocVenda>();
 
                 while (!objList.NoFim())
@@ -359,16 +357,8 @@ namespace project.Lib_Primavera
                     objList.Seguinte();
                 }
 
-                foreach (Model.LinhaDocVenda sale in sales)
-                {
-                    sum += (sale.Quantidade * sale.PrecoUnitario);
-                    totalQuantity += sale.Quantidade;
-                }
+                return sales;
 
-                artigo.Vendas = sum;
-                artigo.Vendidos = totalQuantity;
-
-                return artigo;
             }
             else
                 return null;

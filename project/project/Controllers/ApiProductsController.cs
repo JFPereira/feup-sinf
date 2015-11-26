@@ -41,7 +41,6 @@ namespace project.Controllers
                     sumPrecos += preco;
                 }
                 artigo.PrecoMedio = sumPrecos / precos.Count;
-                artigo = Lib_Primavera.PriIntegration.GetVendasArtigo(artigo);
                 artigo = Lib_Primavera.PriIntegration.GetComprasArtigo(artigo);
                /* List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
                 string month = DateTime.Now.Month.ToString();
@@ -111,6 +110,29 @@ namespace project.Controllers
             
         }
 
+        // GET api/products/{id}/sales
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage Sales(string id)
+        {
+            List<LinhaDocVenda> sales = Lib_Primavera.PriIntegration.GetVendasArtigo(id);
+            double sum = 0;
+            double totalQuantity = 0;
+            ProductSalesItem result = new ProductSalesItem();
+            foreach (LinhaDocVenda sale in sales)
+            {
+                sum += (sale.Quantidade * sale.PrecoUnitario);
+                totalQuantity += sale.Quantidade;
+            }
+
+            result.Vendas = sum;
+            result.Vendidos = totalQuantity;
+
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+
+        }
+       
         // GET api/products/top
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopProducts()
