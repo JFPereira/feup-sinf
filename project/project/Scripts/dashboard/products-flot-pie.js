@@ -7,7 +7,7 @@
 
             var data = [];
             $.each(products, function (i) {
-                data.push({ label: products[i].description, data: products[i].percentage });
+                data.push({ label: products[i].codArtigo + " - " + products[i].description, data: products[i].percentage });
             });
 
             $.plot("#placeholderB", data, {
@@ -26,7 +26,15 @@
                         x: 20,
                         y: 0
                     }
+                },
+                legend: {
+                labelFormatter: function (label, series) {
+                    // split the string label into an array with the entity and name of the company
+                    var entity_name = label.split(' - ');
+
+                    return '<a class="pie-legend" href="/Products/Index/' + entity_name[0] + '">' + entity_name[1] + '</a>';
                 }
+            }
             });
 
             $("#placeholderBLoadingAnimation").remove();

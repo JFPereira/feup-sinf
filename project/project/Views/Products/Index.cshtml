@@ -14,50 +14,64 @@
 @Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
 @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
 <!-- Our Scripts -->
-@Scripts.Render("~/Scripts/dashboard/product-clients-flot-pie.js")
-@Scripts.Render("~/Scripts/dashboard/product-shipments.js")
-@Scripts.Render("~/Scripts/dashboard/product-units-sold.js")
-@Scripts.Render("~/Scripts/dashboard/product-financial-morris.js")
+@Scripts.Render("~/Scripts/products/product-clients-flot-pie.js")
+@Scripts.Render("~/Scripts/products/product-shipments.js")
+@Scripts.Render("~/Scripts/products/product-units-sold.js")
+@Scripts.Render("~/Scripts/products/product-financial-morris.js")
 }
 
-<h2>Index</h2>
+<h2>@Model.CodArtigo - @Model.DescArtigo</h2>
+<hr>
 <div>
-    <div>
-        <h3>Product Info</h3>
-    </div>
-    <div>
-        @Html.Action("Info", ViewData["product"]);
-    </div>
-    <div class="panel-body">
-        <div class="flot-chart">
-            <div id="ProductPlaceholder" class="flot-chart-content"></div>
+    <div class="col-xs-12 col-md-6 col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top 10 Clients</div>
+
+            <div class="panel-body">
+                <div class="flot-chart">
+                    <div id="ProductPlaceholder" class="flot-chart-content"></div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-clock-o fa-5x"></i>
-                    </div>
 
-                    <div class="col-xs-9 text-right">
-                        <div id="productshipments" class="huge"></div>
-                        <div>Late Shipments</div>
+    <div class="col-xs-12 col-md-6 col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Product Details</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <p class="col-md-3 text-right"><strong>Code:</strong></p>
+                            <p class="col-md-9">@Model.CodArtigo</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-md-3 text-right"><strong>Description:</strong></p>
+                            <p class="col-md-9">@Model.DescArtigo</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-md-3 text-right"><strong>Type:</strong></p>
+                            <p class="col-md-9">@Model.Tipo</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-md-3 text-right"><strong>Price:</strong></p>
+                            <p class="col-md-9">@Model.Preco</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-md-3 text-right"><strong>Cost:</strong></p>
+                            <p class="col-md-9">@Model.Custo</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-md-3 text-right"><strong>Stock:</strong></p>
+                            <p class="col-md-9">@Model.Stock</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <a href="#">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+
+    <div class="col-lg-2 col-md-2">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
@@ -81,24 +95,8 @@
             </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-6 col-lg-5">
-        <div class="panel panel-default">
-            <div class="panel-heading">Sales and Purchases</div>
 
-            <div class="panel-body">
-                <div id="productfinancial"></div>
-            </div>
-
-            <a href="#">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-2 col-md-2">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
@@ -122,6 +120,51 @@
             </a>
         </div>
     </div>
+
+    <div class="col-lg-2 col-md-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-clock-o fa-5x"></i>
+                    </div>
+
+                    <div class="col-xs-9 text-right">
+                        <div id="productshipments" class="huge"></div>
+                        <div>Late Shipments</div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Sales and Purchases</div>
+
+            <div class="panel-body">
+                <div id="productfinancial"></div>
+            </div>
+
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    
     <div>
         <input id="productID" type="hidden" name="productID" value=@Html.ViewData["product"]>
     </div>
