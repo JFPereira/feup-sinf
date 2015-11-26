@@ -11,7 +11,8 @@
             var dataG = [];
             $.each(financial, function (i) {
                 var mes = financial[i].Ano + "-" + financial[i].Mes;
-                dataG.push({ month: mes, sales: financial[i].Vendas, purchases: financial[i].Compras });
+                var profits = financial[i].Vendas - financial[i].Compras;
+                dataG.push({ month: mes, sales: financial[i].Vendas, purchases: financial[i].Compras, profit: profits });
             });
 
             new Morris.Line({
@@ -23,10 +24,10 @@
                 // The name of the data record attribute that contains x-values.
                 xkey: 'month',
                 // A list of names of data record attributes that contain y-values.
-                ykeys: ['sales', 'purchases'],
+                ykeys: ['sales', 'purchases', 'profit'],
                 // Labels for the ykeys -- will be displayed when you hover over the
                 // chart.
-                labels: ['Sales', 'Purchases'],
+                labels: ['Sales', 'Purchases', 'Profit'],
             });
         }
     })

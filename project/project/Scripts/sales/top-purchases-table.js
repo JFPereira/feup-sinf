@@ -1,35 +1,16 @@
-﻿$(function () {
+﻿$("document").ready(function () {
+    setTimeout(function () {
+        $("input#top-purchases-button").trigger('click');
+    }, 10);
+});
 
-    var year = document.getElementById("year").getAttribute("value");
-    var month = document.getElementById("month").getAttribute("value");
-    var day = document.getElementById("day").getAttribute("value");
+function updateTopPurchases() {
+
+    var year = $("select#tp-year").find(":selected").val();
+    var month = $("select#tp-month").find(":selected").val();
+    var day = $("select#tp-day").find(":selected").val();
     
-
-    if (year == null) {
-        $.ajax({
-            dataType: "json",
-            url: "http://localhost:49328/api/sales/top/2015",
-            success: function (sales) {
-                sales = JSON.parse(sales);
-
-                var dataS = [];
-                $.each(sales, function (i) {
-                    dataS.push([i + 1, sales[i].entity, sales[i].numPurchases, sales[i].purchaseValue]);
-                });
-
-                $('#top-purchases').dataTable({
-                    data: dataS,
-                    columns: [
-                        { title: "#" },
-                        { title: "Entity" },
-                        { title: "Units" },
-                        { title: "Purchase Value" }
-                    ]
-                });
-            }
-        })
-    }
-    else if (month == null) {
+    if (month == "None") {
         $.ajax({
             dataType: "json",
             url: "http://localhost:49328/api/sales/top/" + year,
@@ -48,12 +29,13 @@
                         { title: "Entity" },
                         { title: "Units" },
                         { title: "Purchase Value" }
-                    ]
+                    ],
+                    destroy: true
                 });
             }
         })
     }
-    else if (day == null) {
+    else if (day == "None") {
         $.ajax({
             dataType: "json",
             url: "http://localhost:49328/api/sales/top/" + year + "/" + month,
@@ -72,7 +54,8 @@
                         { title: "Entity" },
                         { title: "Units" },
                         { title: "Purchase Value" }
-                    ]
+                    ],
+                    destroy: true
                 });
             }
         })
@@ -96,9 +79,10 @@
                         { title: "Entity" },
                         { title: "Units" },
                         { title: "Purchase Value" }
-                    ]
+                    ],
+                    destroy:true
                 });
             }
         })
     }
-});
+}
