@@ -44,26 +44,53 @@
     <h1>Main Dash</h1>
     <hr>
 
-    <div class="col-xs-12 col-md-6 col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Top 10 Clients</div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Top 10 Clients</div>
 
-            <div class="panel-body">
-                <div class="flot-chart">
-                    <div id="placeholderA" class="flot-chart-content"></div>
+                <div class="panel-body">
+                    <div class="flot-chart">
+                        <div id="placeholderA" class="flot-chart-content"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-xs-12 col-md-6 col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Top 10 Products</div>
+        <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Top 10 Products</div>
 
-            <div class="panel-body">
-                <div class="flot-chart">
-                    <div id="placeholderB" class="flot-chart-content"></div>
+                <div class="panel-body">
+                    <div class="flot-chart">
+                        <div id="placeholderB" class="flot-chart-content"></div>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-clock-o fa-5x"></i>
+                        </div>
+
+                        <div class="col-xs-9 text-right">
+                            <div id="lateshipments" class="huge"></div>
+                            <div>Late Shipments</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -93,31 +120,6 @@
             <div class="panel-body">
                 <div class="dataTable_wrapper">
                     <table id="topsales" class="table table-bordered table-hover table-striped" width="auto"></table>
-                </div>
-            </div>
-
-            <a href="#">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-clock-o fa-5x"></i>
-                    </div>
-
-                    <div class="col-xs-9 text-right">
-                        <div id="lateshipments" class="huge"></div>
-                        <div>Late Shipments</div>
-                    </div>
                 </div>
             </div>
 

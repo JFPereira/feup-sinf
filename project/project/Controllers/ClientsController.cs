@@ -25,14 +25,5 @@ namespace project.Controllers
 
             return View(client);
         }
-
-        //Clients/Info
-        public ActionResult Info(string id)
-        {
-            ApiClientsController apiClients = new ApiClientsController();
-            Cliente clientSearch = apiClients.GetClient(id);
-
-            return PartialView(clientSearch);
-        }
     }
 }

@@ -1,0 +1,142 @@
+﻿@section ExtraStyles {
+    <!-- Morris Charts CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.css")
+
+    <!-- DataTables CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css")
+
+    <!-- DataTables Responsive CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/datatables-responsive/css/dataTables.responsive.css")
+
+    <!-- Morris Charts CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.css")
+
+    <!-- Our Styles -->
+    @Styles.Render("~/Content/css/main-dash.css")
+}
+
+@section ExtraScripts {
+    <!-- Flot Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/excanvas.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js")
+
+    <!-- DataTables JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")
+
+    <!-- Morris Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
+
+    <!-- Our Scripts -->
+}
+
+<div class="col-xs-12">
+    <h1>Financial Dashboard</h1>
+    <hr>
+
+    <div class="row">
+        <div class="col-xs-12 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Product Billing Missing</div>
+
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Revenue (YTD)</div>
+
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Billings to be Received</div>
+
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Units PSB</div>
+
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-eur fa-5x"></i>
+                        </div>
+
+                        <div class="col-xs-9 text-right">
+                            <div id="lateshipments" class="huge"></div>
+                            <div>Purchases YTD</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-eur fa-5x"></i>
+                        </div>
+
+                        <div class="col-xs-9 text-right">
+                            <div id="lateshipments" class="huge"></div>
+                            <div>Sales YTD</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Billings to be Received</div>
+
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
