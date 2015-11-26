@@ -4,6 +4,7 @@
     }, 10);
 });
 
+var myChart = null;
 function updateSalesBooking() {
 
 
@@ -25,14 +26,20 @@ function updateSalesBooking() {
                     dataS.push({ name: sales[i].nome, value: sales[i].valorVendas });
                 });
 
-                new Morris.Bar({
-                    element: 'salesbooking',
-                    data: dataS,
-                    xkey: 'name',
-                    ykeys: ['value'],
-                    labels: ['Volume de Vendas'],
-                    hidehover: 'auto'
-                });
+                
+                if (myChart == null) {
+                    myChart = new Morris.Bar({
+                        element: 'salesbooking',
+                        data: dataS,
+                        xkey: 'name',
+                        ykeys: ['value'],
+                        labels: ['Volume de Vendas'],
+                        hidehover: 'auto'
+                    });
+                }
+                else {
+                    myChart.setData(dataS);
+                }
             }
         })
     }
@@ -48,14 +55,19 @@ function updateSalesBooking() {
                     dataS.push({ name: sales[i].nome, value: sales[i].valorVendas });
                 });
 
-                new Morris.Bar({
-                    element: 'salesbooking',
-                    data: dataS,
-                    xkey: 'name',
-                    ykeys: ['value'],
-                    labels: ['Volume de Vendas'],
-                    hidehover: 'auto'
-                });
+                if (myChart == null) {
+                    myChart = new Morris.Bar({
+                        element: 'salesbooking',
+                        data: dataS,
+                        xkey: 'name',
+                        ykeys: ['value'],
+                        labels: ['Volume de Vendas'],
+                        hidehover: 'auto'
+                    });
+                }
+                else {
+                    myChart.setData(dataS);
+                }
             }
         })
     }
@@ -71,14 +83,19 @@ function updateSalesBooking() {
                     dataS.push({ name: sales[i].nome, value: sales[i].valorVendas });
                 });
 
-                new Morris.Bar({
-                    element: 'salesbooking',
-                    data: dataS,
-                    xkey: 'name',
-                    ykeys: ['value'],
-                    labels: ['Volume de Vendas'],
-                    hidehover: 'auto'
-                });
+                if (myChart == null) {
+                    myChart = new Morris.Bar({
+                        element: 'salesbooking',
+                        data: dataS,
+                        xkey: 'name',
+                        ykeys: ['value'],
+                        labels: ['Volume de Vendas'],
+                        hidehover: 'auto'
+                    });
+                }
+                else {
+                    myChart.setData(dataS);
+                }
             }
         })
     }
