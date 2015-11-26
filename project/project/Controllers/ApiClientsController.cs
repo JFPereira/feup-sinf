@@ -136,7 +136,7 @@ namespace project.Controllers
 
         // GET api/clients/{entity}/daily-purchases/{month}/{year}
         [System.Web.Http.HttpGet]
-        public List<Items.DailyPurchasesItem> DailyPurchases(string entity, string month, string year)
+        public HttpResponseMessage DailyPurchases(string entity, string month, string year)
         {
             // date interval between the target sales documents
             string dateStart, dateEnd;
@@ -191,12 +191,16 @@ namespace project.Controllers
                 }
             }
 
-            return days.OrderBy(e => e.day).ToList(); ;
+            days = days.OrderBy(e => e.day).ToList();
+
+            var json = new JavaScriptSerializer().Serialize(days);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         // GET api/clients/{entity}/monthly-purchases/{year}
         [System.Web.Http.HttpGet]
-        public List<Items.MonthlyPurchasesItem> MonthlyPurchases(string entity, string year)
+        public HttpResponseMessage MonthlyPurchases(string entity, string year)
         {
             // date interval between the target sales documents
             string dateStart, dateEnd;
@@ -261,7 +265,11 @@ namespace project.Controllers
                 }
             }
 
-            return months.OrderBy(e => e.month).ToList(); ;
+            months = months.OrderBy(e => e.month).ToList();
+
+            var json = new JavaScriptSerializer().Serialize(months);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         // process the date interval and assign the total elements that the WS DailyPurchases/MonthlyPurchases will need

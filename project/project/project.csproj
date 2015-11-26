@@ -293,6 +293,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Content Include="Content\assets\favicon.ico" />
     <Content Include="Content\assets\images\dashboard-icon.png" />
+    <Content Include="Content\css\clients-dash.css" />
     <Content Include="Content\css\sales-dash.css" />
     <Compile Include="Controllers\ApiClientsController.cs" />
     <Compile Include="Controllers\ApiFinancialController.cs" />
