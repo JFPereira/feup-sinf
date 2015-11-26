@@ -36,190 +36,15 @@
     @Scripts.Render("~/Scripts/sales/RSS-table.js")
     @Scripts.Render("~/Scripts/sales/sales-booking-morris.js") 
     @Scripts.Render("~/Scripts/sales/top-purchases-table.js")
+    @Scripts.Render("~/Scripts/sales/sales-growth-percentage.js")
+    @Scripts.Render("~/Scripts/sales/sales-growth-value.js")
 }
 
 
     <div class="col-xs-12">
         <h1>Sales Dash</h1>
         <hr>
-        <div class="col-xs-12 col-md-12 col-lg-7">
-            <div class="panel panel-default">
 
-                <div class="panel-heading"><strong>Regional Sales Status</strong></div>
-
-                <div class="panel-body">
-                    <div id="salesrss-form" class="form-inline" role="form">
-                        <div class="form-group years">
-                            <label for="rss-year">Year</label>
-                            <select id="rss-year" class="form-control" name="year">
-                                <option value="2014">2014</option>
-                                <option value="2015" selected>2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                            </select>
-                        </div>
-                        <div class="form-group months">
-                            <label for="rss-month">Month</label>
-                            <select id="rss-month" class="form-control" name="month">
-                                <option value="None" selected>None</option>
-                                <option value="01">January</option>
-                                <option value="02">February</option>
-                                <option value="03">March</option>
-                                <option value="04">April</option>
-                                <option value="05">May</option>
-                                <option value="06">June</option>
-                                <option value="07">July</option>
-                                <option value="08">August</option>
-                                <option value="09">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
-                        </div>
-                        <div class="form-group days">
-                            <label for="rss-day">Day</label>
-                            <select id="rss-day" class="form-control" name="day">
-                                <option value="None" selected>None</option>
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                                <option value="03">03</option>
-                                <option value="04">04</option>
-                                <option value="05">05</option>
-                                <option value="06">06</option>
-                                <option value="07">07</option>
-                                <option value="08">08</option>
-                                <option value="09">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                                <option value="19">19</option>
-                                <option value="20">20</option>
-                                <option value="21">21</option>
-                                <option value="22">22</option>
-                                <option value="23">23</option>
-                                <option value="24">24</option>
-                                <option value="25">25</option>
-                                <option value="26">26</option>
-                                <option value="27">27</option>
-                                <option value="28">28</option>
-                                <option value="29">29</option>
-                                <option value="30">30</option>
-                                <option value="31">31</option>
-                            </select>
-                        </div>
-                        <input onclick="updateRSS()" type="button" id="rss-button" class="btn btn-default" value="Update" />
-                    </div>
-
-
-                    <div class="dataTable_wrapper">
-                        <table id="salesrss" class="table table-bordered table-hover table-striped" width="auto"></table>
-                    </div>
-                </div>
-
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-12 col-lg-7">
-            <div class="panel panel-default">
-
-                <div class="panel-heading"><strong>Top Purchases</strong></div>
-
-                <div id="top-purchases-form" class="form-inline" role="form">                   
-                    <div class="panel-body">
-                        <div class="form-group years">
-                            <label for="tp-year">Year</label>
-                            <select id="tp-year" class="form-control" name="year">
-                                <option value="2014">2014</option>
-                                <option value="2015" selected>2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                            </select>
-                        </div>
-                        <div class="form-group months">
-                            <label for="tp-month">Month</label>
-                            <select id="tp-month" class="form-control" name="month">
-                                <option value="None" selected>None</option>
-                                <option value="01">January</option>
-                                <option value="02">February</option>
-                                <option value="03">March</option>
-                                <option value="04">April</option>
-                                <option value="05">May</option>
-                                <option value="06">June</option>
-                                <option value="07">July</option>
-                                <option value="08">August</option>
-                                <option value="09">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
-                        </div>
-                        <div class="form-group days">
-                            <label for="tp-day">Day</label>
-                            <select id="tp-day" class="form-control" name="day">
-                                <option value="None" selected>None</option>
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                                <option value="03">03</option>
-                                <option value="04">04</option>
-                                <option value="05">05</option>
-                                <option value="06">06</option>
-                                <option value="07">07</option>
-                                <option value="08">08</option>
-                                <option value="09">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                                <option value="19">19</option>
-                                <option value="20">20</option>
-                                <option value="21">21</option>
-                                <option value="22">22</option>
-                                <option value="23">23</option>
-                                <option value="24">24</option>
-                                <option value="25">25</option>
-                                <option value="26">26</option>
-                                <option value="27">27</option>
-                                <option value="28">28</option>
-                                <option value="29">29</option>
-                                <option value="30">30</option>
-                                <option value="31">31</option>
-                            </select>
-                        </div>
-                        <input onclick="updateTopPurchases()" type="button" id="top-purchases-button" class="btn btn-default" value="Update" />
-                    </div>
-
-                
-                    <div class="dataTable_wrapper">
-                        <table id="top-purchases" class="table table-bordered table-hover table-striped" width="auto"></table>
-                    </div>
-                </div>
-
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
         <div class="col-xs-12 col-md-12 col-lg-12">
             <div class="panel panel-default">
 
@@ -239,7 +64,7 @@
                         <div class="form-group months">
                             <label for="sb-month">Month</label>
                             <select id="sb-month" class="form-control" name="month">
-                                <option value="None" selected>None</option>
+                                <option value="None" selected></option>
                                 <option value="01">January</option>
                                 <option value="02">February</option>
                                 <option value="03">March</option>
@@ -254,57 +79,253 @@
                                 <option value="12">December</option>
                             </select>
                         </div>
-                        <div class="form-group days">
-                            <label for="sb-day">Day</label>
-                            <select id="sb-day" class="form-control" name="day">
-                                <option value="None" selected>None</option>
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                                <option value="03">03</option>
-                                <option value="04">04</option>
-                                <option value="05">05</option>
-                                <option value="06">06</option>
-                                <option value="07">07</option>
-                                <option value="08">08</option>
-                                <option value="09">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="13">13</option>
-                                <option value="14">14</option>
-                                <option value="15">15</option>
-                                <option value="16">16</option>
-                                <option value="17">17</option>
-                                <option value="18">18</option>
-                                <option value="19">19</option>
-                                <option value="20">20</option>
-                                <option value="21">21</option>
-                                <option value="22">22</option>
-                                <option value="23">23</option>
-                                <option value="24">24</option>
-                                <option value="25">25</option>
-                                <option value="26">26</option>
-                                <option value="27">27</option>
-                                <option value="28">28</option>
-                                <option value="29">29</option>
-                                <option value="30">30</option>
-                                <option value="31">31</option>
-                            </select>
-                        </div>
                         <input onclick="updateSalesBooking()" type="button" id="sales-booking-button" class="btn btn-default" value="Update" />
-                        </div>
-
-                        <div id="salesbooking"></div>
                     </div>
-
-                    <a href="#">
-                        <div class="panel-footer">
-                            <span class="pull-left">View Details</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <hr>
+                    <div id="salesbooking"></div>
                 </div>
+
+            </div>
         </div>
 
+        <div class="col-xs-12 col-md-6 col-lg-6">
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-euro fa-5x"></i>
+                        </div>
+
+                        <div class="col-xs-9 text-right">
+                            <div id="sales-growth-value" class="huge"></div>
+                            <div>Sales Growth Value</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div id="sales-growth-form" class="form-inline" role="form">
+                        <div class="form-group years">
+                            <label for="sg-year1">Growth from</label>
+                            <select id="sg-year1" class="form-control" name="year">
+                                <option value="2014" selected>2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                            </select>
+                        </div>
+                        <div class="form-group months">
+                            <select id="sg-month1" class="form-control" name="month">
+                                <option value="None" selected></option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <div class="form-group years">
+                            <label for="sg-year2">to</label>
+                            <select id="sg-year2" class="form-control" name="year">
+                                <option value="2014">2014</option>
+                                <option value="2015" selected>2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                            </select>
+                        </div>
+                        <div class="form-group months">
+                            <select id="sg-month2" class="form-control" name="month">
+                                <option value="None" selected></option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <input onclick="updateSalesGrowth()" type="button" id="sales-growth-button" class="btn btn-default" value="Update" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6 col-lg-6">
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-line-chart fa-5x"></i>
+                        </div>
+
+                        <div class="col-xs-9 text-right">
+                            <div id="sales-growth-per" class="huge"></div>
+                            <div>Sales Growth Percentage</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div id="sales-growth-per-form" class="form-inline" role="form">
+                        <div class="form-group years">
+                            <label for="sgp-year1">Growth from</label>
+                            <select id="sgp-year1" class="form-control" name="year">
+                                <option value="2014" selected>2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                            </select>
+                        </div>
+                        <div class="form-group months">
+                            <select id="sgp-month1" class="form-control" name="month">
+                                <option value="None" selected></option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <div class="form-group years">
+                            <label for="sgp-year2">to</label>
+                            <select id="sgp-year2" class="form-control" name="year">
+                                <option value="2014">2014</option>
+                                <option value="2015" selected>2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                            </select>
+                        </div>
+                        <div class="form-group months">
+                            <select id="sgp-month2" class="form-control" name="month">
+                                <option value="None" selected></option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <input onclick="updateSalesGrowthPer()" type="button" id="sales-growth-per-button" class="btn btn-default" value="Update" />
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="col-xs-12 col-md-12 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Regional Sales Status</strong></div>
+                <div class="panel-body">
+                    <div id="salesrss-form" class="form-inline" role="form">
+                        <div class="form-group years">
+                            <label for="rss-year">Year</label>
+                            <select id="rss-year" class="form-control" name="year">
+                                <option value="2014">2014</option>
+                                <option value="2015" selected>2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                            </select>
+                        </div>
+                        <div class="form-group months">
+                            <label for="rss-month">Month</label>
+                            <select id="rss-month" class="form-control" name="month">
+                                <option value="None" selected></option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+
+                        <input onclick="updateRSS()" type="button" id="rss-button" class="btn btn-default" value="Update" />
+                    </div>
+
+                    <hr>
+                    <div class="dataTable_wrapper">
+                        <table id="salesrss" class="table table-bordered table-hover table-striped" width="auto"></table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-12 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Top Purchases</strong></div>
+                <div class="panel-body">
+                    <div id="top-purchases-form" class="form-inline" role="form">
+                            <div class="form-group years">
+                                <label for="tp-year">Year</label>
+                                <select id="tp-year" class="form-control" name="year">
+                                    <option value="2014">2014</option>
+                                    <option value="2015" selected>2015</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2017">2017</option>
+                                </select>
+                            </div>
+                            <div class="form-group months">
+                                <label for="tp-month">Month</label>
+                                <select id="tp-month" class="form-control" name="month">
+                                    <option value="None" selected></option>
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+
+                            <input onclick="updateTopPurchases()" type="button" id="top-purchases-button" class="btn btn-default" value="Update" />
+                        </div>
+                        <hr>
+                        <div class="dataTable_wrapper">
+                            <table id="top-purchases" class="table table-bordered table-hover table-striped" width="auto"></table>
+                        </div>
+                </div>
+            </div>
+        </div>
     </div>

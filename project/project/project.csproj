@@ -319,6 +319,7 @@
     <Compile Include="Items\ProductSalesItem.cs" />
     <Compile Include="Items\RegionalSSItem.cs" />
     <Compile Include="Items\RegSalesBookingItem.cs" />
+    <Compile Include="Items\SalesGrowthItem.cs" />
     <Compile Include="Items\TopSalesCountry.cs" />
     <Compile Include="Items\SalesBookingItem.cs" />
     <Compile Include="Items\TopClientsItem.cs" />
@@ -1204,6 +1205,8 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\sales\sales-booking-morris.js" />
+    <Content Include="Scripts\sales\sales-growth-percentage.js" />
+    <Content Include="Scripts\sales\sales-growth-value.js" />
     <Content Include="Scripts\sales\top-purchases-table.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
