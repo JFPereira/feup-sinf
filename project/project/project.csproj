@@ -348,6 +348,8 @@
     <Content Include="Scripts\dashboard\product-financial-morris.js" />
     <Content Include="Scripts\dashboard\product-shipments.js" />
     <Content Include="Scripts\dashboard\product-units-sold.js" />
+    <Content Include="Scripts\finances\fetchPurchasesYtd.js" />
+    <Content Include="Scripts\finances\fetchSalesYtd.js" />
     <Content Include="Scripts\sales\RSS-table.js" />
   </ItemGroup>
   <ItemGroup>
@@ -1234,10 +1236,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Clients\List.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
-    <Content Include="Views\Clients\Index.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Clients\Show.cshtml" />
-    <Content Include="Views\Clients\Info.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Products\Info.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />

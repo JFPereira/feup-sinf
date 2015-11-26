@@ -33,6 +33,8 @@
     @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
 
     <!-- Our Scripts -->
+    @Scripts.Render("~/Scripts/finances/fetchPurchasesYtd.js")
+    @Scripts.Render("~/Scripts/finances/fetchSalesYtd.js")
 }
 
 <div class="col-xs-12">
@@ -87,7 +89,7 @@
                         </div>
 
                         <div class="col-xs-9 text-right">
-                            <div id="lateshipments" class="huge"></div>
+                            <div id="purchasesYtdPlaceholder" class="huge"></div>
                             <div>Purchases YTD</div>
                         </div>
                     </div>
@@ -112,7 +114,7 @@
                         </div>
 
                         <div class="col-xs-9 text-right">
-                            <div id="lateshipments" class="huge"></div>
+                            <div id="salesYtdPlaceholder" class="huge"></div>
                             <div>Sales YTD</div>
                         </div>
                     </div>
