@@ -1,34 +1,19 @@
-﻿$(function () {
+﻿$("document").ready(function () {
+    setTimeout(function () {
+        $("input#sales-booking-button").trigger('click');
+    }, 10);
+});
 
-    var year = document.getElementById("year").getAttribute("value");
-    var month = document.getElementById("month").getAttribute("value");
-    var day = document.getElementById("day").getAttribute("value");
-    
+function updateSalesBooking() {
 
-    if (year == null) {
-        $.ajax({
-            dataType: "json",
-            url: "http://localhost:49328/api/sales/psb/2015",
-            success: function (sales) {
-                sales = JSON.parse(sales);
 
-                var dataS = [];
-                $.each(sales, function (i) {
-                    dataS.push({ name: sales[i].nome, value: sales[i].valorVendas });
-                });
 
-                Morris.Bar({
-                    element: 'salesbooking',
-                    data: dataS,
-                    xkey: 'name',
-                    ykeys: ['value'],
-                    labels: ['Volume de Vendas'],
-                    hidehover: 'auto'
-                });
-            }
-        })
-    }
-    else if (month == null) {
+    var year = $("select#sb-year").find(":selected").val();
+    var month = $("select#sb-month").find(":selected").val();
+    var day = $("select#sb-day").find(":selected").val();
+
+
+    if (month == "None") {
         $.ajax({
             dataType: "json",
             url: "http://localhost:49328/api/sales/psb/" + year,
@@ -40,7 +25,7 @@
                     dataS.push({ name: sales[i].nome, value: sales[i].valorVendas });
                 });
 
-                Morris.Bar({
+                new Morris.Bar({
                     element: 'salesbooking',
                     data: dataS,
                     xkey: 'name',
@@ -51,7 +36,7 @@
             }
         })
     }
-    else if (day == null) {
+    else if (day == "None") {
         $.ajax({
             dataType: "json",
             url: "http://localhost:49328/api/sales/psb/" + year + "/" + month,
@@ -63,7 +48,7 @@
                     dataS.push({ name: sales[i].nome, value: sales[i].valorVendas });
                 });
 
-                Morris.Bar({
+                new Morris.Bar({
                     element: 'salesbooking',
                     data: dataS,
                     xkey: 'name',
@@ -86,7 +71,7 @@
                     dataS.push({ name: sales[i].nome, value: sales[i].valorVendas });
                 });
 
-                Morris.Bar({
+                new Morris.Bar({
                     element: 'salesbooking',
                     data: dataS,
                     xkey: 'name',
@@ -97,4 +82,4 @@
             }
         })
     }
-});
+}

@@ -1,39 +1,16 @@
-﻿$(function () {
+﻿$("document").ready(function () {
+    setTimeout(function () {
+        $("input#rss-button").trigger('click');
+    }, 10);
+});
 
-    var year = document.getElementById("year").getAttribute("value");
-    var month = document.getElementById("month").getAttribute("value");
-    var day = document.getElementById("day").getAttribute("value");
-    
-    if (month == "February" || month == "february") {
-        if (parseInt(day) > 29) {
-            day = "29";
-        }
-    }
-    if (year == null) {
-        $.ajax({
-            dataType: "json",
-            url: "http://localhost:49328/api/sales/rss/2015",
-            success: function (sales) {
-                sales = JSON.parse(sales);
+function updateRSS() {
 
-                var dataS = [];
-                $.each(sales, function (i) {
-                    dataS.push([i + 1, sales[i].pais, sales[i].valor, sales[i].percentagem]);
-                });
+    var year = $("select#rss-year").find(":selected").val();
+    var month = $("select#rss-month").find(":selected").val();
+    var day = $("select#rss-day").find(":selected").val();
 
-                $('#salesrss').dataTable({
-                    data: dataS,
-                    columns: [
-                        { title: "#" },
-                        { title: "Country" },
-                        { title: "Sales Volume" },
-                        { title: "Percentage" }
-                    ]
-                });
-            }
-        })
-    }
-    else if (month == null) {
+    if (month == "None") {
         $.ajax({
             dataType: "json",
             url: "http://localhost:49328/api/sales/rss/" + year,
@@ -52,12 +29,13 @@
                         { title: "Country" },
                         { title: "Sales Volume" },
                         { title: "Percentage" }
-                    ]
+                    ],
+                    destroy: true
                 });
             }
         })
     }
-    else if (day == null) {
+    else if (day == "None") {
         $.ajax({
             dataType: "json",
             url: "http://localhost:49328/api/sales/rss/" + year + "/" + month,
@@ -76,7 +54,8 @@
                         { title: "Country" },
                         { title: "Sales Volume" },
                         { title: "Percentage" }
-                    ]
+                    ],
+                    destroy: true
                 });
             }
         })
@@ -100,9 +79,10 @@
                         { title: "Country" },
                         { title: "Sales Volume" },
                         { title: "Percentage" }
-                    ]
+                    ],
+                    destroy: true
                 });
             }
         })
     }
-});
+}

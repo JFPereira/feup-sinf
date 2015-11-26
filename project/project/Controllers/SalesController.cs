@@ -11,12 +11,8 @@ namespace project.Controllers
         //
         // GET: /Sales/{ano}/{mes}/{dia}
 
-        public ActionResult Index(string year, string month, string day)
+        public ActionResult Index()
         {
-            ViewData["year"] = year;
-            ViewData["month"] = month;
-            ViewData["day"] = day;
-            
             return View();
         }
 
