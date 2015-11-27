@@ -29,8 +29,6 @@
                 // chart.
                 labels: ['Sales', 'Purchases', 'Profit'],
             });
-
-            $("#productfinancialLoadingAnimation").remove();
         }
     })
 });
