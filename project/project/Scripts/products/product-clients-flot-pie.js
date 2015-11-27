@@ -40,7 +40,7 @@
                         // split the string label into an array with the entity and name of the company
                         var clientCod_description = label.split(' - ');
 
-                        return '<a class="pie-legend" href="/Clients/Index/' + clientCod_description[0] + '">' + clientCod_description[1] + '</a>';
+                        return '<a class="pie-legend" href="/Clients/Show/' + clientCod_description[0] + '">' + clientCod_description[1] + '</a>';
                     }
                 }
             });
@@ -49,7 +49,7 @@
                 if (item) {
                     // split the string label in entity
                     var clientCod = item.series.label.split(' - ')[0];
-                    $(location).attr('href', '/Clients/Index/' + clientCod);
+                    $(location).attr('href', '/Clients/Show/' + clientCod);
                 }
             });
 
