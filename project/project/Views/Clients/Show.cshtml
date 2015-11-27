@@ -28,6 +28,7 @@
     @Scripts.Render("~/Scripts/clients/costs-earnings.js")
     @Scripts.Render("~/Scripts/clients/daily-purchases.js")
     @Scripts.Render("~/Scripts/clients/monthly-purchases.js")
+    @Scripts.Render("~/Scripts/clients/average-purchase-cost.js")
 }
 
 <div class="col-xs-12">
@@ -65,7 +66,7 @@
             </div>
         </div>
     </div>
-        
+
     <div class="col-xs-12 col-md-6 col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">Top 10 Products</div>
@@ -82,12 +83,12 @@
         </div>
     </div>
 
-    <div class="col-xs-12 col-md-6 col-lg-6">
+    <div class="col-md-6 col-lg-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-eur fa-5x"></i>
+                        <i class="fa fa-clock-o fa-5x"></i>
                     </div>
 
                     <div class="col-xs-9 text-right">
@@ -96,8 +97,9 @@
                         </div>
 
                         <div id="average-purchase-cost" class="huge"></div>
+                        <div id="num-purchases" class="huge"></div>
 
-                        <div>Average Purchase Cost</div>
+                        <div>Average Purshase Cost</div>
                     </div>
                 </div>
             </div>
@@ -111,6 +113,7 @@
             </a>
         </div>
     </div>
+</div>
         
     <div class="col-xs-12 col-md-6 col-lg-6">
         <div class="panel panel-default">

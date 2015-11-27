@@ -309,7 +309,7 @@ namespace project.Controllers
 
         // GET api/clients/{entity}/apc
         [System.Web.Http.HttpGet]
-        public APCItem AveragePurchaseCost(string entity)
+        public HttpResponseMessage AveragePurchaseCost(string entity)
         {
             APCItem result = new APCItem();
 
@@ -328,7 +328,9 @@ namespace project.Controllers
             // calculate the average of total value and number of purchases
             result.averagePurchaseCost = totalPurchaseVolume / result.numPurchases;
 
-            return result;
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         // GET api/clients/{entity}/ce
