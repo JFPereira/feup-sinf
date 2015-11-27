@@ -11,7 +11,6 @@ function updateSalesBooking() {
 
     var year = $("select#sb-year").find(":selected").val();
     var month = $("select#sb-month").find(":selected").val();
-    var day = $("select#sb-day").find(":selected").val();
 
 
     if (month == "None") {
@@ -33,7 +32,7 @@ function updateSalesBooking() {
                         data: dataS,
                         xkey: 'name',
                         ykeys: ['value'],
-                        labels: ['Volume de Vendas'],
+                        labels: ['Sales Volume'],
                         hidehover: 'auto'
                     });
                 }
@@ -43,7 +42,7 @@ function updateSalesBooking() {
             }
         })
     }
-    else if (day == "None") {
+    else {
         $.ajax({
             dataType: "json",
             url: "http://localhost:49328/api/sales/psb/" + year + "/" + month,
@@ -61,35 +60,7 @@ function updateSalesBooking() {
                         data: dataS,
                         xkey: 'name',
                         ykeys: ['value'],
-                        labels: ['Volume de Vendas'],
-                        hidehover: 'auto'
-                    });
-                }
-                else {
-                    myChart.setData(dataS);
-                }
-            }
-        })
-    }
-    else {
-        $.ajax({
-            dataType: "json",
-            url: "http://localhost:49328/api/sales/psb/" + year + "/" + month + "/" + day,
-            success: function (sales) {
-                sales = JSON.parse(sales);
-
-                var dataS = [];
-                $.each(sales, function (i) {
-                    dataS.push({ name: sales[i].nome, value: sales[i].valorVendas });
-                });
-
-                if (myChart == null) {
-                    myChart = new Morris.Bar({
-                        element: 'salesbooking',
-                        data: dataS,
-                        xkey: 'name',
-                        ykeys: ['value'],
-                        labels: ['Volume de Vendas'],
+                        labels: ['Sales Volume'],
                         hidehover: 'auto'
                     });
                 }
