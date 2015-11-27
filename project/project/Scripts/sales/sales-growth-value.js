@@ -11,10 +11,6 @@ function updateSalesGrowth() {
     var month1 = $("select#sg-month1").find(":selected").val();
     var year2 = $("select#sg-year2").find(":selected").val();
     var month2 = $("select#sg-month2").find(":selected").val();
-    console.log(year1);
-    console.log(year2);
-    console.log(month1);
-    console.log(month2);
 
     $.ajax({
         dataType: "json",
@@ -22,9 +18,10 @@ function updateSalesGrowth() {
         success: function (sales) {
             sales = JSON.parse(sales);
 
-            console.log(sales[0].Valor);
             var s = document.getElementById('sales-growth-value');
             s.innerHTML = sales[0].Valor;
+
+            $("#salesGrowthValueAnimation").remove();
         }
     })
    

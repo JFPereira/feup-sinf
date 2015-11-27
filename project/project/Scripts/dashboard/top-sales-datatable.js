@@ -7,16 +7,19 @@
 
             var dataS = [];
             $.each(sales, function (i) {
-                dataS.push([sales[i].entity, sales[i].purchaseValue, sales[i].numPurchases]);
+                var a = '<a href="/Clients/Show/' + sales[i].entity + '">' + sales[i].entity + '</a>';
+                dataS.push([i + 1, a, sales[i].purchaseValue, sales[i].numPurchases]);
             });
 
             $('#topsales').dataTable({
                 data: dataS,
                 columns: [
+                    { title: "#"},
                     { title: "Entity" },
                     { title: "Purchase Value" },
                     { title: "Nr Purchases" }
-                ]
+                ],
+                destroy: true
             });
 
             $("#topsalesLoadingAnimation").remove();
