@@ -137,7 +137,7 @@ namespace project.Controllers
 
         // GET api/financial/sales/yoy/{year}
         [System.Web.Http.HttpGet]
-        public List<List<double>> SalesYoY(int year)
+        public HttpResponseMessage SalesYoY(int year)
         {
             List<List<double>> result = new List<List<double>>();
             for (int i = 0; i < 12; i++)
@@ -157,7 +157,9 @@ namespace project.Controllers
                 }
             }
 
-            return result;
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         // GET api/financial/top10sales
