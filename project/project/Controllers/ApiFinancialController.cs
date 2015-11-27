@@ -52,7 +52,7 @@ namespace project.Controllers
 
         // GET api/financial/ytd/{year}
         [System.Web.Http.HttpGet]
-        public FinancialYearInfo FinancialYtD(int year)
+        public HttpResponseMessage FinancialYtD(int year)
         {
             FinancialYearInfo result = new FinancialYearInfo();
 
@@ -73,7 +73,9 @@ namespace project.Controllers
             // Revenue
             result.revenue = result.sales - result.purchases;
 
-            return result;
+            var json = new JavaScriptSerializer().Serialize(result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         // GET api/financial/purchases

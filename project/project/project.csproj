@@ -355,8 +355,7 @@
     <Content Include="Scripts\products\product-shipments.js" />
     <Content Include="Scripts\products\product-units-sold.js" />
     <Content Include="Scripts\finances\fetchPurchasesYoy.js" />
-    <Content Include="Scripts\finances\fetchPurchasesYtd.js" />
-    <Content Include="Scripts\finances\fetchSalesYtd.js" />
+    <Content Include="Scripts\finances\fillYtdKpis.js" />
     <Content Include="Scripts\sales\RSS-table.js" />
   </ItemGroup>
   <ItemGroup>
