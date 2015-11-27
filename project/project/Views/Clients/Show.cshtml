@@ -28,7 +28,6 @@
     @Scripts.Render("~/Scripts/clients/costs-earnings.js")
     @Scripts.Render("~/Scripts/clients/daily-purchases.js")
     @Scripts.Render("~/Scripts/clients/monthly-purchases.js")
-    @Scripts.Render("~/Scripts/clients/average-purchase-cost.js")
 }
 
 <div class="col-xs-12">
@@ -37,192 +36,174 @@
     <h2>@Model.NomeCliente</h2>
     <hr>
 
-    <div class="col-xs-12 col-md-6 col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Client Details</div>
-
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <p class="col-md-3 text-right"><strong>Code:</strong></p>
-
-                            <p class="col-md-9">@Model.CodCliente</p>
-                        </div>
-
-                        <div class="row">
-                            <p class="col-md-3 text-right"><strong>Name:</strong></p>
-
-                            <p class="col-md-9">@Model.NomeCliente</p>
-                        </div>
-
-                        <div class="row">
-                            <p class="col-md-3 text-right"><strong>Address:</strong></p>
-
-                            <p class="col-md-9">@Model.Morada</p>
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Client Details</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <p class="col-md-3 text-right"><strong>Code:</strong></p>
+                                <p class="col-md-9">@Model.CodCliente</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-md-3 text-right"><strong>Name:</strong></p>
+                                <p class="col-md-9">@Model.NomeCliente</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-md-3 text-right"><strong>Address:</strong></p>
+                                <p class="col-md-9">@Model.Morada</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-xs-12 col-md-6 col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Top 10 Products</div>
+        <div class="col-xs-12 col-md-6 col-lg-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-clock-o fa-5x"></i>
+                        </div>
 
-            <div class="panel-body">
-                <div id="top10ProductsLoadingAnimation" class="text-center">
-                    <i class="fa fa-cog fa-spin fa-3x"></i>
+                        <div class="col-xs-9 text-right">
+                            <div id="averagePurchaseCostLoadingAnimation">
+                                <i class="fa fa-cog fa-spin fa-3x"></i>
+                            </div>
+
+                            <div id="average-purchase-cost" class="huge"></div>
+                            <div id="num-purchases" class="huge"></div>
+
+                            <div>Average Purshase Cost</div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="flot-chart">
-                    <div id="clientTopProductsPlaceholder" class="flot-chart-content"></div>
-                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-6 col-lg-3">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-clock-o fa-5x"></i>
-                    </div>
-
-                    <div class="col-xs-9 text-right">
-                        <div id="averagePurchaseCostLoadingAnimation">
+        <div class="row">
+            <div class="col-xs-12 col-md-6 col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Top 10 Products</div>
+                    <div class="panel-body">
+                        <div id="top10ProductsLoadingAnimation" class="text-center">
                             <i class="fa fa-cog fa-spin fa-3x"></i>
                         </div>
-
-                        <div id="average-purchase-cost" class="huge"></div>
-                        <div id="num-purchases" class="huge"></div>
-
-                        <div>Average Purshase Cost</div>
-                    </div>
-                </div>
-            </div>
-
-            <a href="#">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
-        
-    <div class="col-xs-12 col-md-6 col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Earnings vs Costs</div>
-
-            <div class="panel-body">
-                <div id="ceLoadingAnimation" class="text-center">
-                    <i class="fa fa-cog fa-spin fa-3x"></i>
-                </div>
-
-                <div id="ce">
-                    <div id="ce-graph"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-   
-    <div class="col-xs-12 col-md-6 col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Daily Purchases</div>
-
-            <div class="panel-body">
-                <div id="dailyLoadingAnimation" class="text-center">
-                    <i class="fa fa-cog fa-spin fa-3x"></i>
-                </div>
-
-                <div id="options-rows">
-                    <div id="daily-purchases-1" class="form-inline" role="form">
-                        <div class="form-group years">
-                            <label for="dp-year-1">Year</label>
-                            <select id="dp-year-1" class="form-control" name="month">
-                                <option value="2014">2014</option>
-                                <option value="2015" selected>2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group months">
-                            <label for="dp-month-1">Month</label>
-                            <select id="dp-month-1" class="form-control" name="year">
-                                <option value="01">January</option>
-                                <option value="02">February</option>
-                                <option value="03">March</option>
-                                <option value="04">April</option>
-                                <option value="05">May</option>
-                                <option value="06">June</option>
-                                <option value="07">July</option>
-                                <option value="08">August</option>
-                                <option value="09">September</option>
-                                <option value="10" selected>October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
+                        <div class="flot-chart">
+                            <div id="clientTopProductsPlaceholder" class="flot-chart-content"></div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="radio-group">
-                    <label><input type="radio" checked="checked" name="optradio-daily" value="sales-volume">Sales Volume</label>
-                    <label><input type="radio" name="optradio-daily" value="purchases">Purchases</label>
+            <div class="col-xs-12 col-md-6 col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Earnings vs Costs</div>
+                    <div class="panel-body">
+                        <div id="ceLoadingAnimation" class="text-center">
+                            <i class="fa fa-cog fa-spin fa-3x"></i>
+                        </div>
+                        <div id="ce">
+                            <div id="ce-graph"></div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
 
-                <input onclick="updateDailyPurchases()" type="button" id="daily-purchases-button" class="btn btn-default" value="Update" />
+        <div class="row">
+            <div class="col-xs-12 col-md-6 col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Daily Purchases</div>
+                    <div class="panel-body">
+                        <div id="dailyLoadingAnimation" class="text-center">
+                            <i class="fa fa-cog fa-spin fa-3x"></i>
+                        </div>
+                        <div id="options-rows">
+                            <div id="daily-purchases-1" class="form-inline" role="form">
+                                <div class="form-group years">
+                                    <label for="dp-year-1">Year</label>
+                                    <select id="dp-year-1" class="form-control" name="month">
+                                        <option value="2014">2014</option>
+                                        <option value="2015" selected>2015</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2017">2017</option>
+                                    </select>
+                                </div>
+                                <div class="form-group months">
+                                    <label for="dp-month-1">Month</label>
+                                    <select id="dp-month-1" class="form-control" name="year">
+                                        <option value="01">January</option>
+                                        <option value="02">February</option>
+                                        <option value="03">March</option>
+                                        <option value="04">April</option>
+                                        <option value="05">May</option>
+                                        <option value="06">June</option>
+                                        <option value="07">July</option>
+                                        <option value="08">August</option>
+                                        <option value="09">September</option>
+                                        <option value="10" selected>October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="radio-group">
+                            <label><input type="radio" checked="checked" name="optradio-daily" value="sales-volume">Sales Volume</label>
+                            <label><input type="radio" name="optradio-daily" value="purchases">Purchases</label>
+                        </div>
+                        <input onclick="updateDailyPurchases()" type="button" id="daily-purchases-button" class="btn btn-default" value="Update" />
+                        <!--<input id="numMonths" type="hidden" name="numMonths" value="1">-->
+                        <!--<input onclick="addNewMonth()" type="button" id="add-month" class="btn btn-default" value="Add Month" />-->
+                        <div class="flot-chart">
+                            <div id="clientDailyPurchasesPlaceholder" class="flot-chart-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                <!--<input id="numMonths" type="hidden" name="numMonths" value="1">-->
-                <!--<input onclick="addNewMonth()" type="button" id="add-month" class="btn btn-default" value="Add Month" />-->
-
-                <div class="flot-chart">
-                    <div id="clientDailyPurchasesPlaceholder" class="flot-chart-content"></div>
+            <div class="col-xs-12 col-md-6 col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Monthly Purchases</div>
+                    <div class="panel-body">
+                        <div id="monthlyLoadingAnimation" class="text-center">
+                            <i class="fa fa-cog fa-spin fa-3x"></i>
+                        </div>
+                        <div id="options-rows">
+                            <div id="monthly-purchases-1" class="form-inline" role="form">
+                                <div class="form-group years">
+                                    <label for="dp-mYear-1">Year</label>
+                                    <select id="dp-mYear-1" class="form-control" name="month">
+                                        <option value="2014">2014</option>
+                                        <option value="2015" selected>2015</option>
+                                        <option value="2016">2016</option>
+                                        <option value="2017">2017</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="radio-group">
+                            <label><input type="radio" checked="checked" name="optradio-monthly" value="sales-volume">Sales Volume</label>
+                            <label><input type="radio" name="optradio-monthly" value="purchases">Purchases</label>
+                        </div>
+                        <input onclick="updateMonthlyPurchases()" type="button" id="monthly-purchases-button" class="btn btn-default" value="Update" />
+                        <div class="flot-chart">
+                            <div id="clientMonthlyPurchasesPlaceholder" class="flot-chart-content"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="col-xs-12 col-md-6 col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Monthly Purchases</div>
-
-            <div class="panel-body">
-                <div id="monthlyLoadingAnimation" class="text-center">
-                    <i class="fa fa-cog fa-spin fa-3x"></i>
-                </div>
-
-                <div id="options-rows">
-                    <div id="monthly-purchases-1" class="form-inline" role="form">
-                        <div class="form-group years">
-                            <label for="dp-mYear-1">Year</label>
-                            <select id="dp-mYear-1" class="form-control" name="month">
-                                <option value="2014">2014</option>
-                                <option value="2015" selected>2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="radio-group">
-                    <label><input type="radio" checked="checked" name="optradio-monthly" value="sales-volume">Sales Volume</label>
-                    <label><input type="radio" name="optradio-monthly" value="purchases">Purchases</label>
-                </div>
-
-                <input onclick="updateMonthlyPurchases()" type="button" id="monthly-purchases-button" class="btn btn-default" value="Update" />
-
-                <div class="flot-chart">
-                    <div id="clientMonthlyPurchasesPlaceholder" class="flot-chart-content"></div>
-                </div>
-            </div>
-        </div>
-    </div>    
-</div>

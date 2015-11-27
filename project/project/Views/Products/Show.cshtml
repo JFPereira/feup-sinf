@@ -28,6 +28,9 @@
             <div class="panel-heading">Top 10 Clients</div>
 
             <div class="panel-body">
+                <div id="ProductPlaceholderLoadingAnimation" class="text-center">
+                    <i class="fa fa-cog fa-spin fa-3x"></i>
+                </div>
                 <div class="flot-chart">
                     <div id="ProductPlaceholder" class="flot-chart-content"></div>
                 </div>
@@ -80,6 +83,9 @@
                     </div>
 
                     <div class="col-xs-9 text-right">
+                        <div id="productunitssoldLoadingAnimation">
+                            <i class="fa fa-cog fa-spin fa-3x"></i>
+                        </div>
                         <div id="productunitssold" class="huge"></div>
                         <div>Total Units Sold</div>
                     </div>
@@ -105,7 +111,7 @@
                     </div>
 
                     <div class="col-xs-9 text-right">
-                        <div id="productunitssold" class="huge">@Model.PrecoMedio</div>
+                        <div id="productavgprice" class="huge">@Model.PrecoMedio</div>
                         <div>Average Price</div>
                     </div>
                 </div>
@@ -130,6 +136,9 @@
                     </div>
 
                     <div class="col-xs-9 text-right">
+                        <div id="productshipmentsLoadingAnimation">
+                            <i class="fa fa-cog fa-spin fa-3x"></i>
+                        </div>
                         <div id="productshipments" class="huge"></div>
                         <div>Late Shipments</div>
                     </div>
@@ -152,6 +161,9 @@
             <div class="panel-heading">Sales and Purchases</div>
 
             <div class="panel-body">
+                <div id="productfinancialLoadingAnimation" class="text-center">
+                    <i class="fa fa-cog fa-spin fa-3x"></i>
+                </div>
                 <div id="productfinancial"></div>
             </div>
 

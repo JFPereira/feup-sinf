@@ -13,8 +13,8 @@ namespace project.Controllers
 {
     public class ProductsController : Controller
     {
-        //Products/Index/{id}
-        public async Task<ActionResult> Index(string id)
+        //Products/Show/{id}
+        public async Task<ActionResult> Show(string id)
         {
             var httpClient = new HttpClient();
             var response = await httpClient.GetAsync("http://localhost:49328/api/products/" + id);
@@ -25,15 +25,5 @@ namespace project.Controllers
             return View(product);
         }
 
-        //Products/Info
-        public ActionResult Info(string id)
-        {
-            ApiProductsController apiProducts = new ApiProductsController();
-            Artigo productSearch = apiProducts.GetProduct(id);
-
-            return PartialView(productSearch);
-        }
-
-        
     }
 }

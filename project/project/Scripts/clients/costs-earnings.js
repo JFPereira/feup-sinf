@@ -19,7 +19,7 @@
             });
 
             $("div#ce").append(
-                '<div class="col-lg-3 col-md-6">' +
+                '<div class="col-lg-5 col-md-6">' +
                     '<div class="panel panel-primary">' +
                         '<div class="panel-heading">' +
                             '<div class="row">' +
@@ -27,7 +27,7 @@
                                     '<i class="fa fa-eur fa-5x"></i>' +
                                 '</div>' +
                                 '<div class="col-xs-9 text-right">' +
-                                    '<div id="profit" class="huge">' + item.profit + ' €</div>' +
+                                    '<div id="profit" class="huge">' + item.profit + '</div>' +
                                     '<div>Total Profit</div>' +
                                 '</div>' +
                             '</div>' +

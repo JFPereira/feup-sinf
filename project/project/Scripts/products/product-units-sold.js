@@ -11,6 +11,8 @@
 
             var s = document.getElementById('productunitssold');
             s.innerHTML = sales;
+
+            $("#productunitssoldLoadingAnimation").remove();
         }
     })
 });

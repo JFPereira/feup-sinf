@@ -10,6 +10,8 @@
 
             var s = document.getElementById('productshipments');
             s.innerHTML = shipments;
+
+            $("#productshipmentsLoadingAnimation").remove();
         }
     })
 });
