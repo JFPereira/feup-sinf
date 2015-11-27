@@ -34,11 +34,14 @@ function updateSalesBooking() {
                         ykeys: ['value'],
                         labels: ['Sales Volume'],
                         hidehover: 'auto'
+                    }).on('click', function (i, row) {
+                        $(location).attr('href', '/Products/Show/' + sales[i].codArtigo)
                     });
                 }
                 else {
                     myChart.setData(dataS);
                 }
+                $("#salesBookingAnimation").remove();
             }
         })
     }
@@ -62,11 +65,15 @@ function updateSalesBooking() {
                         ykeys: ['value'],
                         labels: ['Sales Volume'],
                         hidehover: 'auto'
+                    }).on('click', function (i, row) {
+                        $(location).attr('href', '/Products/Show/' + sales[i].codArtigo)
                     });
                 }
                 else {
                     myChart.setData(dataS);
                 }
+
+                $("#salesBookingAnimation").remove();
             }
         })
     }

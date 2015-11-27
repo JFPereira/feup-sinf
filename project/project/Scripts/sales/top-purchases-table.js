@@ -19,7 +19,8 @@ function updateTopPurchases() {
 
                 var dataS = [];
                 $.each(sales, function (i) {
-                    dataS.push([i + 1, sales[i].entity, sales[i].numPurchases, sales[i].purchaseValue]);
+                    var a = '<a href="/Clients/Show/' + sales[i].entity + '">' + sales[i].entity + '</a>';
+                    dataS.push([i + 1, a, sales[i].numPurchases, sales[i].purchaseValue]);
                 });
 
                 $('#top-purchases').dataTable({
@@ -32,6 +33,7 @@ function updateTopPurchases() {
                     ],
                     destroy: true
                 });
+                $("#topPurchasesAnimation").remove();
             }
         })
     }
@@ -44,7 +46,8 @@ function updateTopPurchases() {
 
                 var dataS = [];
                 $.each(sales, function (i) {
-                    dataS.push([i + 1, sales[i].entity, sales[i].numPurchases, sales[i].purchaseValue]);
+                    var a = '<a href="/Clients/Show/' + sales[i].entity + '">' + sales[i].entity + '</a>';
+                    dataS.push([i + 1, a, sales[i].numPurchases, sales[i].purchaseValue]);
                 });
 
                 $('#top-purchases').dataTable({
@@ -57,6 +60,8 @@ function updateTopPurchases() {
                     ],
                     destroy: true
                 });
+
+                $("#topPurchasesAnimation").remove();
             }
         })
     }

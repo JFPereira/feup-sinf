@@ -11,10 +11,6 @@ function updateSalesGrowthPer() {
     var month1 = $("select#sgp-month1").find(":selected").val();
     var year2 = $("select#sgp-year2").find(":selected").val();
     var month2 = $("select#sgp-month2").find(":selected").val();
-    console.log(year1);
-    console.log(year2);
-    console.log(month1);
-    console.log(month2);
 
     $.ajax({
         dataType: "json",
@@ -22,25 +18,10 @@ function updateSalesGrowthPer() {
         success: function (sales) {
             sales = JSON.parse(sales);
 
-            /*var dataS = [];
-            dataS.push({ name: sales[0].Nome, value: sales[0].Percentagem });
-
-            if (growthChart == null) {
-                growthChart = new Morris.Bar({
-                    element: 'salesgrowth',
-                    data: dataS,
-                    xkey: 'name',
-                    ykeys: ['value'],
-                    labels: ['Growth Percentage'],
-                    hidehover: 'auto'
-                });
-            }
-            else {
-                growthChart.setData(dataS);
-            }*/
-            console.log(sales[0].Percentagem);
             var s = document.getElementById('sales-growth-per');
             s.innerHTML = sales[0].Percentagem;
+
+            $("#salesGrowthPerAnimation").remove();
         }
     })
    

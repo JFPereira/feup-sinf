@@ -133,6 +133,7 @@ namespace project.Controllers
             {
                 returnList.Add(new SalesBookingItem
                     {
+                        codArtigo = prod.CodArtigo,
                         nome = prod.DescArtigo,
                         valorVendas = Lib_Primavera.PriIntegration.getSalesProd("year", prod.CodArtigo, year, null, null)
                     });
@@ -157,6 +158,7 @@ namespace project.Controllers
                 
                 returnList.Add(new SalesBookingItem
                 {
+                    codArtigo = prod.CodArtigo,
                     nome = prod.DescArtigo,
                     valorVendas = Lib_Primavera.PriIntegration.getSalesProd("month", prod.CodArtigo, year, month, null)
                 });
@@ -181,6 +183,7 @@ namespace project.Controllers
             {
                 returnList.Add(new SalesBookingItem
                 {
+                    codArtigo = prod.CodArtigo,
                     nome = prod.DescArtigo,
                     valorVendas = Lib_Primavera.PriIntegration.getSalesProd("day", prod.CodArtigo, year, month, day)
                 });

@@ -7,6 +7,11 @@ namespace project.Items
 {
     public class SalesBookingItem
     {
+        public string codArtigo
+        {
+            get;
+            set;
+        }
         public string nome
         {
             get;

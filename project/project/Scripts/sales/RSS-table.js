@@ -31,6 +31,8 @@ function updateRSS() {
                     ],
                     destroy: true
                 });
+
+                $("#salesRSSAnimation").remove();
             }
         })
     }
@@ -56,6 +58,8 @@ function updateRSS() {
                     ],
                     destroy: true
                 });
+
+                $("#salesRSSAnimation").remove();
             }
         })
     }
