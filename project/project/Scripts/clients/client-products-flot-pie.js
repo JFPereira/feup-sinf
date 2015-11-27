@@ -36,7 +36,7 @@
                         // split the string label into an array with the entity and name of the company
                         var productCod_description = label.split(' - ');
 
-                        return '<a class="pie-legend" href="/Products/Index/' + productCod_description[0] + '">' + productCod_description[1] + '</a>';
+                        return '<a class="pie-legend" href="/Products/Show/' + productCod_description[0] + '">' + productCod_description[1] + '</a>';
                     }
                 }
             });
@@ -45,7 +45,7 @@
                 if (item) {
                     // split the string label in entity
                     var productCod = item.series.label.split(' - ')[0];
-                    $(location).attr('href', '/Products/Index/' + productCod);
+                    $(location).attr('href', '/Products/Show/' + productCod);
                 }
             });
 

@@ -33,7 +33,7 @@
                     // split the string label into an array with the entity and name of the company
                     var pro = label.split(' - ');
 
-                    return '<a class="pie-legend" href="/Products/Index/' + pro[0] + '">' + pro[1] + '</a>';
+                    return '<a class="pie-legend" href="/Products/Show/' + pro[0] + '">' + pro[1] + '</a>';
                 }
             }
             });
@@ -42,7 +42,7 @@
                 if (item) {
                     // split the string label in entity
                     var cod = item.series.label.split(' - ')[0];
-                    $(location).attr('href', '/Products/Index/' + cod);
+                    $(location).attr('href', '/Products/Show/' + cod);
                 }
             });
 
