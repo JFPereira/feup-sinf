@@ -342,12 +342,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Content Include="Content\touchspin\jquery.bootstrap-touchspin.min.css" />
+    <Content Include="Content\touchspin\jquery.bootstrap-touchspin.min.js" />
     <Content Include="Scripts\clients\costs-earnings.js" />
     <Content Include="Scripts\clients\daily-purchases.js" />
     <Content Include="Scripts\dashboard\product-clients-flot-pie.js" />
     <Content Include="Scripts\dashboard\product-financial-morris.js" />
     <Content Include="Scripts\dashboard\product-shipments.js" />
     <Content Include="Scripts\dashboard\product-units-sold.js" />
+    <Content Include="Scripts\finances\fetchPurchasesYoy.js" />
     <Content Include="Scripts\finances\fetchPurchasesYtd.js" />
     <Content Include="Scripts\finances\fetchSalesYtd.js" />
     <Content Include="Scripts\sales\RSS-table.js" />

@@ -33,6 +33,7 @@
     @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
 
     <!-- Our Scripts -->
+    @Scripts.Render("~/Scripts/finances/fetchPurchasesYoy.js")
     @Scripts.Render("~/Scripts/finances/fetchPurchasesYtd.js")
     @Scripts.Render("~/Scripts/finances/fetchSalesYtd.js")
 }
@@ -47,9 +48,15 @@
                 <div class="panel-heading">Purchases year-on-year</div>
 
                 <div class="panel-body">
-                    <div class="text-center">
-                        <i class="fa fa-cog fa-spin fa-3x"></i>
+                    <div class="row">
+                        <div id="purchasesYoySpinnerPlaceholder" class="col-xs-offset-6 col-xs-6"></div>
+
+                        <div class="col-xs-12">
+                            <div id="purchasesYoyPlaceholder"></div>
+                        </div>
                     </div>
+
+                    <div id="purchasesYoyPlaceholderLoadingAnimation" class="text-center"></div>
                 </div>
             </div>
         </div>
