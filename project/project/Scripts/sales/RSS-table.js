@@ -26,8 +26,8 @@ function updateRSS() {
                     columns: [
                         { title: "#" },
                         { title: "Country" },
-                        { title: "Sales Volume" },
-                        { title: "Percentage" }
+                        { title: "Sales Volume €" },
+                        { title: "Percentage %" }
                     ],
                     destroy: true
                 });
@@ -53,8 +53,8 @@ function updateRSS() {
                     columns: [
                         { title: "#" },
                         { title: "Country" },
-                        { title: "Sales Volume" },
-                        { title: "Percentage" }
+                        { title: "Sales Volume €" },
+                        { title: "Percentage %" }
                     ],
                     destroy: true
                 });

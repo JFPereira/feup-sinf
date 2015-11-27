@@ -1245,11 +1245,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Clients\List.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
-    <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Clients\Show.cshtml" />
-    <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Products\Show.cshtml" />
     <Content Include="Views\Finances\Index.cshtml" />
+    <Content Include="Views\Sales\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,7 +16,7 @@
                 columns: [
                     { title: "#"},
                     { title: "Entity" },
-                    { title: "Purchase Value" },
+                    { title: "Purchase Value €" },
                     { title: "Nr Purchases" }
                 ],
                 destroy: true

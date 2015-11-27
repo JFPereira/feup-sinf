@@ -29,7 +29,7 @@ function updateTopPurchases() {
                         { title: "#" },
                         { title: "Entity" },
                         { title: "Units" },
-                        { title: "Purchase Value" }
+                        { title: "Purchase Value €" }
                     ],
                     destroy: true
                 });
@@ -56,7 +56,7 @@ function updateTopPurchases() {
                         { title: "#" },
                         { title: "Entity" },
                         { title: "Units" },
-                        { title: "Purchase Value" }
+                        { title: "Purchase Value €" }
                     ],
                     destroy: true
                 });
