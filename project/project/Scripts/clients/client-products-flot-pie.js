@@ -48,6 +48,8 @@
                     $(location).attr('href', '/Products/Index/' + productCod);
                 }
             });
+
+            $('#top10ProductsLoadingAnimation').remove();
         }
     })
 });

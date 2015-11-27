@@ -268,6 +268,8 @@ function updateMonthlyPurchases() {
             $("button").click(function () {
                 doMonthlyPlot($(this).text());
             });
+
+            $("#monthlyLoadingAnimation").remove();
         }
     });
 }

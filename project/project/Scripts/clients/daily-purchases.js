@@ -176,6 +176,8 @@ function updateDailyPurchases() {
             $("button").click(function () {
                 doPlot($(this).text());
             });
+
+            $("#dailyLoadingAnimation").remove();
         }
     });
 }
