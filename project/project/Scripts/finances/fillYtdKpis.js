@@ -7,11 +7,11 @@
         success: function (content) {
             content = JSON.parse(content)
 
-            $('#purchasesYtdPlaceholder').append(content.purchases)
-            $('#purchasesYtdPlaceholderLoadingAnimation').remove()
-
             $('#salesYtdPlaceholder').append(content.sales)
             $('#salesYtdPlaceholderLoadingAnimation').remove()
+
+            $('#purchasesYtdPlaceholder').append(content.purchases)
+            $('#purchasesYtdPlaceholderLoadingAnimation').remove()
 
             $('#revenueYtdPlaceholder').append(content.revenue)
             $('#revenueYtdPlaceholder').parents().eq(3).addClass(content.revenue > 0 ? 'panel-green' : 'panel-red')
