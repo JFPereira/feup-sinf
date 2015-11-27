@@ -974,7 +974,7 @@ namespace project.Lib_Primavera
 
             if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
                 month = (months.IndexOf(month) + 1).ToString();
-            else month = null;
+            else if (month != "01" && month != "02" && month != "03" && month != "04" && month != "05" && month != "06" && month != "07" && month != "08" && month != "09" && month != "10" && month != "11" && month != "12") month = null;
 
             if (companyInitialized)
             {
@@ -1029,7 +1029,7 @@ namespace project.Lib_Primavera
 
             if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
                 month = (months.IndexOf(month) + 1).ToString();
-            else month = null;
+            else if(month != "01" && month != "02" && month != "03" && month != "04" && month != "05" && month != "06" && month != "07" && month != "08" && month != "09" && month != "10" && month != "11" && month != "12") month = null;
 
             if (companyInitialized)
             {
