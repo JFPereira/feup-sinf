@@ -20,7 +20,7 @@
 @Scripts.Render("~/Scripts/products/product-financial-morris.js")
 }
 
-<h2>@Model.CodArtigo - @Model.DescArtigo</h2>
+<h2>@Model.DescArtigo</h2>
 <hr>
 <div>
     <div class="col-xs-12 col-md-6 col-lg-6">
@@ -58,15 +58,20 @@
                         </div>
                         <div class="row">
                             <p class="col-md-3 text-right"><strong>Price:</strong></p>
-                            <p class="col-md-9">@Model.Preco</p>
+                            <p class="col-md-9">@Model.Preco €</p>
                         </div>
                         <div class="row">
                             <p class="col-md-3 text-right"><strong>Cost:</strong></p>
-                            <p class="col-md-9">@Model.Custo</p>
+                            <p class="col-md-9">@Model.Custo €</p>
                         </div>
                         <div class="row">
                             <p class="col-md-3 text-right"><strong>Stock:</strong></p>
-                            <p class="col-md-9">@Model.Stock</p>
+                            @if(@Model.Stock > 1 || @Model.Stock == 0 || @Model.Stock < -1) {
+                                <p class="col-md-9">@Model.Stock units</p>
+                            }
+                            else {
+                            <p class="col-md-9">@Model.Stock unit</p>
+                            }
                         </div>
                     </div>
                 </div>
