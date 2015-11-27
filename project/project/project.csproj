@@ -1246,7 +1246,7 @@
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Clients\Show.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
-    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\Show.cshtml" />
     <Content Include="Views\Finances\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
