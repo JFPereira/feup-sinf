@@ -132,16 +132,20 @@ function doPlot(salesVolume, purchases, days, mode) {
         if (item) {
             var day = item.datapoint[0],
                 value = item.datapoint[1];
-
-            $("#tooltip").html(item.series.label + " of day " + day + ": " + value)
-                .css({ top: item.pageY + 5, left: item.pageX + 5 })
-                .fadeIn(200);
+            if (mode === "sales-volume")
+                $("#tooltip").html(item.series.label + " of day " + day + ": " + value + "€").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
+            else {
+                if (value > 1)
+                    $("#tooltip").html(item.series.label + " of day " + day + ": " + value + " purchases").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
+                else
+                    $("#tooltip").html(item.series.label + " of day " + day + ": " + value + " purchase").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
+            }
         } else {
             $("#tooltip").hide();
         }
     });
 
-};
+}
 
 function updateDailyPurchases() {
 
@@ -149,7 +153,7 @@ function updateDailyPurchases() {
 
     var year = $("select#dp-year-1").find(":selected").val();
     var month = $("select#dp-month-1").find(":selected").val();
-    var mode = $("input[name=optradio]:checked").val();
+    var mode = $("input[name=optradio-daily]:checked").val();
 
     console.log("Year: " + year + "       Month: " + month + "         Mode: " + mode);
 

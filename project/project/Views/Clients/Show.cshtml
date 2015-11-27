@@ -27,6 +27,7 @@
     @Scripts.Render("~/Scripts/clients/client-products-flot-pie.js")
     @Scripts.Render("~/Scripts/clients/costs-earnings.js")
     @Scripts.Render("~/Scripts/clients/daily-purchases.js")
+    @Scripts.Render("~/Scripts/clients/monthly-purchases.js")
 }
 
 <div class="col-xs-12">
@@ -127,8 +128,8 @@
                 </div>
 
                 <div class="radio-group">
-                    <label><input type="radio" checked="checked" name="optradio" value="sales-volume">Sales Volume</label>
-                    <label><input type="radio" name="optradio" value="purchases">Purchases</label>
+                    <label><input type="radio" checked="checked" name="optradio-daily" value="sales-volume">Sales Volume</label>
+                    <label><input type="radio" name="optradio-daily" value="purchases">Purchases</label>
                 </div>
 
                 <input onclick="updateDailyPurchases()" type="button" id="daily-purchases-button" class="btn btn-default" value="Update" />
@@ -138,6 +139,39 @@
 
                 <div class="flot-chart">
                     <div id="clientDailyPurchasesPlaceholder" class="flot-chart-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-6 col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Monthly Purchases</div>
+
+            <div class="panel-body">
+                <div id="options-rows">
+                    <div id="monthly-purchases-1" class="form-inline" role="form">
+                        <div class="form-group years">
+                            <label for="dp-mYear-1">Year</label>
+                            <select id="dp-mYear-1" class="form-control" name="month">
+                                <option value="2014">2014</option>
+                                <option value="2015" selected>2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="radio-group">
+                    <label><input type="radio" checked="checked" name="optradio-monthly" value="sales-volume">Sales Volume</label>
+                    <label><input type="radio" name="optradio-monthly" value="purchases">Purchases</label>
+                </div>
+
+                <input onclick="updateMonthlyPurchases()" type="button" id="monthly-purchases-button" class="btn btn-default" value="Update" />
+
+                <div class="flot-chart">
+                    <div id="clientMonthlyPurchasesPlaceholder" class="flot-chart-content"></div>
                 </div>
             </div>
         </div>

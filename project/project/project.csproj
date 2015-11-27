@@ -344,6 +344,7 @@
     </Compile>
     <Content Include="Scripts\clients\costs-earnings.js" />
     <Content Include="Scripts\clients\daily-purchases.js" />
+    <Content Include="Scripts\clients\monthly-purchases.js" />
     <Content Include="Scripts\dashboard\product-clients-flot-pie.js" />
     <Content Include="Scripts\dashboard\product-financial-morris.js" />
     <Content Include="Scripts\dashboard\product-shipments.js" />
