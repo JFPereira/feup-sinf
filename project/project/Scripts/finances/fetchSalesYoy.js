@@ -3,14 +3,14 @@
 
     // append year spinner
     $('#salesYoySpinnerPlaceholder').append(
-        '<input id="salesYoySpinner" type="text" value="' + currentYear + '" name="salesYoySpinner">');
+        '<input id="salesYoySpinner" class="text-center" type="text" value="' + currentYear + '" name="salesYoySpinner">');
 
     var spinner = $("input[name='salesYoySpinner']");
 
     spinner.TouchSpin({
         min: 1900,
         max: currentYear,
-        prefix: 'Select a year',
+        prefix: 'Year',
         verticalbuttons: true,
         verticalupclass: 'glyphicon glyphicon-plus',
         verticaldownclass: 'glyphicon glyphicon-minus'
