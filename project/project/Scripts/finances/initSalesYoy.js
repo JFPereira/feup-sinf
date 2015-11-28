@@ -16,14 +16,17 @@
         verticaldownclass: 'glyphicon glyphicon-minus'
     });
 
-    rendersalesYoy(currentYear);
-
     spinner.on("touchspin.on.stopspin", function () {
-        rendersalesYoy(spinner.val());
+        renderSalesYoy(spinner.val());
     });
+
+    renderSalesYoy(currentYear);
 });
 
-function rendersalesYoy(year) {
+function renderSalesYoy(year) {
+    // update spinner value (needed if the year was changed using the core view year pivot)
+    $('#salesYoySpinner').val(year);
+
     // clear previous morris bar chart
     removeAllChildrenOfNode('salesYoyPlaceholder');
 
@@ -104,11 +107,4 @@ function rendersalesYoy(year) {
             removeAllChildrenOfNode('salesYoyPlaceholderLoadingAnimation');
         }
     });
-}
-
-function removeAllChildrenOfNode(elementId) {
-    var node = document.getElementById(elementId);
-
-    while (node.firstChild)
-        node.removeChild(node.firstChild);
 }

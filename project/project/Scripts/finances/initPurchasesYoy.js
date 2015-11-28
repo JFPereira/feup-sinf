@@ -16,14 +16,17 @@
         verticaldownclass: 'glyphicon glyphicon-minus'
     });
 
-    renderPurchasesYoy(currentYear);
-
     spinner.on("touchspin.on.stopspin", function () {
         renderPurchasesYoy(spinner.val());
     });
+
+    renderPurchasesYoy(currentYear);
 });
 
 function renderPurchasesYoy(year) {
+    // update spinner value (needed if the year was changed using the core view year pivot)
+    $('#purchasesYoySpinner').val(year);
+
     // clear previous morris bar chart
     removeAllChildrenOfNode('purchasesYoyPlaceholder');
 
@@ -104,11 +107,4 @@ function renderPurchasesYoy(year) {
             removeAllChildrenOfNode('purchasesYoyPlaceholderLoadingAnimation');
         }
     });
-}
-
-function removeAllChildrenOfNode(elementId) {
-    var node = document.getElementById(elementId);
-
-    while (node.firstChild)
-        node.removeChild(node.firstChild);
 }
