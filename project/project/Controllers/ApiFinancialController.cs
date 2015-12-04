@@ -70,8 +70,8 @@ namespace project.Controllers
                 if (entry.Data.Year == year)
                     result.purchases -= entry.TotalMerc + entry.TotalIva;
 
-            // Revenue
-            result.revenue = result.sales - result.purchases;
+            // Net Profit
+            result.netProfit = result.sales - result.purchases;
 
             var json = new JavaScriptSerializer().Serialize(result);
 

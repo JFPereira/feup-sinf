@@ -19,7 +19,7 @@
         }
 
         // year total revenue (sales - purchases)
-        public double revenue
+        public double netProfit
         {
             get;
             set;

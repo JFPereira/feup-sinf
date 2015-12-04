@@ -21,13 +21,13 @@ function renderYtdKpis(year) {
             removeAllChildrenOfNode('purchasesYtdPlaceholderLoadingAnimation')
             $('#purchasesYtdPlaceholder').append(content.purchases)
 
-            // revenue
-            removeAllChildrenOfNode('revenueYtdPlaceholderLoadingAnimation')
-            $('#revenueYtdPlaceholder').append(content.revenue)
+            // net profit
+            removeAllChildrenOfNode('netProfitYtdPlaceholderLoadingAnimation')
+            $('#netProfitYtdPlaceholder').append(content.netProfit)
 
-            $('#revenueYtdPlaceholder').parents().eq(3)
+            $('#netProfitYtdPlaceholder').parents().eq(3)
                 .removeClass('panel-default panel-green panel-red')
-                .addClass(content.revenue > 0 ? 'panel-green' : 'panel-red')
+                .addClass(content.netProfit > 0 ? 'panel-green' : 'panel-red')
         }
     })
 }
@@ -39,6 +39,6 @@ function clearKpisContentAndShowLoadingAnimation() {
     removeAllChildrenOfNode('purchasesYtdPlaceholder')
     $('#purchasesYtdPlaceholderLoadingAnimation').append('<i class="fa fa-cog fa-spin fa-3x"></i>')
 
-    removeAllChildrenOfNode('revenueYtdPlaceholder')
-    $('#revenueYtdPlaceholderLoadingAnimation').append('<i class="fa fa-cog fa-spin fa-3x"></i>')
+    removeAllChildrenOfNode('netProfitYtdPlaceholder')
+    $('#netProfitYtdPlaceholderLoadingAnimation').append('<i class="fa fa-cog fa-spin fa-3x"></i>')
 }
