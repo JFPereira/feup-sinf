@@ -460,7 +460,7 @@ namespace project.Lib_Primavera
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Id from LinhasDocStatus, LinhasDoc, CabecDoc WHERE LinhasDocStatus.QuantTrans != LinhasDocStatus.Quantidade AND LinhasDoc.Id = LinhasDocStatus.IdLinhasDoc AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.TipoDoc = 'ECL' GROUP BY CabecDoc.Id AND Artigo = '" + id + "'");
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Id from LinhasDocStatus, LinhasDoc, CabecDoc WHERE LinhasDocStatus.QuantTrans != LinhasDocStatus.Quantidade AND LinhasDoc.Id = LinhasDocStatus.IdLinhasDoc AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.TipoDoc = 'ECL'  AND Artigo = '" + id + "'" + " GROUP BY CabecDoc.Id");
 
                 while (!objList.NoFim())
                 {
