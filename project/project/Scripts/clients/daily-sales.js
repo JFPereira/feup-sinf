@@ -2,10 +2,10 @@
     $("select#dp-month").trigger('change');
 });
 
-function doPurchasesPlot(purchases, days) {
-    var data = purchases;
+function doSalesPlot(sales, days) {
+    var data = sales;
 
-    var plot = $.plot("#clientDailyPurchasesPlaceholder", [{ label: "Purchases", data: data }], {
+    var plot = $.plot("#clientDailySalesPlaceholder", [{ label: "Sales", data: data }], {
             series: {
                 lines: { show: true },
                 points: { show: true }
@@ -17,7 +17,7 @@ function doPurchasesPlot(purchases, days) {
             yaxis: {
                 ticks: 1,
                 min: 0,
-                tickFormatter: function (val, axis) { return val < axis.max ? val : val + " Purchases"; }
+                tickFormatter: function (val, axis) { return val < axis.max ? val : val + " Sales"; }
             },
             grid: {
                 backgroundColor: { colors: ["#fff", "#eee"] },
@@ -41,15 +41,15 @@ function doPurchasesPlot(purchases, days) {
         opacity: 0.80
     }).appendTo("body");
 
-    $("#clientDailyPurchasesPlaceholder").bind("plothover", function (event, pos, item) {
+    $("#clientDailySalesPlaceholder").bind("plothover", function (event, pos, item) {
         if (item) {
             var day = item.datapoint[0],
                 value = item.datapoint[1];
             
                 if (value > 1 || value == 0)
-                    $("#tooltip").html(item.series.label + " of day " + day + ": " + value + " purchases").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
+                    $("#tooltip").html(item.series.label + " of day " + day + ": " + value + " sales").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
                 else
-                    $("#tooltip").html(item.series.label + " of day " + day + ": " + value + " purchase").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
+                    $("#tooltip").html(item.series.label + " of day " + day + ": " + value + " sale").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
         } else {
             $("#tooltip").hide();
         }
@@ -105,14 +105,11 @@ function doSalesVolumePlot(salesVolume, days) {
     });
 }
 
-$('#dp-month').on('change', function () {
-
+function updateDailySales() { 
     var entity = document.getElementById("client-id").getAttribute("value");
 
-    var year = $("select#dp-year").find(":selected").val();
+    var year = $("input[name='yearPivotSpinner']").val();
     var month = $("select#dp-month").find(":selected").val();
-
-    console.log("Year: " + year + "       Month: " + month);
 
     $.ajax({
         dataType: "json",
@@ -120,20 +117,25 @@ $('#dp-month').on('change', function () {
         success: function (item) {
             item = JSON.parse(item);
 
-            var purchases = [], days = [], salesVolume = [];
+            var sales = [], days = [], salesVolume = [];
 
             $.each(item, function (i) {
                 days.push(item[i].day);
-                purchases.push([item[i].day, item[i].numPurchase]);
+                sales.push([item[i].day, item[i].numPurchase]);
                 salesVolume.push([item[i].day, item[i].salesVolume]);
             });
 
-            doPurchasesPlot(purchases, days);
+            doSalesPlot(sales, days);
 
             doSalesVolumePlot(salesVolume, days);
 
-            $("#dailyLoadingAnimation").remove();
+            $("#dailySalesLoadingAnimation").remove();
+
+            $("#dailySalesVolumeLoadingAnimation").remove();
         }
     });
-});
+}
 
+$('#dp-month').on('change', function () {
+    updateDailySales();
+});

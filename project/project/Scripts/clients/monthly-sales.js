@@ -1,13 +1,13 @@
 ﻿$(function () {
     var currentYear = new Date().getFullYear()
 
-    updateMonthlyPurchases(currentYear);
+    updateMonthlySales(currentYear);
 });
 
-function doMonthlyPurchasesPlot(purchases, months) {
-    var data = purchases;
+function doMonthlySalesPlot(sales, months) {
+    var data = sales;
 
-    plot = $.plot("#clientMonthlyPurchasesPlaceholder", [{ label: "Purchases", data: data }], {
+    plot = $.plot("#clientMonthlySalesPlaceholder", [{ label: "Sales", data: data }], {
         series: {
             lines: { show: true },
             points: { show: true }
@@ -65,7 +65,7 @@ function doMonthlyPurchasesPlot(purchases, months) {
         yaxis: {
             ticks: 1,
             min: 0,
-            tickFormatter: function (val, axis) { return val < axis.max ? val : val + " Purchases"; }
+            tickFormatter: function (val, axis) { return val < axis.max ? val : val + " Sales"; }
         },
         grid: {
             backgroundColor: { colors: ["#fff", "#eee"] },
@@ -89,7 +89,7 @@ function doMonthlyPurchasesPlot(purchases, months) {
         opacity: 0.80
     }).appendTo("body");
 
-    $("#clientMonthlyPurchasesPlaceholder").bind("plothover", function (event, pos, item) {
+    $("#clientMonthlySalesPlaceholder").bind("plothover", function (event, pos, item) {
         if (item) {
             var month = item.datapoint[0],
                 value = item.datapoint[1];
@@ -134,9 +134,9 @@ function doMonthlyPurchasesPlot(purchases, months) {
             }
 
             if (value > 1 || value == 0)
-                $("#tooltip").html(item.series.label + " of " + month + ": " + value + " purchases").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
+                $("#tooltip").html(item.series.label + " of " + month + ": " + value + " sales").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
             else
-                $("#tooltip").html(item.series.label + " of " + month + ": " + value + " purchase").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
+                $("#tooltip").html(item.series.label + " of " + month + ": " + value + " sale").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
         } else {
             $("#tooltip").hide();
         }
@@ -280,7 +280,7 @@ function doMonthlySalesVolumePlot(salesVolume, months) {
     });
 }
 
-function updateMonthlyPurchases(year) {
+function updateMonthlySales(year) {
 
     var entity = document.getElementById("client-id").getAttribute("value");
 
@@ -290,19 +290,21 @@ function updateMonthlyPurchases(year) {
         success: function (item) {
             item = JSON.parse(item);
 
-            var purchases = [], months = [], salesVolume = [];
+            var sales = [], months = [], salesVolume = [];
 
             $.each(item, function (i) {
                 months.push(item[i].month);
-                purchases.push([item[i].month, item[i].numPurchase]);
+                sales.push([item[i].month, item[i].numPurchase]);
                 salesVolume.push([item[i].month, item[i].salesVolume]);
             });
 
-            doMonthlyPurchasesPlot(purchases, months);
+            doMonthlySalesPlot(sales, months);
 
             doMonthlySalesVolumePlot(salesVolume, months);
 
-            $("#monthlyLoadingAnimation").remove();
+            $("#monthlySalesLoadingAnimation").remove();
+
+            $("#monthlySalesVolumeLoadingAnimation").remove();
         }
     });
 }

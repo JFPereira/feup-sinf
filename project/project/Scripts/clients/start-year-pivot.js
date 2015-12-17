@@ -22,6 +22,6 @@
 });
 
 function renderPivot(year) {
-    console.log("year no spinner: " + year);
-    updateMonthlyPurchases(year);
+    updateMonthlySales(year);
+    updateDailySales();
 }

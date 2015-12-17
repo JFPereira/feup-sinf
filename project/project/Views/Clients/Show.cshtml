@@ -27,8 +27,8 @@
     @Scripts.Render("~/Scripts/clients/start-year-pivot.js")
     @Scripts.Render("~/Scripts/clients/client-products-flot-pie.js")
     @Scripts.Render("~/Scripts/clients/costs-earnings.js")
-    @Scripts.Render("~/Scripts/clients/daily-purchases.js")
-    @Scripts.Render("~/Scripts/clients/monthly-purchases.js")
+    @Scripts.Render("~/Scripts/clients/daily-sales.js")
+    @Scripts.Render("~/Scripts/clients/monthly-sales.js")
     @Scripts.Render("~/Scripts/clients/average-purchase-cost.js")
 }
 
@@ -124,74 +124,99 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-md-6 col-lg-6">
-            <div id="yearPivotSpinnerPlaceholder" class="col-lg-3 pull-right" style="margin-top: 20px"></div>
-         </div>
-    </div>
-
-    <div class="col-xs-12 col-md-6 col-lg-6">
         <div class="panel panel-default">
-            <div class="panel-heading">Monthly Purchases</div>
+            <div class="panel-heading">Information Flow</div>
             <div class="panel-body">
-                <div id="monthlyLoadingAnimation" class="text-center">
-                    <i class="fa fa-cog fa-spin fa-3x"></i>
-                </div>
-
-                <div class="flot-chart">
-                    <div id="clientMonthlyPurchasesPlaceholder" class="flot-chart-content"></div>
-                </div>
-
-                <div class="flot-chart">
-                    <div id="clientMonthlySalesVolumePlaceholder" class="flot-chart-content"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12 col-md-6 col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Daily Purchases</div>
-                <div class="panel-body">
-                    <div id="dailyLoadingAnimation" class="text-center">
-                        <i class="fa fa-cog fa-spin fa-3x"></i>
+                <div class="row">
+                    <div class="row">
+                        <div id="yearPivotSpinnerPlaceholder" class="col-xs-6 col-md-2 pull-right" style="margin-top: 20px"></div>
                     </div>
-                    <div id="options-rows">
-                        <div id="daily-purchases" class="form-inline" role="form">
-                            <div class="form-group years">
-                                <label for="dp-year">Year</label>
-                                <select id="dp-year" class="form-control" name="month">
-                                    <option value="2014">2014</option>
-                                    <option value="2015" selected>2015</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                </select>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Monthly Sales</div>
+                                <div class="panel-body">
+                                    <div id="monthlySalesLoadingAnimation" class="text-center">
+                                        <i class="fa fa-cog fa-spin fa-3x"></i>
+                                    </div>
+
+                                    <div class="flot-chart">
+                                        <div id="clientMonthlySalesPlaceholder" class="flot-chart-content"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group months">
-                                <label for="dp-month">Month</label>
-                                <select id="dp-month" class="form-control" name="year">
-                                    <option value="01">January</option>
-                                    <option value="02">February</option>
-                                    <option value="03">March</option>
-                                    <option value="04">April</option>
-                                    <option value="05">May</option>
-                                    <option value="06">June</option>
-                                    <option value="07">July</option>
-                                    <option value="08">August</option>
-                                    <option value="09">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12" selected>December</option>
-                                </select>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Monthly Sales Volume</div>
+                                <div class="panel-body">
+                                    <div id="monthlySalesVolumeLoadingAnimation" class="text-center">
+                                        <i class="fa fa-cog fa-spin fa-3x"></i>
+                                    </div>
+
+                                    <div class="flot-chart">
+                                        <div id="clientMonthlySalesVolumePlaceholder" class="flot-chart-content"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flot-chart">
-                        <div id="clientDailyPurchasesPlaceholder" class="flot-chart-content"></div>
+
+                    <div class="row">
+                        <div id="options-rows" class="col-xs-6 col-md-2 pull-right">
+                            <div id="daily-purchases" class="form-inline" role="form">
+                                <div class="form-group months">
+                                    <label for="dp-month">Month</label>
+                                    <select id="dp-month" class="form-control" name="year">
+                                        <option value="01">January</option>
+                                        <option value="02">February</option>
+                                        <option value="03">March</option>
+                                        <option value="04">April</option>
+                                        <option value="05">May</option>
+                                        <option value="06">June</option>
+                                        <option value="07">July</option>
+                                        <option value="08">August</option>
+                                        <option value="09">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12" selected>December</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="flot-chart">
-                        <div id="clientDailySalesVolumePlaceholder" class="flot-chart-content"></div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Daily Sales</div>
+                                <div class="panel-body">
+                                    <div id="dailySalesLoadingAnimation" class="text-center">
+                                        <i class="fa fa-cog fa-spin fa-3x"></i>
+                                    </div>
+
+                                    <div class="flot-chart">
+                                        <div id="clientDailySalesPlaceholder" class="flot-chart-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Daily Sales Volume</div>
+                                <div class="panel-body">
+                                    <div id="dailySalesVolumeLoadingAnimation" class="text-center">
+                                        <i class="fa fa-cog fa-spin fa-3x"></i>
+                                    </div>
+                                    <div class="flot-chart">
+                                        <div id="clientDailySalesVolumePlaceholder" class="flot-chart-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
