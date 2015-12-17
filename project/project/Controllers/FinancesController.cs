@@ -13,6 +13,8 @@ namespace project.Controllers
 {
     public class FinancesController : Controller
     {
+        public static Dictionary<int, FinancialYearInfo> yearKpisMap = new Dictionary<int, FinancialYearInfo>();
+
         // finances/index
         public ActionResult index()
         {

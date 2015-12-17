@@ -56,22 +56,32 @@ namespace project.Controllers
         {
             FinancialYearInfo result = new FinancialYearInfo();
 
-            // DB queries
-            List<CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
-            List<DocCompra> purchases = Lib_Primavera.PriIntegration.getPurchases();
+            if (FinancesController.yearKpisMap.ContainsKey(year))
+            {
+                result = FinancesController.yearKpisMap[year];
+            }
+            else
+            {
+                // DB queries
+                List<CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
+                List<DocCompra> purchases = Lib_Primavera.PriIntegration.getPurchases();
 
-            // Sales
-            foreach (var entry in sales)
-                if (entry.Data.Year == year)
-                    result.sales += entry.TotalMerc + entry.TotalIva;
+                // Sales
+                foreach (var entry in sales)
+                    if (entry.Data.Year == year)
+                        result.sales += entry.TotalMerc + entry.TotalIva;
 
-            // Purchases
-            foreach (var entry in purchases)
-                if (entry.Data.Year == year)
-                    result.purchases -= entry.TotalMerc + entry.TotalIva;
+                // Purchases
+                foreach (var entry in purchases)
+                    if (entry.Data.Year == year)
+                        result.purchases -= entry.TotalMerc + entry.TotalIva;
 
-            // Net Profit
-            result.netProfit = result.sales - result.purchases;
+                // Net Profit
+                result.netProfit = result.sales - result.purchases;
+
+                // add result to cache
+                FinancesController.yearKpisMap.Add(year, result);
+            }
 
             var json = new JavaScriptSerializer().Serialize(result);
 
