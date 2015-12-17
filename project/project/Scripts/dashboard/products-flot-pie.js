@@ -29,13 +29,13 @@
                     }
                 },
                 legend: {
-                labelFormatter: function (label, series) {
-                    // split the string label into an array with the entity and name of the company
-                    var pro = label.split(' - ');
+                    labelFormatter: function (label, series) {
+                        // split the string label into an array with the entity and name of the company
+                        var pro = label.split(' - ');
 
-                    return '<a class="pie-legend" href="/Products/Show/' + pro[0] + '">' + pro[1] + '</a>';
+                        return '<a class="pie-legend" href="/Products/Show/' + pro[0] + '">' + pro[1] + '</a>';
+                    }
                 }
-            }
             });
 
             $("#placeholderB").bind("plotclick", function (event, pos, item) {

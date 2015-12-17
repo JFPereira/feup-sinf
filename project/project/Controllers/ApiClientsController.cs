@@ -42,43 +42,54 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopClients()
         {
-            // get all the sales docs
-            List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
+            List<TopClientsItem> result;
 
-            List<TopClientsItem> result = new List<TopClientsItem>();
-
-            double totalSalesVolume = 0;
-
-            foreach (CabecDoc sale in sales)
+            if (HomeController.top10ClientsCache != null)
             {
-                // if the entity already exists then update the target values
-                if (result.Exists(e => e.entity == sale.Entidade))
-                {
-                    result.Find(e => e.entity == sale.Entidade).salesVolume += (sale.TotalMerc + sale.TotalIva);
-                    result.Find(e => e.entity == sale.Entidade).numPurchases++;
-                }
-                else // else create new item and add it to the list
-                {
-                    result.Add(new TopClientsItem
-                    {
-                        entity = sale.Entidade,
-                        name = sale.Nome,
-                        nif = sale.NumContribuinte,
-                        salesVolume = sale.TotalMerc + sale.TotalIva,
-                        percentage = "",
-                        numPurchases = 1
-                    });
-                }
-
-                totalSalesVolume += (sale.TotalMerc + sale.TotalIva);
+                result = HomeController.top10ClientsCache;
             }
+            else
+            {
+                result = new List<TopClientsItem>();
 
-            // take the top 10 clientes of the list and order them by sales volume
-            result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
+                // get all the sales docs
+                List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
 
-            // calculate the percentage of each one
-            foreach (TopClientsItem client in result)
-                client.percentage += Math.Round(client.salesVolume / totalSalesVolume * 100, 2).ToString(CultureInfo.GetCultureInfo("en-GB"));
+                double totalSalesVolume = 0;
+
+                foreach (CabecDoc sale in sales)
+                {
+                    // if the entity already exists then update the target values
+                    if (result.Exists(e => e.entity == sale.Entidade))
+                    {
+                        result.Find(e => e.entity == sale.Entidade).salesVolume += (sale.TotalMerc + sale.TotalIva);
+                        result.Find(e => e.entity == sale.Entidade).numPurchases++;
+                    }
+                    else // else create new item and add it to the list
+                    {
+                        result.Add(new TopClientsItem
+                        {
+                            entity = sale.Entidade,
+                            name = sale.Nome,
+                            nif = sale.NumContribuinte,
+                            salesVolume = sale.TotalMerc + sale.TotalIva,
+                            percentage = "",
+                            numPurchases = 1
+                        });
+                    }
+
+                    totalSalesVolume += (sale.TotalMerc + sale.TotalIva);
+                }
+
+                // take the top 10 clientes of the list and order them by sales volume
+                result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
+
+                // calculate the percentage of each one
+                foreach (TopClientsItem client in result)
+                    client.percentage += Math.Round(client.salesVolume / totalSalesVolume * 100, 2).ToString(CultureInfo.GetCultureInfo("en-GB"));
+
+                HomeController.top10ClientsCache = result;
+            }
 
             var json = new JavaScriptSerializer().Serialize(result);
 
