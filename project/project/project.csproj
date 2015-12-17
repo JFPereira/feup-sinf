@@ -312,7 +312,7 @@
     <Compile Include="Items\APCItem.cs" />
     <Compile Include="Items\CostsVsEarningsItem.cs" />
     <Compile Include="Items\DailyPurchasesItem.cs" />
-    <Compile Include="Items\FinancialInfo.cs" />
+    <Compile Include="Items\FinancialYearInfo.cs" />
     <Compile Include="Items\GlobalFinancialItem.cs" />
     <Compile Include="Items\MonthlyPurchasesItem.cs" />
     <Compile Include="Items\ProductPurchasesItem.cs" />
