@@ -1,9 +1,23 @@
 ﻿$(function () {
+    var currentYear = new Date().getFullYear();
+
+    renderProductFinancial(currentYear);
+});
+
+function renderProductFinancial(year) {
+    // clear previous morris bar chart
+    removeAllChildrenOfNode('productfinancial');
+
+    // remove any existing animated loading cog
+    removeAllChildrenOfNode('productfinancialLoadingAnimation');
+
+    // show animated loading cog
+    $('#productfinancialLoadingAnimation').append('<i class="fa fa-cog fa-spin fa-3x"></i>');
     var product = document.getElementById("productID").getAttribute("value");
 
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49328/api/products/" + product + "/financial",
+        url: "http://localhost:49328/api/products/" + product + "/financial/" + year,
         success: function (financial) {
             financial = JSON.parse(financial);
 
@@ -33,4 +47,4 @@
             $("#productfinancialLoadingAnimation").remove();
         }
     })
-});
+}
