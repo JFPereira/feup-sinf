@@ -357,6 +357,7 @@
     <Content Include="Scripts\products\product-units-sold.js" />
     <Content Include="Scripts\finances\initPurchasesYoy.js" />
     <Content Include="Scripts\finances\initYtdKpis.js" />
+    <Content Include="Scripts\products\startYearPivot.js" />
     <Content Include="Scripts\sales\RSS-table.js" />
   </ItemGroup>
   <ItemGroup>

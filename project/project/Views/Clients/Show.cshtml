@@ -32,6 +32,7 @@
 }
 
 <div class="col-xs-12">
+
     <input id="client-id" type="hidden" name="client-id" value=@Html.ViewData["entity"]>
 
     <h2>@Model.NomeCliente</h2>
@@ -130,10 +131,10 @@
                         <i class="fa fa-cog fa-spin fa-3x"></i>
                     </div>
                     <div id="options-rows">
-                        <div id="daily-purchases-1" class="form-inline" role="form">
+                        <div id="daily-purchases" class="form-inline" role="form">
                             <div class="form-group years">
-                                <label for="dp-year-1">Year</label>
-                                <select id="dp-year-1" class="form-control" name="month">
+                                <label for="dp-year">Year</label>
+                                <select id="dp-year" class="form-control" name="month">
                                     <option value="2014">2014</option>
                                     <option value="2015" selected>2015</option>
                                     <option value="2016">2016</option>
@@ -141,8 +142,8 @@
                                 </select>
                             </div>
                             <div class="form-group months">
-                                <label for="dp-month-1">Month</label>
-                                <select id="dp-month-1" class="form-control" name="year">
+                                <label for="dp-month">Month</label>
+                                <select id="dp-month" class="form-control" name="year">
                                     <option value="01">January</option>
                                     <option value="02">February</option>
                                     <option value="03">March</option>
@@ -152,22 +153,19 @@
                                     <option value="07">July</option>
                                     <option value="08">August</option>
                                     <option value="09">September</option>
-                                    <option value="10" selected>October</option>
+                                    <option value="10">October</option>
                                     <option value="11">November</option>
-                                    <option value="12">December</option>
+                                    <option value="12" selected>December</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="radio-group">
-                        <label><input type="radio" checked="checked" name="optradio-daily" value="sales-volume">Sales Volume</label>
-                        <label><input type="radio" name="optradio-daily" value="purchases">Purchases</label>
-                    </div>
-                    <input onclick="updateDailyPurchases()" type="button" id="daily-purchases-button" class="btn btn-default" value="Update" />
-                    <!--<input id="numMonths" type="hidden" name="numMonths" value="1">-->
-                    <!--<input onclick="addNewMonth()" type="button" id="add-month" class="btn btn-default" value="Add Month" />-->
                     <div class="flot-chart">
                         <div id="clientDailyPurchasesPlaceholder" class="flot-chart-content"></div>
+                    </div>
+
+                    <div class="flot-chart">
+                        <div id="clientDailySalesVolumePlaceholder" class="flot-chart-content"></div>
                     </div>
                 </div>
             </div>

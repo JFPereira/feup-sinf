@@ -335,7 +335,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static List<LinhaDocVenda> GetVendasArtigo(string id)
+        public static List<LinhaDocVenda> GetVendasArtigo(string id, int year)
         {
             StdBELista objList;
             Model.LinhaDocVenda lindv;
@@ -344,7 +344,7 @@ namespace project.Lib_Primavera
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade, LinhasDoc.PrecUnit from LinhasDoc WHERE Artigo = '" + id + "'");
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade, LinhasDoc.PrecUnit from LinhasDoc WHERE Artigo = '" + id + "' AND YEAR(LinhasDoc.Data) = " + year);
                 sales = new List<Model.LinhaDocVenda>();
 
                 while (!objList.NoFim())
@@ -364,7 +364,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static List<LinhaDocCompra> GetComprasArtigo(string id)
+        public static List<LinhaDocCompra> GetComprasArtigo(string id, int year)
         {
             StdBELista objList;
             Model.LinhaDocCompra lindv;
@@ -373,7 +373,7 @@ namespace project.Lib_Primavera
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasCompras.Quantidade, LinhasCompras.PrecUnit from LinhasCompras WHERE Artigo = '" + id + "'");
+                objList = PriEngine.Engine.Consulta("SELECT LinhasCompras.Quantidade, LinhasCompras.PrecUnit from LinhasCompras WHERE Artigo = '" + id + "' AND YEAR(LinhasCompras.Data = " + year);
                 purchases = new List<Model.LinhaDocCompra>();
 
                 while (!objList.NoFim())
@@ -394,7 +394,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static List<Model.CabecDoc> GetTopClientesArtigo(string id)
+        public static List<Model.CabecDoc> GetTopClientesArtigo(string id, int year)
         {
             StdBELista objList;
 
@@ -404,7 +404,7 @@ namespace project.Lib_Primavera
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND LinhasDoc.Artigo = " + id);
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND LinhasDoc.Artigo = " + id + " AND YEAR(CabecDoc.Data) = " + year);
                 while (!objList.NoFim())
                 {
                     sales.Add(new Model.CabecDoc
@@ -428,54 +428,50 @@ namespace project.Lib_Primavera
                 return null;
 
         }
-        public static double GetShipments()
+        public static List<String> GetShipments()
         {
-            double delayed = 0;
             StdBELista objList;
+            List<String> late = new List<String>();
 
             bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasInternos.QntSatisfeita, LinhasInternos.Quantidade from LinhasInternos");
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Id from LinhasDocStatus, LinhasDoc, CabecDoc WHERE LinhasDocStatus.QuantTrans != LinhasDocStatus.Quantidade AND LinhasDoc.Id = LinhasDocStatus.IdLinhasDoc AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.TipoDoc = 'ECL' GROUP BY CabecDoc.Id");
 
                 while (!objList.NoFim())
                 {
-                    double satis = objList.Valor("QntSatisfeita");
-                    double quant = objList.Valor("Quantidade");
-                    delayed += quant - satis;
+                    late.Add(objList.Valor("Id"));
                     objList.Seguinte();
                 }
 
-                return delayed;
+                return late;
             }
             else
-                return 0;
+                return null;
         }
 
-        public static double GetProductShipments(string id)
+        public static List<String> GetProductShipments(string id)
         {
-            double delayed = 0;
+            List<String> late = new List<String>();
             StdBELista objList;
 
             bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasInternos.QntSatisfeita, LinhasInternos.Quantidade from LinhasInternos WHERE Artigo = '"+ id +"'");
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Id from LinhasDocStatus, LinhasDoc, CabecDoc WHERE LinhasDocStatus.QuantTrans != LinhasDocStatus.Quantidade AND LinhasDoc.Id = LinhasDocStatus.IdLinhasDoc AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.TipoDoc = 'ECL' GROUP BY CabecDoc.Id AND Artigo = '" + id + "'");
 
                 while (!objList.NoFim())
                 {
-                    double satis = objList.Valor("QntSatisfeita");
-                    double quant = objList.Valor("Quantidade");
-                    delayed += quant - satis;
+                    late.Add(objList.Valor("Id"));
                     objList.Seguinte();
                 }
 
-                return delayed;
+                return late;
             }
             else
-                return 0;
+                return null;
         }
 
         public static List<Model.Artigo> ListaArtigos()
