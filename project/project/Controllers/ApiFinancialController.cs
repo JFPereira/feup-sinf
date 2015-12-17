@@ -25,26 +25,39 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Global()
         {
-            List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
-            string month = DateTime.Now.Month.ToString();
-            string year = DateTime.Now.Year.ToString();
-            int m = Int32.Parse(month);
-            int y = Int32.Parse(year);
-            for (int i = 1; i < m + 1; i++)
-            {
-                double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
-                double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
-                global.Add(new GlobalFinancialItem
-                {
-                    Ano = y,
-                    Mes = i,
-                    Compras = purchase,
-                    Vendas = sale
+            List<GlobalFinancialItem> global;
 
-                });
+            if (HomeController.globalFinancialCache != null)
+            {
+                global = HomeController.globalFinancialCache;
+            }
+            else
+            {
+                global = new List<GlobalFinancialItem>();
+
+                string month = DateTime.Now.Month.ToString();
+                string year = DateTime.Now.Year.ToString();
+                int m = Int32.Parse(month);
+                int y = Int32.Parse(year);
+                for (int i = 1; i < m + 1; i++)
+                {
+                    double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
+                    double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
+                    global.Add(new GlobalFinancialItem
+                    {
+                        Ano = y,
+                        Mes = i,
+                        Compras = purchase,
+                        Vendas = sale
+
+                    });
+                }
+
+                global = global.OrderBy(e => e.Mes).ToList();
+
+                HomeController.globalFinancialCache = global;
             }
 
-            global = global.OrderBy(e => e.Mes).ToList();
             var json = new JavaScriptSerializer().Serialize(global);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);

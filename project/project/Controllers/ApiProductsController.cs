@@ -30,7 +30,7 @@ namespace project.Controllers
             {
                 return null;
                 //throw new HttpResponseException(
-                 // Request.CreateResponse(HttpStatusCode.NotFound));
+                // Request.CreateResponse(HttpStatusCode.NotFound));
             }
             else
             {
@@ -41,7 +41,7 @@ namespace project.Controllers
                     sumPrecos += preco;
                 }
                 artigo.PrecoMedio = sumPrecos / precos.Count;
-               
+
                 return artigo;
             }
         }
@@ -50,8 +50,8 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopClients(string id, int year)
         {
-           
-            List<CabecDoc> sales = Lib_Primavera.PriIntegration.GetTopClientesArtigo(id,year);
+
+            List<CabecDoc> sales = Lib_Primavera.PriIntegration.GetTopClientesArtigo(id, year);
             List<TopClientsItem> result = new List<Items.TopClientsItem>();
 
             double totalSalesVolume = 0;
@@ -86,7 +86,7 @@ namespace project.Controllers
             var json = new JavaScriptSerializer().Serialize(result);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
-            
+
         }
 
         // GET api/products/{id}/sales/{year}
@@ -142,8 +142,8 @@ namespace project.Controllers
         public HttpResponseMessage Financial(string id, int year)
         {
             string month = "";
-            int m=0;
-            int y=0;
+            int m = 0;
+            int y = 0;
             List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
             if (year == DateTime.Now.Year)
             {
@@ -152,46 +152,54 @@ namespace project.Controllers
                 y = year;
             }
 
-            else {
-                m=12;
-                y=year;
+            else
+            {
+                m = 12;
+                y = year;
             }
-                for (int i = 1; i < m + 1; i++)
+            for (int i = 1; i < m + 1; i++)
+            {
+                double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
+                double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
+                global.Add(new GlobalFinancialItem
                 {
-                    double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
-                    double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
-                    global.Add(new GlobalFinancialItem
-                    {
-                        Ano = y,
-                        Mes = i,
-                        Compras = Math.Abs(purchase),
-                        Vendas = sale
+                    Ano = y,
+                    Mes = i,
+                    Compras = Math.Abs(purchase),
+                    Vendas = sale
 
-                    });
-                }
+                });
+            }
 
-                global = global.OrderBy(e => e.Mes).ToList();
-                var json = new JavaScriptSerializer().Serialize(global);
+            global = global.OrderBy(e => e.Mes).ToList();
+            var json = new JavaScriptSerializer().Serialize(global);
 
-                return Request.CreateResponse(HttpStatusCode.OK, json);
-            
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+
 
         }
 
-
-        
-       
         // GET api/products/top
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopProducts()
         {
-            List<Lib_Primavera.Model.LinhaDocVenda> products = Lib_Primavera.PriIntegration.getProductSales();
-            List<TopProductsItem> result = new List<TopProductsItem>();
-            double totalSalesVolume = 0;
+            List<TopProductsItem> result;
 
-            foreach (LinhaDocVenda product in products)
+            if (HomeController.top10ProductsCache != null)
             {
-                string cod = product.Artigo;
+                result = HomeController.top10ProductsCache;
+            }
+            else
+            {
+                result = new List<TopProductsItem>();
+
+                List<Lib_Primavera.Model.LinhaDocVenda> products = Lib_Primavera.PriIntegration.getProductSales();
+
+                double totalSalesVolume = 0;
+
+                foreach (LinhaDocVenda product in products)
+                {
+                    string cod = product.Artigo;
                     if (result.Exists(e => e.codArtigo == cod))
                     {
                         result.Find(e => e.codArtigo == cod).salesVolume += (product.PrecoLiquido);
@@ -210,29 +218,43 @@ namespace project.Controllers
                     }
                     totalSalesVolume += product.TotalILiquido;
                 }
-            
 
-            result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
 
-            foreach (TopProductsItem product in result)
-                product.percentage += Math.Round(product.salesVolume / totalSalesVolume * 100, 2).ToString(CultureInfo.GetCultureInfo("en-GB"));
+                result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
+
+                foreach (TopProductsItem product in result)
+                    product.percentage += Math.Round(product.salesVolume / totalSalesVolume * 100, 2).ToString(CultureInfo.GetCultureInfo("en-GB"));
+
+                HomeController.top10ProductsCache = result;
+            }
 
             var json = new JavaScriptSerializer().Serialize(result);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
-           
         }
 
         // GET api/products/shipments
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Shipments()
         {
-            List<String> delayed = Lib_Primavera.PriIntegration.GetShipments();
+            int? result;
 
-            var json = new JavaScriptSerializer().Serialize(delayed.Count);
+            if (HomeController.lateShipmentsCache != null)
+            {
+                result = HomeController.lateShipmentsCache;
+            }
+            else
+            {
+                List<String> delayed = Lib_Primavera.PriIntegration.GetShipments();
+
+                result = delayed.Count;
+
+                HomeController.lateShipmentsCache = result;
+            }
+
+            var json = new JavaScriptSerializer().Serialize(result);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
-
         }
 
         // GET api/products/shipments/{id}
