@@ -56,9 +56,9 @@ namespace project.Controllers
         {
             FinancialYearInfo result = new FinancialYearInfo();
 
-            if (FinancesController.yearKpisMap.ContainsKey(year))
+            if (FinancesController.kpisCache.ContainsKey(year))
             {
-                result = FinancesController.yearKpisMap[year];
+                result = FinancesController.kpisCache[year];
             }
             else
             {
@@ -82,7 +82,7 @@ namespace project.Controllers
                 result.netProfit = Math.Round(result.sales - result.purchases, 2);
 
                 // add result to cache
-                FinancesController.yearKpisMap.Add(year, result);
+                FinancesController.kpisCache.Add(year, result);
             }
 
             var json = new JavaScriptSerializer().Serialize(result);
@@ -111,21 +111,32 @@ namespace project.Controllers
         public HttpResponseMessage PurchasesYoY(int year)
         {
             List<List<double>> result = new List<List<double>>();
-            for (int i = 0; i < 12; i++)
-                result.Add(new List<double> { 0, 0 });
 
-            // DB query
-            List<DocCompra> purchases = Lib_Primavera.PriIntegration.getPurchases();
-
-            // Purchases total amount
-            foreach (var entry in purchases)
+            if (FinancesController.purchasesCache.ContainsKey(year))
             {
-                if (entry.Data.Year == year || entry.Data.Year == year - 1)
-                {
-                    double amount = -1 * (entry.TotalMerc + entry.TotalIva);
+                result = FinancesController.purchasesCache[year];
+            }
+            else
+            {
+                for (int i = 0; i < 12; i++)
+                    result.Add(new List<double> { 0, 0 });
 
-                    result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
+                // DB query
+                List<DocCompra> purchases = Lib_Primavera.PriIntegration.getPurchases();
+
+                // Purchases total amount
+                foreach (var entry in purchases)
+                {
+                    if (entry.Data.Year == year || entry.Data.Year == year - 1)
+                    {
+                        double amount = -1 * (entry.TotalMerc + entry.TotalIva);
+
+                        result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
+                    }
                 }
+
+                // add result to cache
+                FinancesController.purchasesCache.Add(year, result);
             }
 
             var json = new JavaScriptSerializer().Serialize(result);
