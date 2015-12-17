@@ -70,14 +70,16 @@ namespace project.Controllers
                 foreach (var entry in sales)
                     if (entry.Data.Year == year)
                         result.sales += entry.TotalMerc + entry.TotalIva;
+                result.sales = Math.Round(result.sales, 2);
 
                 // Purchases
                 foreach (var entry in purchases)
                     if (entry.Data.Year == year)
                         result.purchases -= entry.TotalMerc + entry.TotalIva;
+                result.purchases = Math.Round(result.purchases, 2);
 
                 // Net Profit
-                result.netProfit = result.sales - result.purchases;
+                result.netProfit = Math.Round(result.sales - result.purchases, 2);
 
                 // add result to cache
                 FinancesController.yearKpisMap.Add(year, result);
