@@ -165,21 +165,32 @@ namespace project.Controllers
         public HttpResponseMessage SalesYoY(int year)
         {
             List<List<double>> result = new List<List<double>>();
-            for (int i = 0; i < 12; i++)
-                result.Add(new List<double> { 0, 0 });
 
-            // DB query
-            List<CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
-
-            // Purchases total amount
-            foreach (var entry in sales)
+            if (FinancesController.salesCache.ContainsKey(year))
             {
-                if (entry.Data.Year == year || entry.Data.Year == year - 1)
-                {
-                    double amount = entry.TotalMerc + entry.TotalIva;
+                result = FinancesController.salesCache[year];
+            }
+            else
+            {
+                for (int i = 0; i < 12; i++)
+                    result.Add(new List<double> { 0, 0 });
 
-                    result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
+                // DB query
+                List<CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
+
+                // Purchases total amount
+                foreach (var entry in sales)
+                {
+                    if (entry.Data.Year == year || entry.Data.Year == year - 1)
+                    {
+                        double amount = entry.TotalMerc + entry.TotalIva;
+
+                        result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
+                    }
                 }
+
+                // add result to cache
+                FinancesController.salesCache.Add(year, result);
             }
 
             var json = new JavaScriptSerializer().Serialize(result);

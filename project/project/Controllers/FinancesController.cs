@@ -15,6 +15,7 @@ namespace project.Controllers
     {
         public static Dictionary<int, FinancialYearInfo> kpisCache = new Dictionary<int, FinancialYearInfo>();
         public static Dictionary<int, List<List<double>>> purchasesCache = new Dictionary<int, List<List<double>>>();
+        public static Dictionary<int, List<List<double>>> salesCache = new Dictionary<int, List<List<double>>>();
 
         // finances/index
         public ActionResult index()
