@@ -46,7 +46,7 @@ function doPurchasesPlot(purchases, days) {
             var day = item.datapoint[0],
                 value = item.datapoint[1];
             
-                if (value > 1)
+                if (value > 1 || value == 0)
                     $("#tooltip").html(item.series.label + " of day " + day + ": " + value + " purchases").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
                 else
                     $("#tooltip").html(item.series.label + " of day " + day + ": " + value + " purchase").css({ top: item.pageY + 5, left: item.pageX + 5 }).fadeIn(200);
