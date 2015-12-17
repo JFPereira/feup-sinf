@@ -7,6 +7,7 @@ namespace project.Items
 {
     public class TopSalesItem
     {
+        
         public string entity
         {
             get;
@@ -26,7 +27,7 @@ namespace project.Items
             set;
         }
 
-        public DateTime date
+        public string date
         {
             get;
             set;

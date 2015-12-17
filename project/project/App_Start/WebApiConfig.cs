@@ -35,21 +35,21 @@ namespace project
             // GET api/products/{id}/sales/{year}
             config.Routes.MapHttpRoute(
                 name: "Product Sales",
-                routeTemplate: "api/products/{id}/sales",
+                routeTemplate: "api/products/{id}/sales/{year}",
                 defaults: new { controller = "ApiProducts", action = "Sales" }
             );
 
             // GET api/products/{id}/purchases/{year}
             config.Routes.MapHttpRoute(
                 name: "Product Purchases",
-                routeTemplate: "api/products/{id}/purchases",
+                routeTemplate: "api/products/{id}/purchases/{year}",
                 defaults: new { controller = "ApiProducts", action = "Purchases" }
             );
 
             // GET api/products/{id}/financial/{year}
             config.Routes.MapHttpRoute(
                 name: "Product Financial",
-                routeTemplate: "api/products/{id}/financial",
+                routeTemplate: "api/products/{id}/financial/{year}",
                 defaults: new { controller = "ApiProducts", action = "Financial" }
             );
 
@@ -220,10 +220,17 @@ namespace project
                 defaults: new { controller = "ApiSales", action = "RegionalSSD" }
             );
 
-            // GET api/sales/sg/{year}/{month}/{year}/{month}
+            /*// GET api/sales/sg/{year}/{month}/{year}/{month}
             config.Routes.MapHttpRoute(
                 name: "SalesGrowth",
                 routeTemplate: "api/sales/sg/{year1}/{month1}/{year2}/{month2}",
+                defaults: new { controller = "ApiSales", action = "SalesGrowth" }
+            );*/
+
+            // GET api/sales/sg/{year}/{year}
+            config.Routes.MapHttpRoute(
+                name: "SalesGrowth",
+                routeTemplate: "api/sales/sg/{year1}/{year2}",
                 defaults: new { controller = "ApiSales", action = "SalesGrowth" }
             );
 

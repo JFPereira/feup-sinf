@@ -1,68 +1,72 @@
-﻿$("document").ready(function () {
-    setTimeout(function () {
-        $("input#top-purchases-button").trigger('click');
-    }, 10);
+﻿$(function () {
+    var currentYear = new Date().getFullYear();
+
+    // append year spinner
+    $('#TPSpinnerPlaceholder').append(
+        '<input id="TPSpinner" class="text-center" type="text" value="' + currentYear + '" name="TPSpinner">');
+
+    var spinner1 = $("input[name='TPSpinner']");
+
+    spinner1.TouchSpin({
+        min: 1900,
+        max: currentYear,
+        prefix: 'Year',
+        verticalbuttons: true,
+        verticalupclass: 'glyphicon glyphicon-plus',
+        verticaldownclass: 'glyphicon glyphicon-minus'
+    });
+
+    spinner1.on("touchspin.on.stopspin", function () {
+        updateTopPurchases(spinner1.val());
+    });
+
+    updateTopPurchases(currentYear);
 });
 
-function updateTopPurchases() {
+function updateTopPurchases(year) {
 
-    var year = $("select#tp-year").find(":selected").val();
-    var month = $("select#tp-month").find(":selected").val();
-    var day = $("select#tp-day").find(":selected").val();
-    
-    if (month == "None") {
-        $.ajax({
-            dataType: "json",
-            url: "http://localhost:49328/api/sales/top/" + year,
-            success: function (sales) {
-                sales = JSON.parse(sales);
+    console.log(year);
+    $('#TPSpinner').val(year);
+    console.log($('#TPSpinner').val());
+    // clear previous morris bar chart
+    removeAllChildrenOfNode('top-purchases');
 
-                var dataS = [];
-                $.each(sales, function (i) {
-                    var a = '<a href="/Clients/Show/' + sales[i].entity + '">' + sales[i].entity + '</a>';
-                    dataS.push([i + 1, a, sales[i].numPurchases, sales[i].purchaseValue]);
-                });
+    // remove any existing animated loading cog
+    removeAllChildrenOfNode('TPLoadingAnimation');
 
-                $('#top-purchases').dataTable({
-                    data: dataS,
-                    columns: [
-                        { title: "#" },
-                        { title: "Entity" },
-                        { title: "Units" },
-                        { title: "Purchase Value €" }
-                    ],
-                    destroy: true
-                });
-                $("#topPurchasesAnimation").remove();
-            }
-        })
-    }
-    else {
-        $.ajax({
-            dataType: "json",
-            url: "http://localhost:49328/api/sales/top/" + year + "/" + month,
-            success: function (sales) {
-                sales = JSON.parse(sales);
+    // show animated loading cog
+    $('#TPLoadingAnimation').append('<i class="fa fa-cog fa-spin fa-3x"></i>');
 
-                var dataS = [];
-                $.each(sales, function (i) {
-                    var a = '<a href="/Clients/Show/' + sales[i].entity + '">' + sales[i].entity + '</a>';
-                    dataS.push([i + 1, a, sales[i].numPurchases, sales[i].purchaseValue]);
-                });
 
-                $('#top-purchases').dataTable({
-                    data: dataS,
-                    columns: [
-                        { title: "#" },
-                        { title: "Entity" },
-                        { title: "Units" },
-                        { title: "Purchase Value €" }
-                    ],
-                    destroy: true
-                });
+    $.ajax({
+        dataType: "json",
+        url: "http://localhost:49328/api/sales/top/" + year,
+        success: function (sales) {
+            sales = JSON.parse(sales);
 
-                $("#topPurchasesAnimation").remove();
-            }
-        })
-    }
+            var dataS = [];
+            $.each(sales, function (i) {
+                var a = '<a href="/Clients/Show/' + sales[i].entity + '">' + sales[i].entity + '</a>';
+                dataS.push([i + 1, a, sales[i].numPurchases, sales[i].purchaseValue + "€", sales[i].date]);
+            });
+
+            $('#top-purchases').dataTable({
+                data: dataS,
+                columns: [
+                    { title: "#" },
+                    { title: "Client" },
+                    { title: "Units Sold" },
+                    { title: "Sale Volume" },
+                    { title: "Date" }
+                ],
+                destroy: true,
+                "bFilter": false,
+                "paging": false,
+                "info": false
+            });
+
+            // remove animated loading cog
+            removeAllChildrenOfNode('TPLoadingAnimation');
+        }
+    });
 }

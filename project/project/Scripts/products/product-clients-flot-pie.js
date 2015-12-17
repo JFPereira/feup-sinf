@@ -1,10 +1,23 @@
-﻿﻿$(function () {
+﻿$(function () {
+    var currentYear = new Date().getFullYear();
 
+    renderProductTopClients(currentYear);
+});
+
+function renderProductTopClients(year) {
+
+    removeAllChildrenOfNode('ProductPlaceholder');
+
+    // remove any existing animated loading cog
+    removeAllChildrenOfNode('ProductPlaceholderLoadingAnimation');
+
+    // show animated loading cog
+    $('#ProductPlaceholderLoadingAnimation').append('<i class="fa fa-cog fa-spin fa-3x"></i>');
     var product = document.getElementById("productID").getAttribute("value");
-
+    console.log(year);
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49328/api/products/" + product + "/top-clients",
+        url: "http://localhost:49328/api/products/" + product + "/top-clients/" + year ,
         success: function (clients) {
             console.log(clients);
             clients = JSON.parse(clients);
@@ -55,4 +68,4 @@
             $("#ProductPlaceholderLoadingAnimation").remove();
         }
     })
-});
+}

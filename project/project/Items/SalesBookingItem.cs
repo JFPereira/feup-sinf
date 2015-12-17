@@ -23,6 +23,11 @@ namespace project.Items
             get;
             set;
         }
+        public double quantidade
+        {
+            get;
+            set;
+        }
 
     }
 }

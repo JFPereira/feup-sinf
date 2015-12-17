@@ -460,7 +460,7 @@ namespace project.Lib_Primavera
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Id from LinhasDocStatus, LinhasDoc, CabecDoc WHERE LinhasDocStatus.QuantTrans != LinhasDocStatus.Quantidade AND LinhasDoc.Id = LinhasDocStatus.IdLinhasDoc AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.TipoDoc = 'ECL' GROUP BY CabecDoc.Id AND Artigo = '" + id + "'");
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Id from LinhasDocStatus, LinhasDoc, CabecDoc WHERE LinhasDocStatus.QuantTrans != LinhasDocStatus.Quantidade AND LinhasDoc.Id = LinhasDocStatus.IdLinhasDoc AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.TipoDoc = 'ECL'  AND Artigo = '" + id + "'" + " GROUP BY CabecDoc.Id");
 
                 while (!objList.NoFim())
                 {
@@ -1014,11 +1014,11 @@ namespace project.Lib_Primavera
             return sales;
         }
         //returns total amount of money made from selling the item prod, with contraints year,month and day
-        public static double getSalesProd(string controller, string prod, string year, string month, string day)
+        public static List<double> getSalesProd(string controller, string prod, string year, string month, string day)
         {
             StdBELista objList;
 
-            double quantity = 0;
+            List<double> quantity = new List<double> {0,0};
             bool companyInitialized = initCompany();
 
             List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
@@ -1034,37 +1034,36 @@ namespace project.Lib_Primavera
                     objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade AS quantity, LinhasDoc.PrecUnit AS price FROM LinhasDoc,CabecDoc WHERE DATEPART(year, CabecDoc.Data) = " + year + " AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.Artigo = " + prod);
                     while (!objList.NoFim())
                     {
-                        quantity += objList.Valor("quantity") * objList.Valor("price");
+                        quantity[1] += objList.Valor("quantity");
+                        quantity[0] += objList.Valor("quantity") * objList.Valor("price");
                         objList.Seguinte();
                     }
                 }
                 else if (controller == "month")
                 {
-                    if (month == null) { return 0; }
+                    if (month == null) { return quantity; }
                     objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade AS quantity, LinhasDoc.PrecUnit AS price FROM LinhasDoc,CabecDoc WHERE DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year + " AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.Artigo = " + prod);
                     while (!objList.NoFim())
                     {
-                        quantity += objList.Valor("quantity") * objList.Valor("price");
+                        quantity[1] += objList.Valor("quantity");
+                        quantity[0] += objList.Valor("quantity") * objList.Valor("price");
                         objList.Seguinte();
                     }
                 }
                 else if (controller == "day")
                 {
-                    if (month == null) { return 0; }
+                    if (month == null) { return quantity; }
                     objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade AS quantity, LinhasDoc.PrecUnit AS price FROM LinhasDoc,CabecDoc WHERE DATEPART(dd,CabecDoc.Data) = " + day + " AND DATEPART(mm,CabecDoc.Data) = " + month + " AND DATEPART(yyyy,CabecDoc.Data) = " + year + " AND CabecDoc.Id = LinhasDoc.IdCabecDoc AND LinhasDoc.Artigo = " + prod);
                     while (!objList.NoFim())
                     {
-                        quantity += objList.Valor("quantity") * objList.Valor("price");
+                        quantity[1] += objList.Valor("quantity");
+                        quantity[0] += objList.Valor("quantity") * objList.Valor("price");
                         objList.Seguinte();
                     }
                 }
 
-
-
-                return quantity;
-
             }
-            return -1;
+            return quantity;
 
         }
 
