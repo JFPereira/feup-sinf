@@ -41,37 +41,17 @@ namespace project.Controllers
                     sumPrecos += preco;
                 }
                 artigo.PrecoMedio = sumPrecos / precos.Count;
-               /* List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
-                string month = DateTime.Now.Month.ToString();
-                string year = DateTime.Now.Year.ToString();
-                int m = Int32.Parse(month);
-                int y = Int32.Parse(year);
-                for (int i = 1; i < m + 1; i++)
-                {
-                    double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
-                    double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
-                    global.Add(new GlobalFinancialItem
-                    {
-                        Ano = y,
-                        Mes = i,
-                        Compras = sale,
-                        Vendas = purchase
-
-                    });
-                }
-
-                global = global.OrderBy(e => e.Mes).ToList();
-                artigo.VendasComprasMes = global;*/
+               
                 return artigo;
             }
         }
 
-        // GET api/products/{id}/top-clients
+        // GET api/products/{id}/top-clients/{year}
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage TopClients(string id)
+        public HttpResponseMessage TopClients(string id, int year)
         {
            
-            List<CabecDoc> sales = Lib_Primavera.PriIntegration.GetTopClientesArtigo(id);
+            List<CabecDoc> sales = Lib_Primavera.PriIntegration.GetTopClientesArtigo(id,year);
             List<TopClientsItem> result = new List<Items.TopClientsItem>();
 
             double totalSalesVolume = 0;
@@ -109,11 +89,11 @@ namespace project.Controllers
             
         }
 
-        // GET api/products/{id}/sales
+        // GET api/products/{id}/sales/{year}
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage Sales(string id)
+        public HttpResponseMessage Sales(string id, int year)
         {
-            List<LinhaDocVenda> sales = Lib_Primavera.PriIntegration.GetVendasArtigo(id);
+            List<LinhaDocVenda> sales = Lib_Primavera.PriIntegration.GetVendasArtigo(id, year);
             double sum = 0;
             double totalQuantity = 0;
             ProductSalesItem result = new ProductSalesItem();
@@ -132,11 +112,11 @@ namespace project.Controllers
 
         }
 
-        // GET api/products/{id}/purchases
+        // GET api/products/{id}/purchases/{year}
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage Purchases(string id)
+        public HttpResponseMessage Purchases(string id, int year)
         {
-            List<LinhaDocCompra> purchases = Lib_Primavera.PriIntegration.GetComprasArtigo(id);
+            List<LinhaDocCompra> purchases = Lib_Primavera.PriIntegration.GetComprasArtigo(id, year);
             double sum = 0;
             double totalQuantity = 0;
 
@@ -157,33 +137,44 @@ namespace project.Controllers
 
         }
 
-        // GET api/products/{id}/financial
+        // GET api/products/{id}/financial/{year}
         [System.Web.Http.HttpGet]
-        public HttpResponseMessage Financial(string id)
+        public HttpResponseMessage Financial(string id, int year)
         {
+            string month = "";
+            int m=0;
+            int y=0;
             List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
-            string month = DateTime.Now.Month.ToString();
-            string year = DateTime.Now.Year.ToString();
-            int m = Int32.Parse(month);
-            int y = Int32.Parse(year);
-            for (int i = 1; i < m + 1; i++)
+            if (year == DateTime.Now.Year)
             {
-                double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
-                double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
-                global.Add(new GlobalFinancialItem
-                {
-                    Ano = y,
-                    Mes = i,
-                    Compras = Math.Abs(purchase),
-                    Vendas = sale
-
-                });
+                month = DateTime.Now.Month.ToString();
+                m = Int32.Parse(month);
+                y = year;
             }
 
-            global = global.OrderBy(e => e.Mes).ToList();
-            var json = new JavaScriptSerializer().Serialize(global);
+            else {
+                m=12;
+                y=year;
+            }
+                for (int i = 1; i < m + 1; i++)
+                {
+                    double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
+                    double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
+                    global.Add(new GlobalFinancialItem
+                    {
+                        Ano = y,
+                        Mes = i,
+                        Compras = Math.Abs(purchase),
+                        Vendas = sale
 
-            return Request.CreateResponse(HttpStatusCode.OK, json);
+                    });
+                }
+
+                global = global.OrderBy(e => e.Mes).ToList();
+                var json = new JavaScriptSerializer().Serialize(global);
+
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+            
 
         }
 
@@ -236,9 +227,9 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Shipments()
         {
-            double delayed = Lib_Primavera.PriIntegration.GetShipments();
+            List<String> delayed = Lib_Primavera.PriIntegration.GetShipments();
 
-            var json = new JavaScriptSerializer().Serialize(delayed);
+            var json = new JavaScriptSerializer().Serialize(delayed.Count);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
 
@@ -248,9 +239,9 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage ProductShipments(string id)
         {
-            double delayed = Lib_Primavera.PriIntegration.GetProductShipments(id);
+            List<String> delayed = Lib_Primavera.PriIntegration.GetProductShipments(id);
 
-            var json = new JavaScriptSerializer().Serialize(delayed);
+            var json = new JavaScriptSerializer().Serialize(delayed.Count);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
 
