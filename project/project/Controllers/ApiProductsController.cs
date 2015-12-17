@@ -237,12 +237,24 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Shipments()
         {
-            List<String> delayed = Lib_Primavera.PriIntegration.GetShipments();
+            int? result;
 
-            var json = new JavaScriptSerializer().Serialize(delayed.Count);
+            if (HomeController.lateShipmentsCache != null)
+            {
+                result = HomeController.lateShipmentsCache;
+            }
+            else
+            {
+                List<String> delayed = Lib_Primavera.PriIntegration.GetShipments();
+
+                result = delayed.Count;
+
+                HomeController.lateShipmentsCache = result;
+            }
+
+            var json = new JavaScriptSerializer().Serialize(result);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
-
         }
 
         // GET api/products/shipments/{id}

@@ -14,7 +14,7 @@
             $('#topsales').dataTable({
                 data: dataS,
                 columns: [
-                    { title: "#"},
+                    { title: "#" },
                     { title: "Entity" },
                     { title: "Purchase Value €" },
                     { title: "Nr Purchases" }

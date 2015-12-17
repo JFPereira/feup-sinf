@@ -12,6 +12,9 @@ namespace project.Controllers
     {
         public static List<TopClientsItem> top10ClientsCache;
         public static List<TopProductsItem> top10ProductsCache;
+        public static int? lateShipmentsCache;
+        public static List<GlobalFinancialItem> globalFinancialCache;
+        public static List<TopSalesItem> topSalesCache;
 
         public ActionResult Index()
         {

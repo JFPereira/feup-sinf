@@ -13,27 +13,40 @@ namespace project.Controllers
 {
     public class ApiSalesController : ApiController
     {
+
         //returns 10 top sales of all time
         // GET api/sales/top
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopSales()
         {
-            List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
-            List<TopSalesItem> result = new List<TopSalesItem>();
+            List<TopSalesItem> result;
 
-            foreach (Lib_Primavera.Model.CabecDoc sale in sales)
+            if (HomeController.topSalesCache != null)
             {
-                result.Add(new TopSalesItem
-                    {
-                        entity = sale.Entidade,
-                        numDoc = sale.NumDoc,
-                        purchaseValue = sale.TotalMerc + sale.TotalIva,
-                        date = sale.Data,
-                        numPurchases = Lib_Primavera.PriIntegration.numPurchases(sale.Entidade)
-                    });
+                result = HomeController.topSalesCache;
             }
+            else
+            {
+                result = new List<TopSalesItem>();
 
-            result = result.OrderBy(e => e.purchaseValue).Reverse().Take(10).ToList();
+                List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSales();
+
+                foreach (Lib_Primavera.Model.CabecDoc sale in sales)
+                {
+                    result.Add(new TopSalesItem
+                        {
+                            entity = sale.Entidade,
+                            numDoc = sale.NumDoc,
+                            purchaseValue = sale.TotalMerc + sale.TotalIva,
+                            date = sale.Data,
+                            numPurchases = Lib_Primavera.PriIntegration.numPurchases(sale.Entidade)
+                        });
+                }
+
+                result = result.OrderBy(e => e.purchaseValue).Reverse().Take(10).ToList();
+
+                HomeController.topSalesCache = result;
+            }
 
             var json = new JavaScriptSerializer().Serialize(result);
 
@@ -45,7 +58,7 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopSalesY(string year)
         {
-            List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSalesBy("year", year, null,null);
+            List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSalesBy("year", year, null, null);
             List<TopSalesItem> result = new List<TopSalesItem>();
 
             foreach (Lib_Primavera.Model.CabecDoc sale in sales)
@@ -155,14 +168,14 @@ namespace project.Controllers
 
             foreach (Lib_Primavera.Model.Artigo prod in allProd)
             {
-                
+
                 returnList.Add(new SalesBookingItem
                 {
                     codArtigo = prod.CodArtigo,
                     nome = prod.DescArtigo,
                     valorVendas = Lib_Primavera.PriIntegration.getSalesProd("month", prod.CodArtigo, year, month, null)
                 });
-                
+
             }
             returnList = returnList.OrderBy(e => e.valorVendas).Reverse().Take(10).ToList();
 
@@ -315,7 +328,7 @@ namespace project.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
-         //returns sales growth, which is the percentage of comparing volume of sales of two certain times
+        //returns sales growth, which is the percentage of comparing volume of sales of two certain times
         // GET api/sales/sg/{year}/{month}/{year}/{month}
         [System.Web.Http.HttpGet]
         public HttpResponseMessage SalesGrowth(string year1, string month1, string year2, string month2)
@@ -332,22 +345,22 @@ namespace project.Controllers
             }
             else
             {
-               sales1 = Lib_Primavera.PriIntegration.getSalesBy("month", year1, month1, null);
-               name += "Growth from " + month1 + " of " + year1 + " to ";
+                sales1 = Lib_Primavera.PriIntegration.getSalesBy("month", year1, month1, null);
+                name += "Growth from " + month1 + " of " + year1 + " to ";
             }
 
             if (month2 == "None")
             {
                 sales2 = Lib_Primavera.PriIntegration.getSalesBy("year", year2, null, null);
-                name += year2; 
+                name += year2;
             }
             else
             {
                 sales2 = Lib_Primavera.PriIntegration.getSalesBy("month", year2, month2, null);
-                name += month2 + " of " + year2; 
+                name += month2 + " of " + year2;
             }
 
-            
+
 
             double totalValue1 = 0;
             double totalValue2 = 0;
@@ -378,18 +391,19 @@ namespace project.Controllers
                 }
             }
 
-            returnList.Add( new SalesGrowthItem{
-                    
-                    Nome = name,
-                    Percentagem = percentage,
-                    Valor = totalValue2-totalValue1
-            
-                });
+            returnList.Add(new SalesGrowthItem
+            {
+
+                Nome = name,
+                Percentagem = percentage,
+                Valor = totalValue2 - totalValue1
+
+            });
 
             var json = new JavaScriptSerializer().Serialize(returnList);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
-                        
+
         }
     }
 }
