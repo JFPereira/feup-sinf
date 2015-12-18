@@ -17,7 +17,7 @@ function renderProductTopClients(year) {
     console.log(year);
     $.ajax({
         dataType: "json",
-        url: "http://localhost:49328/api/products/" + product + "/top-clients/" + year ,
+        url: "http://localhost:49328/api/products/" + product + "/top-clients/" + year,
         success: function (clients) {
             console.log(clients);
             clients = JSON.parse(clients);

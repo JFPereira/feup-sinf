@@ -50,39 +50,56 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopClients(string id, int year)
         {
+            List<TopClientsItem> result;
 
-            List<CabecDoc> sales = Lib_Primavera.PriIntegration.GetTopClientesArtigo(id, year);
-            List<TopClientsItem> result = new List<Items.TopClientsItem>();
-
-            double totalSalesVolume = 0;
-
-            foreach (CabecDoc sale in sales)
+            if (ProductsController.top10ClientsCache.ContainsKey(id) && ProductsController.top10ClientsCache[id].ContainsKey(year))
             {
-                if (result.Exists(e => e.nif == sale.NumContribuinte))
+                result = ProductsController.top10ClientsCache[id][year];
+            }
+            else
+            {
+                result = new List<Items.TopClientsItem>();
+
+                List<CabecDoc> sales = Lib_Primavera.PriIntegration.GetTopClientesArtigo(id, year);
+
+                double totalSalesVolume = 0;
+
+                foreach (CabecDoc sale in sales)
                 {
-                    result.Find(e => e.nif == sale.NumContribuinte).salesVolume += (sale.TotalMerc + sale.TotalIva);
-                    result.Find(e => e.nif == sale.NumContribuinte).numPurchases++;
-                }
-                else
-                {
-                    result.Add(new Items.TopClientsItem
+                    if (result.Exists(e => e.nif == sale.NumContribuinte))
                     {
-                        entity = sale.Entidade,
-                        name = sale.Nome,
-                        nif = sale.NumContribuinte,
-                        salesVolume = sale.TotalMerc + sale.TotalIva,
-                        percentage = "",
-                        numPurchases = 1
-                    });
+                        result.Find(e => e.nif == sale.NumContribuinte).salesVolume += (sale.TotalMerc + sale.TotalIva);
+                        result.Find(e => e.nif == sale.NumContribuinte).numPurchases++;
+                    }
+                    else
+                    {
+                        result.Add(new Items.TopClientsItem
+                        {
+                            entity = sale.Entidade,
+                            name = sale.Nome,
+                            nif = sale.NumContribuinte,
+                            salesVolume = sale.TotalMerc + sale.TotalIva,
+                            percentage = "",
+                            numPurchases = 1
+                        });
+                    }
+
+                    totalSalesVolume += (sale.TotalMerc + sale.TotalIva);
                 }
 
-                totalSalesVolume += (sale.TotalMerc + sale.TotalIva);
+                result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
+
+                foreach (Items.TopClientsItem client in result)
+                    client.percentage += Math.Round(client.salesVolume / totalSalesVolume * 100, 2).ToString(CultureInfo.GetCultureInfo("en-GB"));
+
+                if (!ProductsController.top10ClientsCache.ContainsKey(id))
+                {
+                    ProductsController.top10ClientsCache[id] = new Dictionary<int, List<TopClientsItem>>();
+                }
+
+                ProductsController.top10ClientsCache[id][year] = result;
             }
 
-            result = result.OrderBy(e => e.salesVolume).Reverse().Take(10).ToList();
-
-            foreach (Items.TopClientsItem client in result)
-                client.percentage += Math.Round(client.salesVolume / totalSalesVolume * 100, 2).ToString(CultureInfo.GetCultureInfo("en-GB"));
             var json = new JavaScriptSerializer().Serialize(result);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
@@ -93,18 +110,35 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Sales(string id, int year)
         {
-            List<LinhaDocVenda> sales = Lib_Primavera.PriIntegration.GetVendasArtigo(id, year);
-            double sum = 0;
-            double totalQuantity = 0;
-            ProductSalesItem result = new ProductSalesItem();
-            foreach (LinhaDocVenda sale in sales)
-            {
-                sum += (sale.Quantidade * sale.PrecoUnitario);
-                totalQuantity += sale.Quantidade;
-            }
+            ProductSalesItem result;
 
-            result.Vendas = sum;
-            result.Vendidos = totalQuantity;
+            if (ProductsController.totalUnitsSoldCache.ContainsKey(id) && ProductsController.totalUnitsSoldCache[id].ContainsKey(year))
+            {
+                result = ProductsController.totalUnitsSoldCache[id][year];
+            }
+            else
+            {
+                result = new ProductSalesItem();
+
+                List<LinhaDocVenda> sales = Lib_Primavera.PriIntegration.GetVendasArtigo(id, year);
+                double sum = 0;
+                double totalQuantity = 0;
+                foreach (LinhaDocVenda sale in sales)
+                {
+                    sum += (sale.Quantidade * sale.PrecoUnitario);
+                    totalQuantity += sale.Quantidade;
+                }
+
+                result.Vendas = sum;
+                result.Vendidos = totalQuantity;
+
+                if (!ProductsController.totalUnitsSoldCache.ContainsKey(id))
+                {
+                    ProductsController.totalUnitsSoldCache[id] = new Dictionary<int, ProductSalesItem>();
+                }
+
+                ProductsController.totalUnitsSoldCache[id][year] = result;
+            }
 
             var json = new JavaScriptSerializer().Serialize(result);
 
@@ -141,42 +175,59 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage Financial(string id, int year)
         {
-            string month = "";
-            int m = 0;
-            int y = 0;
-            List<GlobalFinancialItem> global = new List<GlobalFinancialItem>();
-            if (year == DateTime.Now.Year)
-            {
-                month = DateTime.Now.Month.ToString();
-                m = Int32.Parse(month);
-                y = year;
-            }
+            List<GlobalFinancialItem> global;
 
+            if (ProductsController.productFinancialCache.ContainsKey(id) && ProductsController.productFinancialCache[id].ContainsKey(year))
+            {
+                global = ProductsController.productFinancialCache[id][year];
+            }
             else
             {
-                m = 12;
-                y = year;
-            }
-            for (int i = 1; i < m + 1; i++)
-            {
-                double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
-                double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
-                global.Add(new GlobalFinancialItem
+                global = new List<GlobalFinancialItem>();
+
+                string month = "";
+                int m = 0;
+                int y = 0;
+
+                if (year == DateTime.Now.Year)
                 {
-                    Ano = y,
-                    Mes = i,
-                    Compras = Math.Abs(purchase),
-                    Vendas = sale
+                    month = DateTime.Now.Month.ToString();
+                    m = Int32.Parse(month);
+                    y = year;
+                }
 
-                });
+                else
+                {
+                    m = 12;
+                    y = year;
+                }
+                for (int i = 1; i < m + 1; i++)
+                {
+                    double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
+                    double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
+                    global.Add(new GlobalFinancialItem
+                    {
+                        Ano = y,
+                        Mes = i,
+                        Compras = Math.Abs(purchase),
+                        Vendas = sale
+
+                    });
+                }
+
+                global = global.OrderBy(e => e.Mes).ToList();
+
+                if (!ProductsController.productFinancialCache.ContainsKey(id))
+                {
+                    ProductsController.productFinancialCache[id] = new Dictionary<int, List<GlobalFinancialItem>>();
+                }
+
+                ProductsController.productFinancialCache[id][year] = global;
             }
 
-            global = global.OrderBy(e => e.Mes).ToList();
             var json = new JavaScriptSerializer().Serialize(global);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
-
-
         }
 
         // GET api/products/top
@@ -245,9 +296,7 @@ namespace project.Controllers
             }
             else
             {
-                List<String> delayed = Lib_Primavera.PriIntegration.GetShipments();
-
-                result = delayed.Count;
+                result = Lib_Primavera.PriIntegration.GetShipments().Count;
 
                 HomeController.lateShipmentsCache = result;
             }
@@ -261,14 +310,25 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage ProductShipments(string id)
         {
-            List<String> delayed = Lib_Primavera.PriIntegration.GetProductShipments(id);
+            int? result;
 
-            var json = new JavaScriptSerializer().Serialize(delayed.Count);
+            if (ProductsController.lateShipmentsCache.ContainsKey(id))
+            {
+                result = ProductsController.lateShipmentsCache[id];
+            }
+            else
+            {
+                result = Lib_Primavera.PriIntegration.GetProductShipments(id).Count;
+
+                ProductsController.lateShipmentsCache[id] = result;
+            }
+
+            var json = new JavaScriptSerializer().Serialize(result);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
 
         }
 
-
     }
+
 }

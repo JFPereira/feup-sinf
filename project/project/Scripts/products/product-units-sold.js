@@ -5,7 +5,6 @@
 });
 
 function renderProductUnitsSold(year) {
-
     // clear previous morris bar chart
     removeAllChildrenOfNode('productunitssold');
 
@@ -15,7 +14,6 @@ function renderProductUnitsSold(year) {
     // show animated loading cog
     $('#productunitssoldLoadingAnimation').append('<i class="fa fa-cog fa-spin fa-3x"></i>');
     var product = document.getElementById("productID").getAttribute("value");
-
 
     $.ajax({
         dataType: "json",

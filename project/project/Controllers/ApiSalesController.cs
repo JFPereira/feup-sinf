@@ -58,21 +58,29 @@ namespace project.Controllers
         [System.Web.Http.HttpGet]
         public HttpResponseMessage TopSalesY(string year)
         {
-            List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSalesBy("year", year, null, null);
             List<TopSalesItem> result = new List<TopSalesItem>();
 
-            foreach (Lib_Primavera.Model.CabecDoc sale in sales)
+            if (SalesController.top10SalesCache.ContainsKey(year))
             {
-                result.Add(new TopSalesItem
-                {
-                    entity = sale.Entidade,
-                    numDoc = sale.NumDoc,
-                    purchaseValue = sale.TotalMerc + sale.TotalIva,
-                    date = sale.Data.ToString("dd/MM/yyyy"),
-                    numPurchases = Lib_Primavera.PriIntegration.numUnits(sale.NumDoc)
-                });
+                result = SalesController.top10SalesCache[year];
             }
+            else
+            {
 
+                List<Lib_Primavera.Model.CabecDoc> sales = Lib_Primavera.PriIntegration.getSalesBy("year", year, null, null);
+                foreach (Lib_Primavera.Model.CabecDoc sale in sales)
+                {
+                    result.Add(new TopSalesItem
+                    {
+                        entity = sale.Entidade,
+                        numDoc = sale.NumDoc,
+                        purchaseValue = sale.TotalMerc + sale.TotalIva,
+                        date = sale.Data.ToString("dd/MM/yyyy"),
+                        numPurchases = Lib_Primavera.PriIntegration.numUnits(sale.NumDoc)
+                    });
+                }
+                SalesController.top10SalesCache.Add(year, result);
+            }
             result = result.OrderBy(e => e.purchaseValue).Reverse().Take(10).ToList();
 
             var json = new JavaScriptSerializer().Serialize(result);
@@ -141,18 +149,27 @@ namespace project.Controllers
         public HttpResponseMessage SalesBookingY(string year)
         {
             List<SalesBookingItem> returnList = new List<SalesBookingItem>();
-            List<Lib_Primavera.Model.Artigo> allProd = Lib_Primavera.PriIntegration.ListaArtigos();
 
-            foreach (Lib_Primavera.Model.Artigo prod in allProd)
+            if (SalesController.salesBookingCache.ContainsKey(year))
             {
-                List<double> sp = Lib_Primavera.PriIntegration.getSalesProd("year", prod.CodArtigo, year, null, null);
-                returnList.Add(new SalesBookingItem
-                    {
-                        codArtigo = prod.CodArtigo,
-                        nome = prod.DescArtigo,
-                        valorVendas = sp[0],
-                        quantidade = sp[1]
-                    });
+                returnList = SalesController.salesBookingCache[year];
+            }
+            else
+            {
+
+                List<Lib_Primavera.Model.Artigo> allProd = Lib_Primavera.PriIntegration.ListaArtigos();
+                foreach (Lib_Primavera.Model.Artigo prod in allProd)
+                {
+                    List<double> sp = Lib_Primavera.PriIntegration.getSalesProd("year", prod.CodArtigo, year, null, null);
+                    returnList.Add(new SalesBookingItem
+                        {
+                            codArtigo = prod.CodArtigo,
+                            nome = prod.DescArtigo,
+                            valorVendas = sp[0],
+                            quantidade = sp[1]
+                        });
+                }
+                SalesController.salesBookingCache.Add(year, returnList);
             }
             returnList = returnList.OrderBy(e => e.valorVendas).Reverse().Take(10).ToList();
 
@@ -222,34 +239,45 @@ namespace project.Controllers
         public HttpResponseMessage RegionalSSY(string year)
         {
             List<RegionalSSItem> returnList = new List<RegionalSSItem>();
-            List<string> countries = Lib_Primavera.PriIntegration.getAllCountries();
 
-            double totalValue = 0;
-            double thisValue = 0;
-
-            foreach (string country in countries)
+            if (SalesController.salesRSSCache.ContainsKey(year))
             {
-                thisValue = Lib_Primavera.PriIntegration.getPercentage("year", year, null, null, country);
-                totalValue += thisValue;
-                returnList.Add(new RegionalSSItem
-                {
-                    pais = country,
-                    percentagem = thisValue,
-                    valor = thisValue
-
-                });
+                returnList = SalesController.salesRSSCache[year];
             }
-
-            foreach (RegionalSSItem item in returnList)
+            else
             {
-                if (item.valor == 0)
+
+                List<string> countries = Lib_Primavera.PriIntegration.getAllCountries();
+                double totalValue = 0;
+                double thisValue = 0;
+
+                foreach (string country in countries)
                 {
-                    item.percentagem = 0;
+                    thisValue = Lib_Primavera.PriIntegration.getPercentage("year", year, null, null, country);
+                    totalValue += thisValue;
+                    returnList.Add(new RegionalSSItem
+                    {
+                        pais = country,
+                        percentagem = thisValue,
+                        valor = thisValue
+
+                    });
                 }
-                else
+
+                foreach (RegionalSSItem item in returnList)
                 {
-                    item.percentagem = 100.0 * item.percentagem / totalValue;
+                    if (item.valor == 0)
+                    {
+                        item.percentagem = 0;
+                    }
+                    else
+                    {
+                        item.percentagem = 100.0 * item.percentagem / totalValue;
+                    }
                 }
+
+
+                SalesController.salesRSSCache.Add(year, returnList);
             }
 
             var json = new JavaScriptSerializer().Serialize(returnList);
@@ -423,95 +451,105 @@ namespace project.Controllers
             List<Lib_Primavera.Model.CabecDoc> sales1 = new List<Lib_Primavera.Model.CabecDoc>();
             List<Lib_Primavera.Model.CabecDoc> sales2 = new List<Lib_Primavera.Model.CabecDoc>();
             List<SalesGrowthItem> returnList = new List<SalesGrowthItem>();
-            
-            sales1 = Lib_Primavera.PriIntegration.getSalesBy("year", year1, null, null);
-            sales2 = Lib_Primavera.PriIntegration.getSalesBy("year", year2, null, null);
-           
-            //[i][0] totalValue1;
-            //[i][1] totalValue2;
-            //[i][2] percentage;
-            //[i][3] dif;
-            List<List<double>> quarters = new List<List<double>>();
-            for (int i = 0; i < 4; i++)
+            string key = year1 + year2;
+
+            if (SalesController.salesGrowthCache.ContainsKey(key))
             {
-                List<double> l = new List<double>();
-                for (int j = 0; j < 4; j++)
-                {
-                    l.Add(0);
-                }
-                quarters.Add(l);
+                returnList = SalesController.salesGrowthCache[key];
             }
+            else{
+                sales1 = Lib_Primavera.PriIntegration.getSalesBy("year", year1, null, null);
+                sales2 = Lib_Primavera.PriIntegration.getSalesBy("year", year2, null, null);
 
-            foreach (var entry in sales1)
-            {
-                if (entry.Data.Month < 4)
+                //[i][0] totalValue1;
+                //[i][1] totalValue2;
+                //[i][2] percentage;
+                //[i][3] dif;
+                List<List<double>> quarters = new List<List<double>>();
+                for (int i = 0; i < 4; i++)
                 {
-                    quarters[0][0] += entry.TotalMerc + entry.TotalIva;
-                }
-                else if (entry.Data.Month < 7)
-                {
-                    quarters[1][0] += entry.TotalMerc + entry.TotalIva;
-                }
-                else if (entry.Data.Month < 10)
-                {
-                    quarters[2][0] += entry.TotalMerc + entry.TotalIva;
-                }
-                else if (entry.Data.Month < 13)
-                {
-                    quarters[3][0] += entry.TotalMerc + entry.TotalIva;
-                }
-            }
-
-            foreach (var entry in sales2)
-            {
-                if (entry.Data.Month < 4)
-                {
-                    quarters[0][1] += entry.TotalMerc + entry.TotalIva;
-
-                    //result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
-                }
-                else if (entry.Data.Month < 7)
-                {
-                    quarters[1][1] += entry.TotalMerc + entry.TotalIva;
-                }
-                else if (entry.Data.Month < 10)
-                {
-                    quarters[2][1] += entry.TotalMerc + entry.TotalIva;
-                }
-                else if (entry.Data.Month < 13)
-                {
-                    quarters[3][1] += entry.TotalMerc + entry.TotalIva;
-                }
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                quarters[i][3] = quarters[i][1] - quarters[i][0];
-
-                if (quarters[i][0] != 0 && quarters[i][1] != 0)
-                {
-                    quarters[i][2] = (quarters[i][1] - quarters[i][0]) / quarters[i][1] * 100;
-                }
-                else
-                {
-                    if (quarters[i][0] == 0)
+                    List<double> l = new List<double>();
+                    for (int j = 0; j < 4; j++)
                     {
-                        quarters[i][2] = quarters[i][1];
+                        l.Add(0);
                     }
-                    else if (quarters[i][1] == 0)
+                    quarters.Add(l);
+                }
+
+                foreach (var entry in sales1)
+                {
+                    if (entry.Data.Month < 4)
                     {
-                        quarters[i][2] = -quarters[i][0];
+                        quarters[0][0] += entry.TotalMerc + entry.TotalIva;
+                    }
+                    else if (entry.Data.Month < 7)
+                    {
+                        quarters[1][0] += entry.TotalMerc + entry.TotalIva;
+                    }
+                    else if (entry.Data.Month < 10)
+                    {
+                        quarters[2][0] += entry.TotalMerc + entry.TotalIva;
+                    }
+                    else if (entry.Data.Month < 13)
+                    {
+                        quarters[3][0] += entry.TotalMerc + entry.TotalIva;
                     }
                 }
 
-                returnList.Add(new SalesGrowthItem
+                foreach (var entry in sales2)
                 {
+                    if (entry.Data.Month < 4)
+                    {
+                        quarters[0][1] += entry.TotalMerc + entry.TotalIva;
 
-                    Valor1 = quarters[i][0],
-                    Valor2 = quarters[i][1],
-                    Percentagem = quarters[i][2],
-                    Dif = quarters[i][3]
+                        //result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
+                    }
+                    else if (entry.Data.Month < 7)
+                    {
+                        quarters[1][1] += entry.TotalMerc + entry.TotalIva;
+                    }
+                    else if (entry.Data.Month < 10)
+                    {
+                        quarters[2][1] += entry.TotalMerc + entry.TotalIva;
+                    }
+                    else if (entry.Data.Month < 13)
+                    {
+                        quarters[3][1] += entry.TotalMerc + entry.TotalIva;
+                    }
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    quarters[i][3] = quarters[i][1] - quarters[i][0];
 
-                });
+                    if (quarters[i][0] != 0 && quarters[i][1] != 0)
+                    {
+                        quarters[i][2] = (quarters[i][1] - quarters[i][0]) / quarters[i][1] * 100;
+                    }
+                    else
+                    {
+                        if (quarters[i][0] == 0)
+                        {
+                            quarters[i][2] = quarters[i][1];
+                        }
+                        else if (quarters[i][1] == 0)
+                        {
+                            quarters[i][2] = -quarters[i][0];
+                        }
+                    }
+
+                    returnList.Add(new SalesGrowthItem
+                    {
+
+                        Valor1 = quarters[i][0],
+                        Valor2 = quarters[i][1],
+                        Percentagem = quarters[i][2],
+                        Dif = quarters[i][3]
+
+                    });
+                }
+
+
+                SalesController.salesGrowthCache.Add(key, returnList);
             }
 
             var json = new JavaScriptSerializer().Serialize(returnList);
