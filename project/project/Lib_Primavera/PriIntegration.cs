@@ -50,10 +50,10 @@ namespace project.Lib_Primavera
                     {
                         CodCliente = objList.Valor("Cliente"),
                         NomeCliente = objList.Valor("Nome"),
-                        Moeda = objList.Valor("Moeda"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
                         Morada = objList.Valor("campo_exemplo"),
-                        Fac_Tel = objList.Valor("Telefone")
+                        Fac_Tel = objList.Valor("Telefone"),
+                        Moeda = objList.Valor("Moeda")
                     });
                     objList.Seguinte();
 

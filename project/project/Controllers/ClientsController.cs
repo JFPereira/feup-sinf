@@ -26,14 +26,9 @@ namespace project.Controllers
             return View(client);
         }
 
-        public async Task<ActionResult> List()
+        public ActionResult List()
         {
-            var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync("http://localhost:49328/api/clients/");
-
-            var clients = await response.Content.ReadAsAsync<IEnumerable<Cliente>>();
-
-            return View(clients);
+            return View();
         }
     }
 }

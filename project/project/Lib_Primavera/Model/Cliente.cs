@@ -31,13 +31,13 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
-        public string Moeda
+        public string Fac_Tel
         {
             get;
             set;
         }
 
-        public string Fac_Tel
+        public string Moeda
         {
             get;
             set;

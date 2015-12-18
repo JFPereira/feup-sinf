@@ -348,6 +348,7 @@
     <Content Include="Content\touchspin\jquery.bootstrap-touchspin.min.css" />
     <Content Include="Content\touchspin\jquery.bootstrap-touchspin.min.js" />
     <Content Include="Scripts\clients\average-purchase-cost.js" />
+    <Content Include="Scripts\clients\clients-list.js" />
     <Content Include="Scripts\clients\costs-earnings.js" />
     <Content Include="Scripts\clients\daily-sales.js" />
     <Content Include="Scripts\clients\monthly-sales.js" />
@@ -1255,6 +1256,7 @@
     <Content Include="Views\Finances\Index.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Shipments\Index.cshtml" />
+    <Content Include="Views\Products\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

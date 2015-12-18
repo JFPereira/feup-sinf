@@ -29,5 +29,11 @@ namespace project.Controllers
 
             return View(product);
         }
+
+        //Products/List
+        public async Task<ActionResult> List()
+        {
+            return View();
+        }
     }
 }
