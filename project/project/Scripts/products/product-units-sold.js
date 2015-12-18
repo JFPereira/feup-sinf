@@ -25,7 +25,8 @@ function renderProductUnitsSold(year) {
             var s = document.getElementById('productunitssold');
             s.innerHTML = sales;
 
-            $("#productunitssoldLoadingAnimation").remove();
+            // remove animated loading cog
+            removeAllChildrenOfNode('productunitssoldLoadingAnimation');
         }
     })
 }

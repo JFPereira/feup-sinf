@@ -21,7 +21,6 @@ function renderProductFinancial(year) {
         success: function (financial) {
             financial = JSON.parse(financial);
 
-            console.log(financial);
             var dataG = [];
             $.each(financial, function (i) {
                 var mes = financial[i].Ano + "-" + financial[i].Mes;
@@ -44,7 +43,8 @@ function renderProductFinancial(year) {
                 labels: ['Sales', 'Purchases', 'Profit'],
             });
 
-            $("#productfinancialLoadingAnimation").remove();
+            // remove animated loading cog
+            removeAllChildrenOfNode('productfinancialLoadingAnimation');
         }
     })
 }
