@@ -511,7 +511,7 @@ namespace project.Lib_Primavera
                 return null;
         }
 
-        public static List<Model.Artigo> ListaArtigos()
+        /*public static List<Model.Artigo> ListaArtigos()
         {
 
             StdBELista objList;
@@ -527,9 +527,10 @@ namespace project.Lib_Primavera
                 while (!objList.NoFim())
                 {
                     art = new Model.Artigo();
-                    art.CodArtigo = objList.Valor("artigo");
-                    art.DescArtigo = objList.Valor("descricao");
-
+                    art.CodArtigo = objList.Valor("Artigo");
+                    art.DescArtigo = objList.Valor("Descricao");
+                    art.PrecoMedio = objList.Valor("PCM");
+                    art.Stock = objList.Valor("STKActual");
                     listArts.Add(art);
                     objList.Seguinte();
                 }
@@ -543,6 +544,37 @@ namespace project.Lib_Primavera
 
             }
 
+        }*/
+
+        public static List<Model.Artigo> ListaArtigos()
+        {
+            List<Model.Artigo> artigos = new List<Model.Artigo>();
+
+            StdBELista objList;
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT Artigo.Artigo, Artigo.Descricao, Artigo.PCMedio, Artigo.TipoArtigo, Artigo.STKActual, Artigo.PCUltimo FROM Artigo");
+                 while (!objList.NoFim()) {
+                     artigos.Add(new Model.Artigo
+                     {
+                         CodArtigo = objList.Valor("Artigo"),
+                         DescArtigo = objList.Valor("Descricao"),
+                         PrecoMedio = objList.Valor("PCMedio"),
+                         Tipo = objList.Valor("TipoArtigo"),
+                         Stock = objList.Valor("STKActual"),
+                         Custo = objList.Valor("PCUltimo")
+                     });
+                     
+                     objList.Seguinte();
+                }
+
+                return artigos;
+            }
+            else
+                return null;
         }
 
         #endregion Artigo

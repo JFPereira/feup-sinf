@@ -15,9 +15,14 @@ namespace project.Controllers
     public class ApiProductsController : ApiController
     {
         // GET: api/products/
-        public IEnumerable<Lib_Primavera.Model.Artigo> Get()
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage Get()
         {
-            return Lib_Primavera.PriIntegration.ListaArtigos();
+            List<Lib_Primavera.Model.Artigo> products = Lib_Primavera.PriIntegration.ListaArtigos();
+
+            var json = new JavaScriptSerializer().Serialize(products);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
         // GET api/products/{id}

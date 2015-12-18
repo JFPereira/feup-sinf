@@ -31,7 +31,7 @@ namespace project.Controllers
         }
 
         //Products/List
-        public async Task<ActionResult> List()
+        public ActionResult List()
         {
             return View();
         }

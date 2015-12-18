@@ -294,6 +294,7 @@
     <Content Include="Content\assets\favicon.ico" />
     <Content Include="Content\assets\images\dashboard-icon.png" />
     <Content Include="Content\css\clients-dash.css" />
+    <Content Include="Content\css\products-dash.css" />
     <Content Include="Content\css\sales-dash.css" />
     <Compile Include="Controllers\ApiClientsController.cs" />
     <Compile Include="Controllers\ApiFinancialController.cs" />
@@ -361,6 +362,7 @@
     <Content Include="Scripts\products\product-units-sold.js" />
     <Content Include="Scripts\finances\initPurchasesYoy.js" />
     <Content Include="Scripts\finances\initYtdKpis.js" />
+    <Content Include="Scripts\products\products-list.js" />
     <Content Include="Scripts\products\startYearPivot.js" />
     <Content Include="Scripts\sales\RSS-table.js" />
   </ItemGroup>
