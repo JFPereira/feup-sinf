@@ -13,6 +13,11 @@ namespace project.Controllers
 {
     public class ProductsController : Controller
     {
+        public static Dictionary<String, Dictionary<int, List<TopClientsItem>>> top10ClientsCache = new Dictionary<String, Dictionary<int, List<TopClientsItem>>>();
+        public static Dictionary<String, int?> lateShipmentsCache = new Dictionary<String, int?>();
+        public static Dictionary<String, Dictionary<int, ProductSalesItem>> totalUnitsSoldCache = new Dictionary<String, Dictionary<int, ProductSalesItem>>();
+        public static Dictionary<String, Dictionary<int, List<GlobalFinancialItem>>> productFinancialCache = new Dictionary<String, Dictionary<int, List<GlobalFinancialItem>>>();
+
         //Products/Show/{id}
         public async Task<ActionResult> Show(string id)
         {
@@ -24,6 +29,5 @@ namespace project.Controllers
 
             return View(product);
         }
-
     }
 }

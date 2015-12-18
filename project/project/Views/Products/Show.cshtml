@@ -1,30 +1,32 @@
 ﻿@model project.Lib_Primavera.Model.Artigo
+
 @section ExtraScripts {
-<!-- Flot Charts JavaScript -->
-@Scripts.Render("~/Content/sb-admin-2/bower_components/flot/excanvas.min.js")
-@Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.js")
-@Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.pie.js")
-@Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.resize.js")
-@Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.time.js")
-@Scripts.Render("~/Content/sb-admin-2/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js")
-<!-- DataTables JavaScript -->
-@Scripts.Render("~/Content/sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.min.js")
-@Scripts.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")
-<!-- Morris Charts JavaScript -->
-@Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
-@Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
-<!-- Our Scripts -->
-@Scripts.Render("~/Scripts/products/product-clients-flot-pie.js")
-@Scripts.Render("~/Scripts/products/product-shipments.js")
-@Scripts.Render("~/Scripts/products/product-units-sold.js")
-@Scripts.Render("~/Scripts/products/product-financial-morris.js")
-@Scripts.Render("~/Scripts/products/startYearPivot.js")
+    <!-- Flot Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/excanvas.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js")
+    <!-- DataTables JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")
+    <!-- Morris Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
+    <!-- Our Scripts -->
+    @Scripts.Render("~/Scripts/products/product-clients-flot-pie.js")
+    @Scripts.Render("~/Scripts/products/product-shipments.js")
+    @Scripts.Render("~/Scripts/products/product-units-sold.js")
+    @Scripts.Render("~/Scripts/products/product-financial-morris.js")
+    @Scripts.Render("~/Scripts/products/startYearPivot.js")
 }
 
+<div id="yearPivotSpinnerPlaceholder" class="col-lg-3 pull-right" style="margin-top: 20px"></div>
 <h2>@Model.DescArtigo</h2>
 <hr>
+
 <div>
-    <div id="yearPivotSpinnerPlaceholder" class="col-lg-3 pull-right" style="margin-top: 20px"></div>
     <div class="col-xs-12 col-md-6 col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">Top 10 Clients</div>
@@ -68,11 +70,13 @@
                         </div>
                         <div class="row">
                             <p class="col-md-3 text-right"><strong>Stock:</strong></p>
-                            @if(@Model.Stock > 1 || @Model.Stock == 0 || @Model.Stock < -1) {
+                            @if (@Model.Stock > 1 || @Model.Stock == 0 || @Model.Stock < -1)
+                            {
                                 <p class="col-md-9">@Model.Stock units</p>
                             }
-                            else {
-                            <p class="col-md-9">@Model.Stock unit</p>
+                            else
+                            {
+                                <p class="col-md-9">@Model.Stock unit</p>
                             }
                         </div>
                     </div>
@@ -183,9 +187,8 @@
             </a>
         </div>
     </div>
-    
+
     <div>
         <input id="productID" type="hidden" name="productID" value=@Html.ViewData["product"]>
     </div>
 </div>
-
