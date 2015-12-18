@@ -454,6 +454,40 @@ namespace project.Lib_Primavera
                 return null;
         }
 
+        public static List<ShipmentsItem> GetShipmentsList()
+        {
+            StdBELista objList;
+            List<ShipmentsItem> late = new List<ShipmentsItem>();
+            ShipmentsItem shipment = new ShipmentsItem();
+
+            bool companyInitialized = initCompany();
+
+            if (companyInitialized)
+            {
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, LinhasDoc.Artigo, LinhasDoc.Descricao, LinhasDocStatus.Quantidade, LinhasDocStatus.QuantTrans, CabecDoc.Entidade from LinhasDocStatus, LinhasDoc, CabecDoc WHERE LinhasDocStatus.QuantTrans != LinhasDocStatus.Quantidade AND LinhasDoc.Id = LinhasDocStatus.IdLinhasDoc AND LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.TipoDoc = 'ECL'");
+
+                while (!objList.NoFim())
+                {
+                    shipment = new ShipmentsItem();
+                    DateTime date = (DateTime)objList.Valor("Data");
+                    shipment.date = date.ToShortDateString();
+                    shipment.codArtigo = objList.Valor("Artigo");
+                    shipment.nomeArtigo = objList.Valor("Descricao");
+                    shipment.quantEnc = objList.Valor("Quantidade");
+                    shipment.quantSat = objList.Valor("QuantTrans");
+                    shipment.entity = objList.Valor("Entidade");
+                    late.Add(shipment);
+                    objList.Seguinte();
+                }
+
+                return late;
+            }
+            else
+                return null;
+        }
+
+
+
         public static List<String> GetProductShipments(string id)
         {
             List<String> late = new List<String>();

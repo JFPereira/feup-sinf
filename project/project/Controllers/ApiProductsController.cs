@@ -296,6 +296,8 @@ namespace project.Controllers
             }
             else
             {
+                List<String> delayed = Lib_Primavera.PriIntegration.GetShipments();
+
                 result = Lib_Primavera.PriIntegration.GetShipments().Count;
 
                 HomeController.lateShipmentsCache = result;
@@ -305,6 +307,19 @@ namespace project.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
+
+        // GET api/products/shipmentslist
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage ShipmentsList()
+        {
+                List<ShipmentsItem> delayed = Lib_Primavera.PriIntegration.GetShipmentsList();
+
+            var json = new JavaScriptSerializer().Serialize(delayed);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+
+
 
         // GET api/products/shipments/{id}
         [System.Web.Http.HttpGet]

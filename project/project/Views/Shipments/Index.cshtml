@@ -1,0 +1,61 @@
+﻿@section ExtraStyles {
+    <!-- Morris Charts CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.css")
+
+    <!-- DataTables CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css")
+
+    <!-- DataTables Responsive CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/datatables-responsive/css/dataTables.responsive.css")
+
+    <!-- Morris Charts CSS -->
+    @Styles.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.css")
+
+    <!-- Our Styles -->
+    @Styles.Render("~/Content/css/main-dash.css")
+}
+
+@section ExtraScripts {
+    <!-- Flot Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/excanvas.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.pie.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.resize.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot/jquery.flot.time.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js")
+
+    <!-- DataTables JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables/media/js/jquery.dataTables.min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")
+
+    <!-- Morris Charts JavaScript -->
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/raphael/raphael-min.js")
+    @Scripts.Render("~/Content/sb-admin-2/bower_components/morrisjs/morris.min.js")
+
+    <!-- Our Scripts -->
+    @Scripts.Render("~/Scripts/shipments/shipments-datatable.js")
+}
+
+<div class="col-xs-12">
+    <h1><i class="fa fa-tachometer"></i> Late Shipments</h1>
+    <hr>
+
+    <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="panel panel-default">
+
+            <div class="panel-body">
+                <div id="shipmentsLoadingAnimation" class="text-center">
+                    <i class="fa fa-cog fa-spin fa-3x"></i>
+                </div>
+
+                <div class="dataTable_wrapper">
+                    <table id="shipments" class="table table-bordered table-hover table-striped" width="auto"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+</div>
+
