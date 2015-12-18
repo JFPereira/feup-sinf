@@ -14,20 +14,18 @@ function renderProductTopClients(year) {
     // show animated loading cog
     $('#ProductPlaceholderLoadingAnimation').append('<i class="fa fa-cog fa-spin fa-3x"></i>');
     var product = document.getElementById("productID").getAttribute("value");
-    console.log(year);
     $.ajax({
         dataType: "json",
         url: "http://localhost:49328/api/products/" + product + "/top-clients/" + year,
         success: function (clients) {
-            console.log(clients);
             clients = JSON.parse(clients);
-
-            console.log(clients);
             var data = [];
             $.each(clients, function (i) {
                 data.push({ label: clients[i].entity + " - " + clients[i].name, data: clients[i].percentage });
             });
-
+            if (data.length == 0) {
+                data.push({ label: "No purchases were made during this time", data: 100 });
+            }
             console.log(data);
 
             var plot = $.plot("#ProductPlaceholder", data, {
@@ -50,9 +48,11 @@ function renderProductTopClients(year) {
                 },
                 legend: {
                     labelFormatter: function (label, series) {
-                        var clientCod_description = label.split(' - ');
+                        if (label != "No purchases were made during this time") {
+                            var clientCod_description = label.split(' - ');
 
-                        return '<a class="pie-legend" href="/Clients/Show/' + clientCod_description[0] + '">' + clientCod_description[1] + '</a>';
+                            return '<a class="pie-legend" href="/Clients/Show/' + clientCod_description[0] + '">' + clientCod_description[1] + '</a>';
+                        }
                     }
                 }
             });
@@ -65,7 +65,8 @@ function renderProductTopClients(year) {
                 }
             });
 
-            $("#ProductPlaceholderLoadingAnimation").remove();
+            // remove animated loading cog
+            removeAllChildrenOfNode('ProductPlaceholderLoadingAnimation');
         }
     })
 }
