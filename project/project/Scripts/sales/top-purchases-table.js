@@ -25,9 +25,7 @@
 
 function updateTopPurchases(year) {
 
-    console.log(year);
     $('#TPSpinner').val(year);
-    console.log($('#TPSpinner').val());
     // clear previous morris bar chart
     removeAllChildrenOfNode('top-purchases');
 
