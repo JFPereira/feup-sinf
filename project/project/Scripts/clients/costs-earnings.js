@@ -7,33 +7,19 @@
         success: function (item) {
             item = JSON.parse(item);
 
-            Morris.Donut({
-                element: 'ce-graph',
-                data: [
-                  { value: item.totalCost, label: 'Costs' },
-                  { value: item.totalEarning, label: 'Earnings' }
-                ],
-                formatter: function (x, data) { return data.value + "€ (" + Math.round(data.value / item.total * 1000) / 10 + "%)"; }
-            }).on('click', function (i, row) {
-                console.log(i, row);
-            });
+            console.log("Cost: " + item.totalCost);
+            console.log("Earnings: " + item.totalEarning);
+            console.log("Profit: " + item.profit);
 
-            $("div#ce").append(
-                '<div class="col-lg-5 col-md-6">' +
-                    '<div class="panel panel-primary">' +
-                        '<div class="panel-heading">' +
-                            '<div class="row">' +
-                                '<div class="col-xs-3">' +
-                                    '<i class="fa fa-eur fa-5x"></i>' +
-                                '</div>' +
-                                '<div class="col-xs-9 text-right">' +
-                                    '<div id="profit" class="huge">' + item.profit + '</div>' +
-                                    '<div>Total Profit</div>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>');
+            Morris.Bar({
+                element: 'ce-bar',
+                data: [
+                  { y: 'Values', Earnings: item.totalEarning, Costs: item.totalCost, Profit: item.profit }
+                ],
+                xkey: 'y',
+                ykeys: ['Earnings', 'Costs', 'Profit'],
+                labels: ['Earnings', 'Costs', 'Profit']
+            });
 
             $('#ceLoadingAnimation').remove();
         }

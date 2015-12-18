@@ -220,10 +220,17 @@ namespace project
                 defaults: new { controller = "ApiSales", action = "RegionalSSD" }
             );
 
-            // GET api/sales/sg/{year}/{month}/{year}/{month}
+            /*// GET api/sales/sg/{year}/{month}/{year}/{month}
             config.Routes.MapHttpRoute(
                 name: "SalesGrowth",
                 routeTemplate: "api/sales/sg/{year1}/{month1}/{year2}/{month2}",
+                defaults: new { controller = "ApiSales", action = "SalesGrowth" }
+            );*/
+
+            // GET api/sales/sg/{year}/{year}
+            config.Routes.MapHttpRoute(
+                name: "SalesGrowth",
+                routeTemplate: "api/sales/sg/{year1}/{year2}",
                 defaults: new { controller = "ApiSales", action = "SalesGrowth" }
             );
 

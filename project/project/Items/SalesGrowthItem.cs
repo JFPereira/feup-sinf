@@ -8,7 +8,7 @@ namespace project.Items
 {
     public class SalesGrowthItem
     {
-        public string Nome
+       /* public string Nome
         {
             get;
             set;
@@ -22,8 +22,33 @@ namespace project.Items
         {
             get;
             set;
+        } 
+        public string Nome
+        {
+            get;
+            set;
+        }*/
+        public double Valor1
+        {
+            get;
+            set;
+        }
+        public double Valor2
+        {
+            get;
+            set;
         }
 
+        public double Dif
+        {
+            get;
+            set;
+        }
+        public double Percentagem
+        {
+            get;
+            set;
+        }
     }
 }
 

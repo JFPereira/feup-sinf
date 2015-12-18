@@ -38,7 +38,7 @@ namespace project.Controllers
                             entity = sale.Entidade,
                             numDoc = sale.NumDoc,
                             purchaseValue = sale.TotalMerc + sale.TotalIva,
-                            date = sale.Data,
+                            date = sale.Data.ToString("dd/MM/yyyy"),
                             numPurchases = Lib_Primavera.PriIntegration.numPurchases(sale.Entidade)
                         });
                 }
@@ -68,7 +68,7 @@ namespace project.Controllers
                     entity = sale.Entidade,
                     numDoc = sale.NumDoc,
                     purchaseValue = sale.TotalMerc + sale.TotalIva,
-                    date = sale.Data,
+                    date = sale.Data.ToString("dd/MM/yyyy"),
                     numPurchases = Lib_Primavera.PriIntegration.numUnits(sale.NumDoc)
                 });
             }
@@ -95,7 +95,7 @@ namespace project.Controllers
                     entity = sale.Entidade,
                     numDoc = sale.NumDoc,
                     purchaseValue = sale.TotalMerc + sale.TotalIva,
-                    date = sale.Data,
+                    date = sale.Data.ToString("dd/MM/yyyy"),
                     numPurchases = Lib_Primavera.PriIntegration.numUnits(sale.NumDoc)
                 });
             }
@@ -122,7 +122,7 @@ namespace project.Controllers
                     entity = sale.Entidade,
                     numDoc = sale.NumDoc,
                     purchaseValue = sale.TotalMerc + sale.TotalIva,
-                    date = sale.Data,
+                    date = sale.Data.ToString("dd/MM/yyyy"),
                     numPurchases = Lib_Primavera.PriIntegration.numUnits(sale.NumDoc)
                 });
             }
@@ -132,6 +132,7 @@ namespace project.Controllers
             var json = new JavaScriptSerializer().Serialize(result);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
+
         }
 
         //returns a list with the 10 top products and volume of sales in a year
@@ -144,11 +145,13 @@ namespace project.Controllers
 
             foreach (Lib_Primavera.Model.Artigo prod in allProd)
             {
+                List<double> sp = Lib_Primavera.PriIntegration.getSalesProd("year", prod.CodArtigo, year, null, null);
                 returnList.Add(new SalesBookingItem
                     {
                         codArtigo = prod.CodArtigo,
                         nome = prod.DescArtigo,
-                        valorVendas = Lib_Primavera.PriIntegration.getSalesProd("year", prod.CodArtigo, year, null, null)
+                        valorVendas = sp[0],
+                        quantidade = sp[1]
                     });
             }
             returnList = returnList.OrderBy(e => e.valorVendas).Reverse().Take(10).ToList();
@@ -168,15 +171,18 @@ namespace project.Controllers
 
             foreach (Lib_Primavera.Model.Artigo prod in allProd)
             {
-
+                List<double> sp = Lib_Primavera.PriIntegration.getSalesProd("month", prod.CodArtigo, year, month, null);
                 returnList.Add(new SalesBookingItem
+
                 {
                     codArtigo = prod.CodArtigo,
                     nome = prod.DescArtigo,
-                    valorVendas = Lib_Primavera.PriIntegration.getSalesProd("month", prod.CodArtigo, year, month, null)
+                    valorVendas = sp[0],
+                    quantidade = sp[1]
                 });
-
+                
             }
+             
             returnList = returnList.OrderBy(e => e.valorVendas).Reverse().Take(10).ToList();
 
             var json = new JavaScriptSerializer().Serialize(returnList);
@@ -194,11 +200,13 @@ namespace project.Controllers
 
             foreach (Lib_Primavera.Model.Artigo prod in allProd)
             {
+                List<double> sp = Lib_Primavera.PriIntegration.getSalesProd("day", prod.CodArtigo, year, month, day);
                 returnList.Add(new SalesBookingItem
                 {
                     codArtigo = prod.CodArtigo,
                     nome = prod.DescArtigo,
-                    valorVendas = Lib_Primavera.PriIntegration.getSalesProd("day", prod.CodArtigo, year, month, day)
+                    valorVendas = sp[0],
+                    quantidade = sp[1]
                 });
             }
             returnList = returnList.OrderBy(e => e.valorVendas).Reverse().Take(10).ToList();
@@ -330,7 +338,7 @@ namespace project.Controllers
 
         //returns sales growth, which is the percentage of comparing volume of sales of two certain times
         // GET api/sales/sg/{year}/{month}/{year}/{month}
-        [System.Web.Http.HttpGet]
+        /*[System.Web.Http.HttpGet]
         public HttpResponseMessage SalesGrowth(string year1, string month1, string year2, string month2)
         {
             List<Lib_Primavera.Model.CabecDoc> sales1 = new List<Lib_Primavera.Model.CabecDoc>();
@@ -403,7 +411,113 @@ namespace project.Controllers
             var json = new JavaScriptSerializer().Serialize(returnList);
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
+                        
+        } */
 
-        }
+        //returns sales growth, which is the percentage of comparing volume of sales of two years
+        // GET api/sales/sg/{year}/{year}
+
+        [System.Web.Http.HttpGet]
+        public HttpResponseMessage SalesGrowth(string year1, string year2)
+        {
+            List<Lib_Primavera.Model.CabecDoc> sales1 = new List<Lib_Primavera.Model.CabecDoc>();
+            List<Lib_Primavera.Model.CabecDoc> sales2 = new List<Lib_Primavera.Model.CabecDoc>();
+            List<SalesGrowthItem> returnList = new List<SalesGrowthItem>();
+            
+            sales1 = Lib_Primavera.PriIntegration.getSalesBy("year", year1, null, null);
+            sales2 = Lib_Primavera.PriIntegration.getSalesBy("year", year2, null, null);
+           
+            //[i][0] totalValue1;
+            //[i][1] totalValue2;
+            //[i][2] percentage;
+            //[i][3] dif;
+            List<List<double>> quarters = new List<List<double>>();
+            for (int i = 0; i < 4; i++)
+            {
+                List<double> l = new List<double>();
+                for (int j = 0; j < 4; j++)
+                {
+                    l.Add(0);
+                }
+                quarters.Add(l);
+            }
+
+            foreach (var entry in sales1)
+            {
+                if (entry.Data.Month < 4)
+                {
+                    quarters[0][0] += entry.TotalMerc + entry.TotalIva;
+                }
+                else if (entry.Data.Month < 7)
+                {
+                    quarters[1][0] += entry.TotalMerc + entry.TotalIva;
+                }
+                else if (entry.Data.Month < 10)
+                {
+                    quarters[2][0] += entry.TotalMerc + entry.TotalIva;
+                }
+                else if (entry.Data.Month < 13)
+                {
+                    quarters[3][0] += entry.TotalMerc + entry.TotalIva;
+                }
+            }
+
+            foreach (var entry in sales2)
+            {
+                if (entry.Data.Month < 4)
+                {
+                    quarters[0][1] += entry.TotalMerc + entry.TotalIva;
+
+                    //result[entry.Data.Month - 1][entry.Data.Year - year + 1] += amount;
+                }
+                else if (entry.Data.Month < 7)
+                {
+                    quarters[1][1] += entry.TotalMerc + entry.TotalIva;
+                }
+                else if (entry.Data.Month < 10)
+                {
+                    quarters[2][1] += entry.TotalMerc + entry.TotalIva;
+                }
+                else if (entry.Data.Month < 13)
+                {
+                    quarters[3][1] += entry.TotalMerc + entry.TotalIva;
+                }
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                quarters[i][3] = quarters[i][1] - quarters[i][0];
+
+                if (quarters[i][0] != 0 && quarters[i][1] != 0)
+                {
+                    quarters[i][2] = (quarters[i][1] - quarters[i][0]) / quarters[i][1] * 100;
+                }
+                else
+                {
+                    if (quarters[i][0] == 0)
+                    {
+                        quarters[i][2] = quarters[i][1];
+                    }
+                    else if (quarters[i][1] == 0)
+                    {
+                        quarters[i][2] = -quarters[i][0];
+                    }
+                }
+
+                returnList.Add(new SalesGrowthItem
+                {
+
+                    Valor1 = quarters[i][0],
+                    Valor2 = quarters[i][1],
+                    Percentagem = quarters[i][2],
+                    Dif = quarters[i][3]
+
+                });
+            }
+
+            var json = new JavaScriptSerializer().Serialize(returnList);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+
+        } 
     }
 }
