@@ -41,7 +41,7 @@
 
     <div class="row">
         <div class="col-xs-12 col-md-6 col-lg-6">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">Client Details</div>
                 <div class="panel-body">
                     <div class="row">
@@ -95,7 +95,7 @@
 
     <div class="row">
         <div class="col-xs-12 col-md-6 col-lg-6">
-            <div class="panel panel-default">
+            <div class="panel panel-success">
                 <div class="panel-heading">Top 10 Products</div>
                 <div class="panel-body">
                     <div id="top10ProductsLoadingAnimation" class="text-center">
@@ -109,7 +109,7 @@
         </div>
 
         <div class="col-xs-12 col-md-6 col-lg-6">
-            <div class="panel panel-default">
+            <div class="panel panel-success">
                 <div class="panel-heading">Earnings vs Costs</div>
                 <div class="panel-body">
                     <div id="ceLoadingAnimation" class="text-center">
@@ -128,47 +128,48 @@
             <div class="panel-heading">Information Flow</div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="row">
-                        <div id="yearPivotSpinnerPlaceholder" class="col-xs-6 col-md-2 pull-right" style="margin-top: 20px"></div>
-                    </div>
+                    <div id="yearPivotSpinnerPlaceholder" class="col-lg-offset-5 col-lg-2" style="margin-top: 20px; margin-bottom: 20px"></div>
 
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6 col-lg-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Monthly Sales</div>
-                                <div class="panel-body">
-                                    <div id="monthlySalesLoadingAnimation" class="text-center">
-                                        <i class="fa fa-cog fa-spin fa-3x"></i>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <div class="panel panel-green">
+                                    <div class="panel-heading">Monthly Sales</div>
+                                    <div class="panel-body">
+                                        <div id="monthlySalesLoadingAnimation" class="text-center">
+                                            <i class="fa fa-cog fa-spin fa-3x"></i>
+                                        </div>
+
+                                        <div class="flot-chart">
+                                            <div id="clientMonthlySalesPlaceholder" class="flot-chart-content"></div>
+                                        </div>
                                     </div>
+                                </div>
+                            </div>
 
-                                    <div class="flot-chart">
-                                        <div id="clientMonthlySalesPlaceholder" class="flot-chart-content"></div>
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <div class="panel panel-green">
+                                    <div class="panel-heading">Monthly Sales Volume</div>
+                                    <div class="panel-body">
+                                        <div id="monthlySalesVolumeLoadingAnimation" class="text-center">
+                                            <i class="fa fa-cog fa-spin fa-3x"></i>
+                                        </div>
+
+                                        <div class="flot-chart">
+                                            <div id="clientMonthlySalesVolumePlaceholder" class="flot-chart-content"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-xs-12 col-md-6 col-lg-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Monthly Sales Volume</div>
-                                <div class="panel-body">
-                                    <div id="monthlySalesVolumeLoadingAnimation" class="text-center">
-                                        <i class="fa fa-cog fa-spin fa-3x"></i>
-                                    </div>
-
-                                    <div class="flot-chart">
-                                        <div id="clientMonthlySalesVolumePlaceholder" class="flot-chart-content"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="row">
-                        <div id="options-rows" class="col-xs-6 col-md-2 pull-right">
+                        <div id="options-rows" class="col-lg-offset-5 col-lg-2" style="margin-bottom: 20px">
                             <div id="daily-purchases" class="form-inline" role="form">
                                 <div class="form-group months">
                                     <label for="dp-month">Month</label>
+
                                     <select id="dp-month" class="form-control" name="year">
                                         <option value="01">January</option>
                                         <option value="02">February</option>
@@ -188,31 +189,33 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6 col-lg-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Daily Sales</div>
-                                <div class="panel-body">
-                                    <div id="dailySalesLoadingAnimation" class="text-center">
-                                        <i class="fa fa-cog fa-spin fa-3x"></i>
-                                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <div class="panel panel-yellow">
+                                    <div class="panel-heading">Daily Sales</div>
+                                    <div class="panel-body">
+                                        <div id="dailySalesLoadingAnimation" class="text-center">
+                                            <i class="fa fa-cog fa-spin fa-3x"></i>
+                                        </div>
 
-                                    <div class="flot-chart">
-                                        <div id="clientDailySalesPlaceholder" class="flot-chart-content"></div>
+                                        <div class="flot-chart">
+                                            <div id="clientDailySalesPlaceholder" class="flot-chart-content"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-xs-12 col-md-6 col-lg-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Daily Sales Volume</div>
-                                <div class="panel-body">
-                                    <div id="dailySalesVolumeLoadingAnimation" class="text-center">
-                                        <i class="fa fa-cog fa-spin fa-3x"></i>
-                                    </div>
-                                    <div class="flot-chart">
-                                        <div id="clientDailySalesVolumePlaceholder" class="flot-chart-content"></div>
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <div class="panel panel-yellow">
+                                    <div class="panel-heading">Daily Sales Volume</div>
+                                    <div class="panel-body">
+                                        <div id="dailySalesVolumeLoadingAnimation" class="text-center">
+                                            <i class="fa fa-cog fa-spin fa-3x"></i>
+                                        </div>
+                                        <div class="flot-chart">
+                                            <div id="clientDailySalesVolumePlaceholder" class="flot-chart-content"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
