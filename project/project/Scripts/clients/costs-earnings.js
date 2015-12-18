@@ -7,10 +7,6 @@
         success: function (item) {
             item = JSON.parse(item);
 
-            console.log("Cost: " + item.totalCost);
-            console.log("Earnings: " + item.totalEarning);
-            console.log("Profit: " + item.profit);
-
             Morris.Bar({
                 element: 'ce-bar',
                 data: [

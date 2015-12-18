@@ -1,16 +1,39 @@
 ﻿@model  System.Collections.Generic.IEnumerable<project.Lib_Primavera.Model.Cliente>
 
-@{ ViewBag.Title = "List"; }
+<div class="col-xs-12">
 
-<h2>List</h2>
+    <h2>Clients</h2>
 
-<ul>
-    @for (int i = 0; i < Model.Count(); i++)
-    {
-        <h2>@Model.ElementAt(i).NomeCliente</h2>
-        <h3>@Model.ElementAt(i).Morada</h3>
-        <h3>@Model.ElementAt(i).NumContribuinte</h3>
-    }
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Fiscal Name</th>
+                <th>Adress</th>
+                <th>Phone Number</th>
+                <th>Tax Identification Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+           @for (int i = 0; i < Model.Count(); i++)
+            {
+               if(@Model.ElementAt(i).CodCliente != "VD") {
+                <tr>
+                    <td>@Model.ElementAt(i).CodCliente</td>
+                    <td>@Model.ElementAt(i).NomeCliente</td>
+                    <td>@Model.ElementAt(i).Morada</td>
+                    <td>@Model.ElementAt(i).Fac_Tel</td>
+                    <td>@Model.ElementAt(i).NumContribuinte</td>
+                    
+                    <td>
+                        <a href="/Clients/Show/@Model.ElementAt(i).CodCliente" class="btn btn-success btn-block">Details</a>
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+        
 
-    @Html.TextBox("Test", ViewData["test"])
-</ul>
+</div>

@@ -14,10 +14,13 @@ namespace project.Controllers
     public class ApiClientsController : ApiController
     {
         // GET: api/clients/
+        [System.Web.Http.HttpGet]
         public IEnumerable<Lib_Primavera.Model.Cliente> Get()
         {
             // return all clients
-            return Lib_Primavera.PriIntegration.ListaClientes();
+            IEnumerable<Lib_Primavera.Model.Cliente> clients = Lib_Primavera.PriIntegration.ListaClientes();
+
+            return clients;
         }
 
         // GET api/clients/{entity}

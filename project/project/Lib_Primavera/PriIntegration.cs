@@ -42,7 +42,7 @@ namespace project.Lib_Primavera
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo FROM  CLIENTES");
+                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo, Fac_Tel as Telefone FROM  CLIENTES");
 
                 while (!objList.NoFim())
                 {
@@ -52,7 +52,8 @@ namespace project.Lib_Primavera
                         NomeCliente = objList.Valor("Nome"),
                         Moeda = objList.Valor("Moeda"),
                         NumContribuinte = objList.Valor("NumContribuinte"),
-                        Morada = objList.Valor("campo_exemplo")
+                        Morada = objList.Valor("campo_exemplo"),
+                        Fac_Tel = objList.Valor("Telefone")
                     });
                     objList.Seguinte();
 
@@ -66,23 +67,25 @@ namespace project.Lib_Primavera
 
         public static Lib_Primavera.Model.Cliente GetCliente(string codCliente)
         {
-           Cliente cliente = new Cliente();
+            Cliente cliente = new Cliente();
 
             bool companyInitialized = initCompany();
 
             if (companyInitialized)
             {
                 StdBELista objCli = PriEngine.Engine.Consulta(
-                    "SELECT Clientes.Cliente, Clientes.Nome, Clientes.NumContrib, Clientes.Fac_Mor, Clientes.Moeda FROM Clientes WHERE Clientes.Cliente = " + codCliente);
+                    "SELECT Clientes.Cliente, Clientes.Nome, Clientes.NumContrib, Clientes.Fac_Mor, Clientes.Moeda, Clientes.Fac_Tel FROM Clientes WHERE Clientes.Cliente = " + codCliente);
                 if (objCli.NoFim()) return null;
-                else {
+                else
+                {
                     cliente = new Cliente
                     {
                         CodCliente = objCli.Valor("Cliente"),
                         NomeCliente = objCli.Valor("Nome"),
                         NumContribuinte = objCli.Valor("NumContrib"),
                         Morada = objCli.Valor("Fac_Mor"),
-                        Moeda = objCli.Valor("Moeda")
+                        Moeda = objCli.Valor("Moeda"),
+                        Fac_Tel = objCli.Valor("Fac_Tel")
                     };
                 }
             }
@@ -386,7 +389,7 @@ namespace project.Lib_Primavera
                     objList.Seguinte();
                 }
 
-                
+
 
                 return purchases;
             }
@@ -976,8 +979,8 @@ namespace project.Lib_Primavera
             {
                 if (controller == "year")
                 {
-                   objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva, LinhasDoc.Quantidade as quantity FROM CabecDoc, LinhasDoc WHERE CabecDoc.Id = LinhasDoc.IdCabecDoc AND DATEPART(year, CabecDoc.Data) = " + year);
+                    objList = PriEngine.Engine.Consulta(
+                     "SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva, LinhasDoc.Quantidade as quantity FROM CabecDoc, LinhasDoc WHERE CabecDoc.Id = LinhasDoc.IdCabecDoc AND DATEPART(year, CabecDoc.Data) = " + year);
                 }
 
                 else if (controller == "month")
@@ -1018,14 +1021,14 @@ namespace project.Lib_Primavera
         {
             StdBELista objList;
 
-            List<double> quantity = new List<double> {0,0};
+            List<double> quantity = new List<double> { 0, 0 };
             bool companyInitialized = initCompany();
 
             List<string> months = new List<string>() { "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" };
 
             if (month == "january" || month == "march" || month == "may" || month == "july" || month == "august" || month == "october" || month == "december" || month == "april" || month == "june" || month == "september" || month == "november" || month == "february")
                 month = (months.IndexOf(month) + 1).ToString();
-            else if(month != "01" && month != "02" && month != "03" && month != "04" && month != "05" && month != "06" && month != "07" && month != "08" && month != "09" && month != "10" && month != "11" && month != "12") month = null;
+            else if (month != "01" && month != "02" && month != "03" && month != "04" && month != "05" && month != "06" && month != "07" && month != "08" && month != "09" && month != "10" && month != "11" && month != "12") month = null;
 
             if (companyInitialized)
             {
@@ -1241,13 +1244,13 @@ namespace project.Lib_Primavera
             else
                 return null;
         }
-		
+
         //checks if month string is correct
         public static string checkMonth(string month)
         {
 
             if (month != "01" && month != "03" && month != "05" && month != "07" && month != "08" && month != "10" && month != "12" && month != "04" && month != "06" && month != "09" && month != "11" && month != "02")
-				month = null;
+                month = null;
 
             return month;
 

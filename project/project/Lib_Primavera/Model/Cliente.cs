@@ -37,5 +37,10 @@ namespace project.Lib_Primavera.Model
             set;
         }
 
+        public string Fac_Tel
+        {
+            get;
+            set;
+        }
     }
 }
