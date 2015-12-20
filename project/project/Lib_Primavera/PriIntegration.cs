@@ -764,7 +764,7 @@ namespace project.Lib_Primavera
             if (companyInitialized)
             {
                 StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecCompras.DataDoc, CabecCompras.Entidade, CabecCompras.Nome, CabecCompras.NumDoc, CabecCompras.NumContribuinte, CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras");
+                    "SELECT CabecCompras.DataDoc, CabecCompras.Entidade, CabecCompras.Nome, CabecCompras.NumDoc, CabecCompras.NumContribuinte, CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras WHERE TipoDoc='FA'");
 
                 while (!objList.NoFim())
                 {
@@ -798,7 +798,7 @@ namespace project.Lib_Primavera
             if (companyInitialized)
             {
                 StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras WHERE MONTH(CabecCompras.DataDoc) = " + month + " AND YEAR(CabecCompras.DataDoc) = " + year);
+                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras WHERE MONTH(CabecCompras.DataDoc) = " + month + " AND YEAR(CabecCompras.DataDoc) = " + year + " AND TipoDoc='FA'");
 
                 while (!objList.NoFim())
                 {
@@ -821,7 +821,7 @@ namespace project.Lib_Primavera
             if (companyInitialized)
             {
                 StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras, LinhasCompras WHERE LinhasCompras.IdCabecCompras = CabecCompras.Id AND LinhasCompras.Artigo = '" + cod + "' AND MONTH(CabecCompras.DataDoc) = " + month + " AND YEAR(CabecCompras.DataDoc) = " + year);
+                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras, LinhasCompras WHERE TipoDoc='FA' AND LinhasCompras.IdCabecCompras = CabecCompras.Id AND LinhasCompras.Artigo = '" + cod + "' AND MONTH(CabecCompras.DataDoc) = " + month + " AND YEAR(CabecCompras.DataDoc) = " + year);
 
                 while (!objList.NoFim())
                 {
