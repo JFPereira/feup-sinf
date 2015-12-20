@@ -208,8 +208,8 @@ namespace project.Controllers
                 }
                 for (int i = 1; i < m + 1; i++)
                 {
-                    double purchase = Lib_Primavera.PriIntegration.getMonthlyPurchases(i, y);
-                    double sale = Lib_Primavera.PriIntegration.getMonthlySales(i, y);
+                    double purchase = Lib_Primavera.PriIntegration.getProductMonthlyPurchases(i, y, id);
+                    double sale = Lib_Primavera.PriIntegration.getProductMonthlySales(i, y, id);
                     global.Add(new GlobalFinancialItem
                     {
                         Ano = y,

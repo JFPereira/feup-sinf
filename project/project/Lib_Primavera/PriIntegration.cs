@@ -347,7 +347,7 @@ namespace project.Lib_Primavera
 
             if (PriEngine.InitializeCompany(project.Properties.Settings.Default.Company.Trim(), project.Properties.Settings.Default.User.Trim(), project.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade, LinhasDoc.PrecUnit from LinhasDoc WHERE Artigo = '" + id + "' AND YEAR(LinhasDoc.Data) = " + year);
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Quantidade, LinhasDoc.PrecUnit from LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.TipoDoc = 'FA' AND Artigo = '" + id + "' AND YEAR(LinhasDoc.Data) = " + year);
                 sales = new List<Model.LinhaDocVenda>();
 
                 while (!objList.NoFim())
@@ -407,7 +407,7 @@ namespace project.Lib_Primavera
 
             if (companyInitialized)
             {
-                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND LinhasDoc.Artigo = " + id + " AND YEAR(CabecDoc.Data) = " + year);
+                objList = PriEngine.Engine.Consulta("SELECT CabecDoc.Data, CabecDoc.Entidade, CabecDoc.Nome, CabecDoc.NumDoc, CabecDoc.NumContribuinte, CabecDoc.TotalMerc, CabecDoc.TotalIva FROM LinhasDoc, CabecDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.TipoDoc = 'FA' AND LinhasDoc.Artigo = " + id + " AND YEAR(CabecDoc.Data) = " + year);
                 while (!objList.NoFim())
                 {
                     sales.Add(new Model.CabecDoc
@@ -821,7 +821,7 @@ namespace project.Lib_Primavera
             if (companyInitialized)
             {
                 StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras WHERE LinhasCompras.IdCabecCompras = CabecCompras.Id AND LinhasCompras.Artigo = '" + cod + "' AND MONTH(CabecCompras.DataDoc) = " + month + " AND YEAR(CabecCompras.DataDoc) = " + year);
+                    "SELECT CabecCompras.TotalMerc, CabecCompras.TotalIva FROM CabecCompras, LinhasCompras WHERE LinhasCompras.IdCabecCompras = CabecCompras.Id AND LinhasCompras.Artigo = '" + cod + "' AND MONTH(CabecCompras.DataDoc) = " + month + " AND YEAR(CabecCompras.DataDoc) = " + year);
 
                 while (!objList.NoFim())
                 {
@@ -1239,7 +1239,7 @@ namespace project.Lib_Primavera
             if (companyInitialized)
             {
                 StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE MONTH(CabecDoc.Data) = " + month + " AND YEAR(CabecDoc.Data) = " + year);
+                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE CabecDoc.TipoDoc = 'FA' AND MONTH(CabecDoc.Data) = " + month + " AND YEAR(CabecDoc.Data) = " + year);
 
                 while (!objList.NoFim())
                 {
@@ -1262,7 +1262,7 @@ namespace project.Lib_Primavera
             if (companyInitialized)
             {
                 StdBELista objList = PriEngine.Engine.Consulta(
-                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc WHERE LinhasDoc.IdCabecDoc = CabeckDoc.Id AND LinhasDoc.Artigo = '" + cod + "' AND MONTH(CabecDoc.Data) = " + month + " AND YEAR(CabecDoc.Data) = " + year);
+                    "SELECT CabecDoc.TotalMerc, CabecDoc.TotalIva FROM CabecDoc, LinhasDoc WHERE LinhasDoc.IdCabecDoc = CabecDoc.Id AND CabecDoc.TipoDoc = 'FA' AND LinhasDoc.Artigo = '" + cod + "' AND MONTH(CabecDoc.Data) = " + month + " AND YEAR(CabecDoc.Data) = " + year);
 
                 while (!objList.NoFim())
                 {
